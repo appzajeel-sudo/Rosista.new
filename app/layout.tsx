@@ -1,13 +1,13 @@
-import type React from "react";
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-import { ThemeProvider } from "@/lib/theme-context";
-import { Header } from "@/components/header";
-import { Footer } from "@/components/footer";
+import type React from "react"
+import type { Metadata } from "next"
+import { Geist, Geist_Mono } from "next/font/google"
+import "./globals.css"
+import { ThemeProvider } from "@/lib/theme-context"
+import { Header } from "@/components/header"
+import { Footer } from "@/components/footer"
 
-const _geist = Geist({ subsets: ["latin"] });
-const _geistMono = Geist_Mono({ subsets: ["latin"] });
+const _geist = Geist({ subsets: ["latin"] })
+const _geistMono = Geist_Mono({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
   title: "ROSISTA - Luxury Gifts",
@@ -16,12 +16,14 @@ export const metadata: Metadata = {
   headers: {
     "Cache-Control": "public, max-age=31536000, immutable",
   },
-};
+}
+
+export const revalidate = 86400 // 24 hours in seconds
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
@@ -33,5 +35,5 @@ export default function RootLayout({
         </ThemeProvider>
       </body>
     </html>
-  );
+  )
 }

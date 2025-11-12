@@ -1,178 +1,321 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { useTheme } from "@/lib/theme-context"
-import { getTranslation } from "@/lib/i18n"
+import Link from "next/link";
+import { useTranslation } from "react-i18next";
+import { Instagram, Facebook, Twitter, Mail, Phone } from "lucide-react";
 
 export function Footer() {
-  const { language } = useTheme()
-  const year = new Date().getFullYear()
-  const isArabic = language === "ar"
+  const { t, i18n } = useTranslation();
+  const isRtl = i18n.language === "ar";
+
+  const links = {
+    shop: [
+      { href: "/occasions", label: t("footer.about") },
+      { href: "#", label: t("footer.shipping") },
+      { href: "#", label: t("footer.contact") },
+    ],
+    support: [
+      { href: "#", label: t("footer.faq") },
+      { href: "#", label: t("footer.returns") },
+      { href: "#", label: t("footer.privacy") },
+    ],
+  };
+
+  const socials = [
+    { icon: Instagram, href: "#", label: "Instagram" },
+    { icon: Facebook, href: "#", label: "Facebook" },
+    { icon: Twitter, href: "#", label: "Twitter" },
+  ];
 
   return (
-    <footer className="bg-white dark:bg-black border-t border-black dark:border-white">
-      {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 md:px-6 py-12 md:py-16">
-        <div className={`grid grid-cols-1 md:grid-cols-4 gap-8 ${isArabic ? "text-right" : ""}`}>
-          {/* Brand Section */}
-          <div>
-            <div className="flex items-center gap-2 mb-4">
-              <div className="relative w-10 h-10">
-                <div className="absolute inset-0 bg-black dark:bg-white rounded-lg" />
-                <div className="absolute inset-1 bg-white dark:bg-black rounded-md flex items-center justify-center">
-                  <span className="text-sm font-bold text-black dark:text-white">R</span>
-                </div>
-              </div>
-              <span className="text-xl font-serif font-bold text-black dark:text-white">ROSISTA</span>
-            </div>
-            <p className="text-sm text-black/70 dark:text-white/70 leading-relaxed">
-              {getTranslation(language, "footer.aboutText")}
+    <footer
+      className="relative"
+      style={{
+        backgroundColor: "rgb(var(--footer-background))",
+        color: "rgb(var(--footer-foreground))",
+      }}
+    >
+      <div className="mx-auto max-w-[1400px] px-6 py-16 sm:px-8 lg:py-20">
+        {/* Main Content - Single Row */}
+        <div className="mb-16 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+          {/* Column 1 - Brand */}
+          <div className="lg:col-span-2">
+            <h2
+              className={`mb-4 text-3xl font-bold tracking-tight ${
+                isRtl ? "font-sans-ar" : "font-sans-en"
+              }`}
+              style={{ color: "rgb(var(--footer-foreground))" }}
+            >
+              ROSISTA
+            </h2>
+            <p
+              className={`mb-6 max-w-sm text-sm leading-relaxed ${
+                isRtl ? "font-sans-ar" : "font-sans-en"
+              }`}
+              style={{ color: "rgb(var(--footer-foreground) / 0.7)" }}
+            >
+              {t("footer.aboutText")}
             </p>
+
+            {/* Newsletter */}
+            <div>
+              <h3
+                className={`mb-3 text-sm font-semibold uppercase tracking-wider ${
+                  isRtl ? "font-sans-ar" : "font-sans-en"
+                }`}
+                style={{ color: "rgb(var(--footer-foreground))" }}
+              >
+                {isRtl ? "النشرة الإخبارية" : "Newsletter"}
+              </h3>
+              <form className="flex gap-2">
+                <input
+                  type="email"
+                  placeholder={isRtl ? "البريد الإلكتروني" : "Email address"}
+                  className={`flex-1 rounded-lg border px-4 py-2.5 text-sm outline-none transition-all duration-300 ${
+                    isRtl ? "font-sans-ar" : "font-sans-en"
+                  }`}
+                  style={{
+                    backgroundColor: "rgb(var(--footer-background))",
+                    borderColor: "rgb(var(--footer-foreground) / 0.2)",
+                    color: "rgb(var(--footer-foreground))",
+                  }}
+                />
+                <button
+                  type="submit"
+                  className={`rounded-lg px-5 py-2.5 text-sm font-medium transition-all duration-300 ${
+                    isRtl ? "font-sans-ar" : "font-sans-en"
+                  }`}
+                  style={{
+                    backgroundColor: "rgb(var(--primary-500))",
+                    color: "rgb(var(--white))",
+                  }}
+                >
+                  {isRtl ? "اشترك" : "Subscribe"}
+                </button>
+              </form>
+            </div>
           </div>
 
-          {/* Customer Service */}
+          {/* Column 2 - Quick Links */}
           <div>
-            <h3 className="font-serif font-bold text-black dark:text-white mb-4 text-sm">
-              {getTranslation(language, "footer.customer")}
+            <h3
+              className={`mb-4 text-sm font-semibold uppercase tracking-wider ${
+                isRtl ? "font-sans-ar" : "font-sans-en"
+              }`}
+              style={{ color: "rgb(var(--footer-foreground))" }}
+            >
+              {isRtl ? "روابط سريعة" : "Quick Links"}
             </h3>
-            <nav className="space-y-3 flex flex-col">
-              <Link
-                href="#"
-                className="text-sm text-black/70 dark:text-white/70 hover:text-black dark:hover:text-white transition-colors"
-              >
-                {getTranslation(language, "footer.contact")}
-              </Link>
-              <Link
-                href="#"
-                className="text-sm text-black/70 dark:text-white/70 hover:text-black dark:hover:text-white transition-colors"
-              >
-                {getTranslation(language, "footer.support")}
-              </Link>
-              <Link
-                href="#"
-                className="text-sm text-black/70 dark:text-white/70 hover:text-black dark:hover:text-white transition-colors"
-              >
-                {getTranslation(language, "footer.returns")}
-              </Link>
-              <Link
-                href="#"
-                className="text-sm text-black/70 dark:text-white/70 hover:text-black dark:hover:text-white transition-colors"
-              >
-                {getTranslation(language, "footer.shipping")}
-              </Link>
-              <Link
-                href="#"
-                className="text-sm text-black/70 dark:text-white/70 hover:text-black dark:hover:text-white transition-colors"
-              >
-                {getTranslation(language, "footer.faq")}
-              </Link>
-            </nav>
+            <ul className="space-y-3">
+              {links.shop.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className={`text-sm transition-colors ${
+                      isRtl ? "font-sans-ar" : "font-sans-en"
+                    }`}
+                    style={{
+                      color: "rgb(var(--footer-foreground) / 0.7)",
+                    }}
+                    onMouseEnter={(e) =>
+                      (e.currentTarget.style.color =
+                        "rgb(var(--footer-foreground))")
+                    }
+                    onMouseLeave={(e) =>
+                      (e.currentTarget.style.color =
+                        "rgb(var(--footer-foreground) / 0.7)")
+                    }
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
 
-          {/* Company */}
+          {/* Column 3 - Customer Service */}
           <div>
-            <h3 className="font-serif font-bold text-black dark:text-white mb-4 text-sm">
-              {getTranslation(language, "footer.company")}
+            <h3
+              className={`mb-4 text-sm font-semibold uppercase tracking-wider ${
+                isRtl ? "font-sans-ar" : "font-sans-en"
+              }`}
+              style={{ color: "rgb(var(--footer-foreground))" }}
+            >
+              {t("footer.customer")}
             </h3>
-            <nav className="space-y-3 flex flex-col">
-              <Link
-                href="#"
-                className="text-sm text-black/70 dark:text-white/70 hover:text-black dark:hover:text-white transition-colors"
-              >
-                {getTranslation(language, "footer.about")}
-              </Link>
-              <Link
-                href="#"
-                className="text-sm text-black/70 dark:text-white/70 hover:text-black dark:hover:text-white transition-colors"
-              >
-                {getTranslation(language, "footer.careers")}
-              </Link>
-              <Link
-                href="#"
-                className="text-sm text-black/70 dark:text-white/70 hover:text-black dark:hover:text-white transition-colors"
-              >
-                {getTranslation(language, "footer.blog")}
-              </Link>
-              <Link
-                href="#"
-                className="text-sm text-black/70 dark:text-white/70 hover:text-black dark:hover:text-white transition-colors"
-              >
-                {getTranslation(language, "footer.press")}
-              </Link>
-            </nav>
-          </div>
-
-          {/* Legal */}
-          <div>
-            <h3 className="font-serif font-bold text-black dark:text-white mb-4 text-sm">
-              {getTranslation(language, "footer.legal")}
-            </h3>
-            <nav className="space-y-3 flex flex-col">
-              <Link
-                href="#"
-                className="text-sm text-black/70 dark:text-white/70 hover:text-black dark:hover:text-white transition-colors"
-              >
-                {getTranslation(language, "footer.privacy")}
-              </Link>
-              <Link
-                href="#"
-                className="text-sm text-black/70 dark:text-white/70 hover:text-black dark:hover:text-white transition-colors"
-              >
-                {getTranslation(language, "footer.terms")}
-              </Link>
-              <Link
-                href="#"
-                className="text-sm text-black/70 dark:text-white/70 hover:text-black dark:hover:text-white transition-colors"
-              >
-                {getTranslation(language, "footer.cookies")}
-              </Link>
-            </nav>
+            <ul className="space-y-3">
+              {links.support.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className={`text-sm transition-colors ${
+                      isRtl ? "font-sans-ar" : "font-sans-en"
+                    }`}
+                    style={{
+                      color: "rgb(var(--footer-foreground) / 0.7)",
+                    }}
+                    onMouseEnter={(e) =>
+                      (e.currentTarget.style.color =
+                        "rgb(var(--footer-foreground))")
+                    }
+                    onMouseLeave={(e) =>
+                      (e.currentTarget.style.color =
+                        "rgb(var(--footer-foreground) / 0.7)")
+                    }
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
-      </div>
 
-      {/* Divider */}
-      <div className="border-t border-black dark:border-white" />
-
-      {/* Bottom */}
-      <div className="max-w-7xl mx-auto px-4 md:px-6 py-6">
+        {/* Contact & Social Section */}
         <div
-          className={`flex flex-col md:flex-row md:items-center md:justify-between gap-4 ${isArabic ? "text-right" : ""}`}
+          className="mb-12 rounded-2xl border p-6 lg:p-8"
+          style={{ borderColor: "rgb(var(--footer-foreground) / 0.2)" }}
         >
-          <p className="text-sm text-black/60 dark:text-white/60">
-            © {year} ROSISTA. {getTranslation(language, "footer.rights")}
+          <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
+            {/* Contact Info */}
+            <div className="flex flex-wrap items-center gap-6">
+              <a
+                href="mailto:info@rosista.com"
+                className={`flex items-center gap-2 text-sm transition-colors ${
+                  isRtl ? "font-sans-ar" : "font-sans-en"
+                }`}
+                style={{
+                  color: "rgb(var(--footer-foreground) / 0.7)",
+                }}
+                onMouseEnter={(e) =>
+                  (e.currentTarget.style.color =
+                    "rgb(var(--footer-foreground))")
+                }
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.color =
+                    "rgb(var(--footer-foreground) / 0.7)")
+                }
+              >
+                <Mail className="h-4 w-4" />
+                <span>info@rosista.com</span>
+              </a>
+              <a
+                href="tel:+966123456789"
+                className={`flex items-center gap-2 text-sm transition-colors ${
+                  isRtl ? "font-sans-ar" : "font-sans-en"
+                }`}
+                style={{
+                  color: "rgb(var(--footer-foreground) / 0.7)",
+                }}
+                onMouseEnter={(e) =>
+                  (e.currentTarget.style.color =
+                    "rgb(var(--footer-foreground))")
+                }
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.color =
+                    "rgb(var(--footer-foreground) / 0.7)")
+                }
+                dir="ltr"
+              >
+                <Phone className="h-4 w-4" />
+                <span>+966 12 345 6789</span>
+              </a>
+            </div>
+
+            {/* Social Media */}
+            <div className="flex items-center gap-4">
+              <span
+                className={`text-xs ${isRtl ? "font-sans-ar" : "font-sans-en"}`}
+                style={{ color: "rgb(var(--footer-foreground) / 0.5)" }}
+              >
+                {isRtl ? "تابعنا:" : "Follow us:"}
+              </span>
+              {socials.map((social) => (
+                <a
+                  key={social.label}
+                  href={social.href}
+                  aria-label={social.label}
+                  className="rounded-full p-2 transition-all duration-300"
+                  style={{
+                    backgroundColor: "rgb(var(--footer-foreground) / 0.1)",
+                    color: "rgb(var(--footer-foreground) / 0.7)",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor =
+                      "rgb(var(--footer-foreground) / 0.2)";
+                    e.currentTarget.style.color =
+                      "rgb(var(--footer-foreground))";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor =
+                      "rgb(var(--footer-foreground) / 0.1)";
+                    e.currentTarget.style.color =
+                      "rgb(var(--footer-foreground) / 0.7)";
+                  }}
+                >
+                  <social.icon className="h-4 w-4" />
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Section */}
+        <div
+          className="flex flex-col items-center justify-between gap-4 border-t pt-8 sm:flex-row"
+          style={{ borderColor: "rgb(var(--footer-foreground) / 0.2)" }}
+        >
+          <p
+            className={`text-xs ${isRtl ? "font-sans-ar" : "font-sans-en"}`}
+            style={{ color: "rgb(var(--footer-foreground) / 0.6)" }}
+          >
+            © {new Date().getFullYear()} ROSISTA.{" "}
+            {t("footer.rights")}
           </p>
-          <div className="flex gap-6">
-            <button
-              onClick={() => {}}
-              className="text-sm text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition-colors"
-              aria-label="Instagram"
+          <div className="flex items-center gap-4">
+            <Link
+              href="#"
+              className={`text-xs transition-colors ${
+                isRtl ? "font-sans-ar" : "font-sans-en"
+              }`}
+              style={{
+                color: "rgb(var(--footer-foreground) / 0.6)",
+              }}
+              onMouseEnter={(e) =>
+                (e.currentTarget.style.color = "rgb(var(--footer-foreground))")
+              }
+              onMouseLeave={(e) =>
+                (e.currentTarget.style.color =
+                  "rgb(var(--footer-foreground) / 0.6)")
+              }
             >
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.204-.012 3.584-.07 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zM5.838 12a6.162 6.162 0 1112.324 0 6.162 6.162 0 01-12.324 0zM12 16a4 4 0 110-8 4 4 0 010 8zm4.965-10.322a1.44 1.44 0 110-2.88 1.44 1.44 0 010 2.88z" />
-              </svg>
-            </button>
-            <button
-              onClick={() => {}}
-              className="text-sm text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition-colors"
-              aria-label="Facebook"
+              {t("footer.privacy")}
+            </Link>
+            <span
+              className="h-1 w-1 rounded-full"
+              style={{ backgroundColor: "rgb(var(--footer-foreground) / 0.3)" }}
+            ></span>
+            <Link
+              href="#"
+              className={`text-xs transition-colors ${
+                isRtl ? "font-sans-ar" : "font-sans-en"
+              }`}
+              style={{
+                color: "rgb(var(--footer-foreground) / 0.6)",
+              }}
+              onMouseEnter={(e) =>
+                (e.currentTarget.style.color = "rgb(var(--footer-foreground))")
+              }
+              onMouseLeave={(e) =>
+                (e.currentTarget.style.color =
+                  "rgb(var(--footer-foreground) / 0.6)")
+              }
             >
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-              </svg>
-            </button>
-            <button
-              onClick={() => {}}
-              className="text-sm text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition-colors"
-              aria-label="Twitter"
-            >
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" />
-              </svg>
-            </button>
+              {t("footer.terms")}
+            </Link>
           </div>
         </div>
       </div>
     </footer>
-  )
+  );
 }

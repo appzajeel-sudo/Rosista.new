@@ -6,7 +6,7 @@ import { Categories } from "@/components/categories"
 import { BestSellers } from "@/components/best-sellers"
 import { FeaturedCollections } from "@/components/featured-collections"
 
-export default function HomePage() {
+export default async function HomePage() {
   return (
     <main>
       <HeroSlider />

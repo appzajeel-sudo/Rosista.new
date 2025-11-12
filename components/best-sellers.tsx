@@ -1,60 +1,347 @@
-"use client"
-import { useTheme } from "@/lib/theme-context"
-import { getTranslation } from "@/lib/i18n"
+"use client";
+
+import { useRef, useEffect, useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { useTranslation } from "react-i18next";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Autoplay } from "swiper/modules";
+import type { Swiper as SwiperType } from "swiper";
+import {
+  ChevronLeft,
+  ChevronRight,
+  Crown,
+  ShoppingCart,
+  Heart,
+} from "lucide-react";
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/autoplay";
+
+// Sample best seller products
+const BEST_SELLERS = [
+  {
+    id: 1,
+    slug: "luxury-chocolate-box",
+    nameAr: "صندوق شوكولاتة فاخر",
+    nameEn: "Luxury Chocolate Box",
+    descriptionAr: "شوكولاتة فاخرة مختارة بعناية مع حشوات متنوعة وجودة عالية.",
+    descriptionEn:
+      "Premium handpicked chocolates with assorted fillings and fine quality.",
+    price: 299,
+    image:
+      "https://images.unsplash.com/photo-1511381939415-e44015466834?w=600&h=600&fit=crop&q=80",
+  },
+  {
+    id: 2,
+    slug: "premium-rose-bouquet",
+    nameAr: "باقة ورد مميزة",
+    nameEn: "Premium Rose Bouquet",
+    descriptionAr: "باقة من الورود الطازجة بتنسيق أنيق ولمسة فاخرة.",
+    descriptionEn: "Fresh roses arranged elegantly with a luxurious touch.",
+    price: 450,
+    image:
+      "https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=600&h=600&fit=crop&q=80",
+  },
+  {
+    id: 3,
+    slug: "elegant-perfume-set",
+    nameAr: "طقم عطور أنيق",
+    nameEn: "Elegant Perfume Set",
+    price: 850,
+    image:
+      "https://images.unsplash.com/photo-1541643600914-78b084683601?w=600&h=600&fit=crop&q=80",
+  },
+  {
+    id: 4,
+    slug: "gold-jewelry-collection",
+    nameAr: "مجموعة مجوهرات ذهبية",
+    nameEn: "Gold Jewelry Collection",
+    price: 1200,
+    image:
+      "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=600&h=600&fit=crop&q=80",
+  },
+  {
+    id: 5,
+    slug: "luxury-watch",
+    nameAr: "ساعة فاخرة",
+    nameEn: "Luxury Watch",
+    price: 2500,
+    image:
+      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&h=600&fit=crop&q=80",
+  },
+  {
+    id: 6,
+    slug: "designer-handbag",
+    nameAr: "حقيبة يد مصممة",
+    nameEn: "Designer Handbag",
+    price: 1800,
+    image:
+      "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=600&h=600&fit=crop&q=80",
+  },
+];
+
+const RiyalSymbol = ({ className = "w-4 h-4" }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 1124.14 1256.39"
+    className={className}
+    fill="currentColor"
+    aria-hidden="true"
+  >
+    <path d="M699.62,1113.02h0c-20.06,44.48-33.32,92.75-38.4,143.37l424.51-90.24c20.06-44.47,33.31-92.75,38.4-143.37l-424.51,90.24Z" />
+    <path d="M1085.73,895.8c20.06-44.47,33.32-92.75,38.4-143.37l-330.68,70.33v-135.2l292.27-62.11c20.06-44.47,33.32-92.75,38.4-143.37l-330.68,70.27V66.13c-50.67,28.45-95.67,66.32-132.25,110.99v403.35l-132.25,28.11V0c-50.67,28.44-95.67,66.32-132.25,110.99v525.69l-295.91,62.88c-20.06,44.47-33.33,92.75-38.42,143.37l334.33-71.05v170.26l-358.3,76.14c-20.06,44.47-33.32,92.75-38.4,143.37l375.04-79.7c30.53-6.35,56.77-24.4,73.83-49.24l68.78-101.97v-.02c7.14-10.55,11.3-23.27,11.3-36.97v-149.98l132.25-28.11v270.4l424.53-90.28Z" />
+  </svg>
+);
 
 export function BestSellers() {
-  const { language } = useTheme()
+  const swiperRef = useRef<SwiperType | null>(null);
+  const { t, i18n } = useTranslation();
+  const isRtl = i18n.language === "ar";
+  const [isDark, setIsDark] = useState(false);
 
-  const products = [
-    { id: 1, name: "Premium Gift 1", price: "$299.00", image: "/placeholder.svg?key=unk3v" },
-    { id: 2, name: "Premium Gift 2", price: "$399.00", image: "/placeholder.svg?key=ovyiq" },
-    { id: 3, name: "Premium Gift 3", price: "$499.00", image: "/placeholder.svg?key=w2hzq" },
-    { id: 4, name: "Premium Gift 4", price: "$599.00", image: "/placeholder.svg?key=4w7po" },
-  ]
+  useEffect(() => {
+    const checkDarkMode = () => {
+      setIsDark(document.documentElement.classList.contains("dark"));
+    };
+    checkDarkMode();
+    const observer = new MutationObserver(checkDarkMode);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <section className="py-20 px-4 md:px-6 bg-white dark:bg-black">
-      <div className="max-w-7xl mx-auto">
-        <div className="flex items-center justify-between mb-16">
-          <h2 className="text-4xl md:text-5xl font-serif font-bold text-black dark:text-white">
-            {getTranslation(language, "bestSellers.title")}
-          </h2>
-          <a
-            href="#"
-            className="text-black hover:text-black/70 dark:text-white dark:hover:text-white/70 font-semibold transition-colors"
-          >
-            {getTranslation(language, "bestSellers.viewAll")} →
-          </a>
+    <section className="relative overflow-hidden bg-background py-3 sm:py-5">
+      <div className="mx-auto max-w-[1650px] px-6 sm:px-8">
+        {/* Header */}
+        <div className="mb-12">
+          <div className="relative inline-block">
+            <h2
+              className={`pb-3 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl ${
+                isRtl ? "font-sans-ar" : "font-sans-en"
+              }`}
+            >
+              {t("bestSellers.title")}
+            </h2>
+            {/* Decorative Line */}
+            <div className="absolute bottom-0 left-1/2 flex -translate-x-1/2 items-center gap-2">
+              <div
+                className="h-0.5 w-6 rounded-full"
+                style={{
+                  backgroundColor: isDark
+                    ? "rgb(255, 255, 255)"
+                    : "rgb(107, 114, 128)",
+                }}
+              ></div>
+              <div
+                className="h-0.5 w-16"
+                style={{
+                  backgroundColor: isDark
+                    ? "rgb(250, 204, 21)"
+                    : "rgb(0, 0, 0)",
+                  clipPath:
+                    "polygon(0 0, calc(100% - 4px) 0, 100% 100%, 4px 100%)",
+                }}
+              ></div>
+              <div
+                className="h-0.5 w-6 rounded-full"
+                style={{
+                  backgroundColor: isDark
+                    ? "rgb(255, 255, 255)"
+                    : "rgb(107, 114, 128)",
+                }}
+              ></div>
+            </div>
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {products.map((product, index) => (
+        {/* Swiper Container with Navigation */}
+        <div className="relative">
+          {/* Navigation Buttons - في منتصف الصورة */}
+          <button
+            onClick={() => swiperRef.current?.slidePrev()}
+            aria-label="Previous"
+            className={`absolute top-[40%] z-10 hidden -translate-y-1/2 rounded-full p-1.5 cursor-pointer sm:block ${
+              isRtl ? "-right-5" : "-left-5"
+            }`}
+            style={{ backgroundColor: "rgb(var(--background))" }}
+          >
             <div
-              key={product.id}
-              className="group rounded-lg overflow-hidden bg-white dark:bg-neutral-900 border border-black/10 dark:border-white/10 hover:shadow-lg transition-shadow duration-300 animate-scale-in"
+              className="flex h-8 w-8 items-center justify-center rounded-full"
               style={{
-                animationDelay: `${index * 100}ms`,
+                backgroundColor: "rgb(var(--inner-circle-bg))",
               }}
             >
-              <div className="relative overflow-hidden h-64 bg-black/5 dark:bg-white/5">
-                {/* CHANGE: Add lazy loading, responsive sizes, and async decoding */}
-                <img
-                  src={product.image || "/placeholder.svg"}
-                  alt={product.name}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                  loading="lazy"
-                  decoding="async"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                />
-              </div>
-              <div className="p-4">
-                <h3 className="font-serif font-bold text-black dark:text-white mb-2">{product.name}</h3>
-                <p className="text-lg font-semibold text-black dark:text-white">{product.price}</p>
-              </div>
+              {isRtl ? (
+                <ChevronRight className="h-5 w-5 text-foreground" />
+              ) : (
+                <ChevronLeft className="h-5 w-5 text-foreground" />
+              )}
             </div>
-          ))}
+          </button>
+          <button
+            onClick={() => swiperRef.current?.slideNext()}
+            aria-label="Next"
+            className={`absolute top-[40%] z-10 hidden -translate-y-1/2 rounded-full p-1.5 cursor-pointer sm:block ${
+              isRtl ? "-left-5" : "-right-5"
+            }`}
+            style={{ backgroundColor: "rgb(var(--background))" }}
+          >
+            <div
+              className="flex h-8 w-8 items-center justify-center rounded-full"
+              style={{
+                backgroundColor: "rgb(var(--inner-circle-bg))",
+              }}
+            >
+              {isRtl ? (
+                <ChevronLeft className="h-5 w-5 text-foreground" />
+              ) : (
+                <ChevronRight className="h-5 w-5 text-foreground" />
+              )}
+            </div>
+          </button>
+
+          {/* Swiper */}
+          <Swiper
+            key={i18n.language}
+            modules={[Navigation, Autoplay]}
+            spaceBetween={16}
+            slidesPerView={2}
+            loop={false}
+            speed={600}
+            dir={isRtl ? "rtl" : "ltr"}
+            grabCursor={true}
+            onSwiper={(swiper) => {
+              swiperRef.current = swiper;
+            }}
+            breakpoints={{
+              640: {
+                slidesPerView: 3,
+                spaceBetween: 20,
+              },
+              1024: {
+                slidesPerView: 5,
+                spaceBetween: 20,
+              },
+            }}
+            className="best-sellers-swiper"
+          >
+            {BEST_SELLERS.map((product) => (
+              <SwiperSlide key={product.id}>
+                <Link href={`/product/${product.slug}`} className="block">
+                  <div className="group relative overflow-hidden rounded-3xl">
+                    {/* Image */}
+                    <div className="relative aspect-3/4 sm:aspect-270/390 overflow-hidden rounded-3xl">
+                      <Image
+                        src={product.image}
+                        alt={isRtl ? product.nameAr : product.nameEn}
+                        fill
+                        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
+                        priority={product.id === 1}
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+
+                      {/* Best Seller Badge - circular icon chip */}
+                      <div
+                        className={`absolute top-3 flex h-7 w-7 items-center justify-center rounded-full ${
+                          isRtl ? "right-3" : "left-3"
+                        }`}
+                        style={{
+                          backgroundColor: "rgb(var(--background))",
+                        }}
+                        aria-label="Best Seller"
+                        title="Best Seller"
+                      >
+                        <Crown className="h-3.5 w-3.5 text-red-500" />
+                      </div>
+
+                      {/* Favorite Icon - appears on hover */}
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          // TODO: Add to favorites functionality
+                        }}
+                        className={`absolute top-3 z-10 flex h-9 w-9 items-center justify-center rounded-full opacity-0 -translate-y-3 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0 cursor-pointer ${
+                          isRtl ? "left-3" : "right-3"
+                        }`}
+                        style={{
+                          backgroundColor: "rgb(var(--background))",
+                        }}
+                        aria-label={
+                          isRtl ? "إضافة إلى المفضلة" : "Add to favorites"
+                        }
+                      >
+                        <Heart className="h-4 w-4 text-foreground" />
+                      </button>
+
+                      {/* Hover Overlay */}
+                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                      <div className="absolute inset-x-0 bottom-0 p-4 opacity-0 translate-y-3 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
+                        {product.descriptionAr || product.descriptionEn ? (
+                          <p
+                            className={`mx-auto mb-3 max-w-[85%] text-center text-xs text-white/90 ${
+                              isRtl ? "font-sans-ar" : "font-sans-en"
+                            }`}
+                          >
+                            {isRtl
+                              ? product.descriptionAr ?? ""
+                              : product.descriptionEn ?? ""}
+                          </p>
+                        ) : null}
+                        <div className="pointer-events-auto mx-auto w-max">
+                          <button
+                            type="button"
+                            aria-label={isRtl ? "أضف إلى السلة" : "Add to cart"}
+                            className={`inline-flex items-center gap-2 rounded-full px-5 py-2 text-sm font-medium text-foreground transition-opacity hover:opacity-90 cursor-pointer ${
+                              isRtl ? "font-sans-ar" : "font-sans-en"
+                            }`}
+                            style={{
+                              backgroundColor: "rgb(var(--background))",
+                            }}
+                          >
+                            <ShoppingCart className="h-4 w-4" />
+                            <span>
+                              {isRtl ? "أضف إلى السلة" : "Add to Cart"}
+                            </span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Content */}
+                    <div className="p-4">
+                      {/* Product Name */}
+                      <h3
+                        className={`mb-2 text-sm font-medium text-foreground line-clamp-2 ${
+                          isRtl ? "font-sans-ar" : "font-sans-en"
+                        }`}
+                      >
+                        {isRtl ? product.nameAr : product.nameEn}
+                      </h3>
+
+                      {/* Price */}
+                      <div
+                        className={`flex items-center gap-1 text-base font-semibold text-foreground ${
+                          isRtl ? "font-sans-ar" : "font-sans-en"
+                        }`}
+                      >
+                        <span>{product.price}</span>
+                        <RiyalSymbol className="h-4 w-4" />
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              </SwiperSlide>
+            ))}
+          </Swiper>
         </div>
       </div>
     </section>
-  )
+  );
 }

@@ -1,0 +1,99 @@
+{
+  "nav": {
+    "home": "الرئيسية",
+    "occasions": "المناسبات",
+    "shop": "التسوق",
+    "about": "عن",
+    "contact": "اتصل"
+  },
+  "hero": {
+    "title": "هدايا فاخرة لكل لحظة",
+    "subtitle": "مجموعات منتقاة من الهدايا الرقيقة التي تحتفل باللحظات الثمينة في الحياة",
+    "explore": "استكشف المجموعة",
+    "slide1": {
+      "title": "ترتيبات زهور فاخرة",
+      "cta": "تسوق الزهور"
+    },
+    "slide2": {
+      "title": "مجموعات هدايا فاخرة",
+      "cta": "استكشف المجموعات"
+    },
+    "slide3": {
+      "title": "هدايا زفاف أنيقة",
+      "cta": "تسوق الزفاف"
+    }
+  },
+  "home": {
+    "shopByOccasion": {
+      "title": "تسوق حسب المناسبة"
+    },
+    "occasions": {
+      "viewMore": "عرض جميع المناسبات"
+    },
+    "categories": {
+      "title": "مجموعاتنا"
+    }
+  },
+  "occasions": {
+    "title": "تسوق حسب المناسبة",
+    "birthdays": "أعياد الميلاد",
+    "anniversaries": "الذكريات السنوية",
+    "weddings": "الزفاف",
+    "corporate": "الشركات",
+    "celebrations": "الاحتفالات",
+    "valentines": "عيد الحب",
+    "eidAlAdha": "عيد الأضحى",
+    "foundationDay": "اليوم الوطني",
+    "mothersDay": "عيد الأم",
+    "thankYou": "شكر وتقدير",
+    "newYear": "رأس السنة",
+    "graduation": "التخرج",
+    "eidAlFitr": "عيد الفطر",
+    "anniversary": "الذكرى السنوية",
+    "hajj": "الحج"
+  },
+  "categories": {
+    "title": "مجموعاتنا",
+    "jewelry": "المجوهرات",
+    "fragrances": "العطور",
+    "accessories": "الإكسسوارات",
+    "lifestyle": "نمط الحياة",
+    "chocolate": "الشوكولاتة",
+    "flowers": "الزهور",
+    "perfumes": "العطور"
+  },
+  "bestSellers": {
+    "title": "الأكثر مبيعاً",
+    "viewAll": "عرض الكل"
+  },
+  "featured": {
+    "title": "مجموعات مميزة",
+    "new": "وصل حديثاً",
+    "limited": "إصدار محدود"
+  },
+  "featuredCollections": {
+    "title": "مجموعات مميزة",
+    "badge": "مميز"
+  },
+  "footer": {
+    "about": "حول",
+    "aboutText": "روزيستا هي وجهتك الأولى للهدايا الفاخرة التي تحتفل باللحظات الثمينة في الحياة.",
+    "quickLinks": "روابط سريعة",
+    "customer": "خدمة العملاء",
+    "contact": "اتصل",
+    "support": "الدعم",
+    "returns": "المرتجعات",
+    "shipping": "الشحن",
+    "faq": "الأسئلة الشائعة",
+    "company": "الشركة",
+    "careers": "الوظائف",
+    "blog": "المدونة",
+    "press": "الأخبار",
+    "legal": "قانوني",
+    "privacy": "سياسة الخصوصية",
+    "terms": "شروط الخدمة",
+    "cookies": "إعدادات ملفات تعريف الارتباط",
+    "rights": "جميع الحقوق محفوظة"
+  }
+}
+

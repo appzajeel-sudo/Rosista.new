@@ -1,0 +1,98 @@
+{
+  "nav": {
+    "home": "Home",
+    "occasions": "Occasions",
+    "shop": "Shop",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "hero": {
+    "title": "Luxury Gifts for Every Moment",
+    "subtitle": "Curated collections of exquisite gifts that celebrate life's precious moments",
+    "explore": "Explore Collection",
+    "slide1": {
+      "title": "Premium Flower Arrangements",
+      "cta": "Shop Flowers"
+    },
+    "slide2": {
+      "title": "Luxury Gift Collections",
+      "cta": "Explore Collections"
+    },
+    "slide3": {
+      "title": "Elegant Wedding Gifts",
+      "cta": "Shop Wedding"
+    }
+  },
+  "home": {
+    "shopByOccasion": {
+      "title": "Shop by Occasion"
+    },
+    "occasions": {
+      "viewMore": "View All Occasions"
+    },
+    "categories": {
+      "title": "Our Collections"
+    }
+  },
+  "occasions": {
+    "title": "Shop by Occasion",
+    "birthdays": "Birthdays",
+    "anniversaries": "Anniversaries",
+    "weddings": "Weddings",
+    "corporate": "Corporate",
+    "celebrations": "Celebrations",
+    "valentines": "Valentine's Day",
+    "eidAlAdha": "Eid Al-Adha",
+    "foundationDay": "Foundation Day",
+    "mothersDay": "Mother's Day",
+    "thankYou": "Thank You",
+    "newYear": "New Year",
+    "graduation": "Graduation",
+    "eidAlFitr": "Eid Al-Fitr",
+    "anniversary": "Anniversary",
+    "hajj": "Hajj"
+  },
+  "categories": {
+    "title": "Our Collections",
+    "jewelry": "Jewelry",
+    "fragrances": "Fragrances",
+    "accessories": "Accessories",
+    "lifestyle": "Lifestyle",
+    "chocolate": "Chocolate",
+    "flowers": "Flowers",
+    "perfumes": "Perfumes"
+  },
+  "bestSellers": {
+    "title": "Best Sellers",
+    "viewAll": "View All"
+  },
+  "featured": {
+    "title": "Featured Collections",
+    "new": "New Arrivals",
+    "limited": "Limited Edition"
+  },
+  "featuredCollections": {
+    "title": "Featured Collections",
+    "badge": "Featured"
+  },
+  "footer": {
+    "about": "About",
+    "aboutText": "ROSISTA is your premier destination for luxury gifts that celebrate life's most precious moments.",
+    "quickLinks": "Quick Links",
+    "customer": "Customer Service",
+    "contact": "Contact",
+    "support": "Support",
+    "returns": "Returns",
+    "shipping": "Shipping",
+    "faq": "FAQ",
+    "company": "Company",
+    "careers": "Careers",
+    "blog": "Blog",
+    "press": "Press",
+    "legal": "Legal",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "cookies": "Cookie Settings",
+    "rights": "All rights reserved"
+  }
+}

@@ -13,7 +13,7 @@ const nextConfig = {
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
   },
   experimental: {
-    reactCompiler: true,
+    cacheComponents: true,
   },
   staticPageGenerationTimeout: 3600,
   headers: async () => {

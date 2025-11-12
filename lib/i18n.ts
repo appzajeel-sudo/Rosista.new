@@ -1,5 +1,5 @@
 // Internationalization configuration
-export type Language = "en" | "ar"
+export type Language = "en" | "ar";
 
 export const translations = {
   en: {
@@ -12,8 +12,32 @@ export const translations = {
     },
     hero: {
       title: "Luxury Gifts for Every Moment",
-      subtitle: "Curated collections of exquisite gifts that celebrate life's precious moments",
+      subtitle:
+        "Curated collections of exquisite gifts that celebrate life's precious moments",
       explore: "Explore Collection",
+      slide1: {
+        title: "Premium Flower Arrangements",
+        cta: "Shop Flowers",
+      },
+      slide2: {
+        title: "Luxury Gift Collections",
+        cta: "Explore Collections",
+      },
+      slide3: {
+        title: "Elegant Wedding Gifts",
+        cta: "Shop Wedding",
+      },
+    },
+    home: {
+      shopByOccasion: {
+        title: "Shop by Occasion",
+      },
+      occasions: {
+        viewMore: "View All Occasions",
+      },
+      categories: {
+        title: "Our Collections",
+      },
     },
     occasions: {
       title: "Shop by Occasion",
@@ -22,6 +46,16 @@ export const translations = {
       weddings: "Weddings",
       corporate: "Corporate",
       celebrations: "Celebrations",
+      valentines: "Valentine's Day",
+      eidAlAdha: "Eid Al-Adha",
+      foundationDay: "Foundation Day",
+      mothersDay: "Mother's Day",
+      thankYou: "Thank You",
+      newYear: "New Year",
+      graduation: "Graduation",
+      eidAlFitr: "Eid Al-Fitr",
+      anniversary: "Anniversary",
+      hajj: "Hajj",
     },
     categories: {
       title: "Our Collections",
@@ -29,6 +63,9 @@ export const translations = {
       fragrances: "Fragrances",
       accessories: "Accessories",
       lifestyle: "Lifestyle",
+      chocolate: "Chocolate",
+      flowers: "Flowers",
+      perfumes: "Perfumes",
     },
     bestSellers: {
       title: "Best Sellers",
@@ -39,9 +76,14 @@ export const translations = {
       new: "New Arrivals",
       limited: "Limited Edition",
     },
+    featuredCollections: {
+      title: "Featured Collections",
+      badge: "Featured",
+    },
     footer: {
       about: "About",
-      aboutText: "ROSISTA is your premier destination for luxury gifts that celebrate life's most precious moments.",
+      aboutText:
+        "ROSISTA is your premier destination for luxury gifts that celebrate life's most precious moments.",
       quickLinks: "Quick Links",
       customer: "Customer Service",
       contact: "Contact",
@@ -70,8 +112,32 @@ export const translations = {
     },
     hero: {
       title: "هدايا فاخرة لكل لحظة",
-      subtitle: "مجموعات منتقاة من الهدايا الرقيقة التي تحتفل باللحظات الثمينة في الحياة",
+      subtitle:
+        "مجموعات منتقاة من الهدايا الرقيقة التي تحتفل باللحظات الثمينة في الحياة",
       explore: "استكشف المجموعة",
+      slide1: {
+        title: "ترتيبات زهور فاخرة",
+        cta: "تسوق الزهور",
+      },
+      slide2: {
+        title: "مجموعات هدايا فاخرة",
+        cta: "استكشف المجموعات",
+      },
+      slide3: {
+        title: "هدايا زفاف أنيقة",
+        cta: "تسوق الزفاف",
+      },
+    },
+    home: {
+      shopByOccasion: {
+        title: "تسوق حسب المناسبة",
+      },
+      occasions: {
+        viewMore: "عرض جميع المناسبات",
+      },
+      categories: {
+        title: "مجموعاتنا",
+      },
     },
     occasions: {
       title: "تسوق حسب المناسبة",
@@ -80,6 +146,16 @@ export const translations = {
       weddings: "الزفاف",
       corporate: "الشركات",
       celebrations: "الاحتفالات",
+      valentines: "عيد الحب",
+      eidAlAdha: "عيد الأضحى",
+      foundationDay: "اليوم الوطني",
+      mothersDay: "عيد الأم",
+      thankYou: "شكر وتقدير",
+      newYear: "رأس السنة",
+      graduation: "التخرج",
+      eidAlFitr: "عيد الفطر",
+      anniversary: "الذكرى السنوية",
+      hajj: "الحج",
     },
     categories: {
       title: "مجموعاتنا",
@@ -87,6 +163,9 @@ export const translations = {
       fragrances: "العطور",
       accessories: "الإكسسوارات",
       lifestyle: "نمط الحياة",
+      chocolate: "الشوكولاتة",
+      flowers: "الزهور",
+      perfumes: "العطور",
     },
     bestSellers: {
       title: "الأكثر مبيعاً",
@@ -97,9 +176,14 @@ export const translations = {
       new: "وصل حديثاً",
       limited: "إصدار محدود",
     },
+    featuredCollections: {
+      title: "مجموعات مميزة",
+      badge: "مميز",
+    },
     footer: {
       about: "حول",
-      aboutText: "روزيستا هي وجهتك الأولى للهدايا الفاخرة التي تحتفل باللحظات الثمينة في الحياة.",
+      aboutText:
+        "روزيستا هي وجهتك الأولى للهدايا الفاخرة التي تحتفل باللحظات الثمينة في الحياة.",
       quickLinks: "روابط سريعة",
       customer: "خدمة العملاء",
       contact: "اتصل",
@@ -118,13 +202,13 @@ export const translations = {
       rights: "جميع الحقوق محفوظة",
     },
   },
-}
+};
 
 export function getTranslation(lang: Language, key: string): string {
-  const keys = key.split(".")
-  let value: any = translations[lang]
+  const keys = key.split(".");
+  let value: any = translations[lang];
   for (const k of keys) {
-    value = value?.[k]
+    value = value?.[k];
   }
-  return value || key
+  return value || key;
 }

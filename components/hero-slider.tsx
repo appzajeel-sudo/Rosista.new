@@ -1,88 +1,167 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { useTheme } from "@/lib/theme-context"
-import { getTranslation } from "@/lib/i18n"
-import { OptimizedImage } from "./optimized-image"
+import { useRef } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { useTranslation } from "react-i18next";
+import { motion } from "framer-motion";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Navigation, Pagination } from "swiper/modules";
+import type { Swiper as SwiperType } from "swiper";
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+
+const SLIDES = [
+  {
+    id: 1,
+    image: "/luxury-gift-elegant-gold-wrapping.jpg",
+    titleKey: "hero.slide1.title",
+    ctaKey: "hero.slide1.cta",
+    link: "/occasions",
+  },
+  {
+    id: 2,
+    image: "/luxury-gifts-premium-collection.jpg",
+    titleKey: "hero.slide2.title",
+    ctaKey: "hero.slide2.cta",
+    link: "/occasions",
+  },
+  {
+    id: 3,
+    image: "/luxury-jewelry-diamonds-pearls.jpg",
+    titleKey: "hero.slide3.title",
+    ctaKey: "hero.slide3.cta",
+    link: "/occasions",
+  },
+];
 
 export function HeroSlider() {
-  const { language } = useTheme()
-  const [current, setCurrent] = useState(0)
-
-  const slides = [
-    {
-      image: "/luxury-gift-elegant-gold-wrapping.jpg",
-      title: getTranslation(language, "hero.title"),
-      subtitle: getTranslation(language, "hero.subtitle"),
-    },
-    {
-      image: "/luxury-gifts-premium-collection.jpg",
-      title: getTranslation(language, "hero.title"),
-      subtitle: getTranslation(language, "hero.subtitle"),
-    },
-    {
-      image: "/luxury-jewelry-diamonds-pearls.jpg",
-      title: getTranslation(language, "hero.title"),
-      subtitle: getTranslation(language, "hero.subtitle"),
-    },
-  ]
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % slides.length)
-    }, 5000)
-    return () => clearInterval(timer)
-  }, [slides.length])
+  const swiperRef = useRef<SwiperType | null>(null);
+  const { t, i18n } = useTranslation();
+  const isRtl = i18n.language === "ar";
 
   return (
-    <div className="relative w-full h-screen overflow-hidden pt-16">
-      {slides.map((slide, index) => (
-        <div
-          key={index}
-          className={`absolute inset-0 transition-all duration-1000 ${
-            index === current ? "opacity-100 scale-100" : "opacity-0 scale-105"
-          }`}
-        >
-          {/* CHANGE: Use OptimizedImage with lazy loading and responsive sizing */}
-          <OptimizedImage
-            src={slide.image || "/placeholder.svg"}
-            alt={`Slide ${index + 1}`}
-            className="w-full h-full object-cover"
-            loading={index === current ? "eager" : "lazy"}
-            decoding="async"
-            sizes="100vw"
-          />
-          <div className="absolute inset-0 bg-black/30" />
-        </div>
-      ))}
+    <section className="hero-slider relative h-[70vh] sm:h-screen w-full overflow-hidden">
+      <Swiper
+        key={i18n.language}
+        modules={[Autoplay, Navigation, Pagination]}
+        spaceBetween={0}
+        slidesPerView={1}
+        loop={true}
+        speed={600}
+        effect="slide"
+        dir={isRtl ? "rtl" : "ltr"}
+        grabCursor={true}
+        touchRatio={1}
+        resistance={true}
+        resistanceRatio={0.85}
+        autoplay={{
+          delay: 5000,
+          disableOnInteraction: false,
+          pauseOnMouseEnter: true,
+        }}
+        onSwiper={(swiper) => {
+          swiperRef.current = swiper;
+        }}
+        pagination={{
+          el: ".hero-pagination",
+          clickable: true,
+          bulletClass: "hero-bullet",
+          bulletActiveClass: "hero-bullet-active",
+        }}
+        className="h-full w-full"
+      >
+        {SLIDES.map((slide) => (
+          <SwiperSlide key={slide.id} className="relative">
+            <div className="relative h-full w-full">
+              {/* Background Image */}
+              <Image
+                src={slide.image}
+                alt={t(slide.titleKey)}
+                fill
+                priority
+                quality={90}
+                className="object-cover"
+                sizes="100vw"
+              />
 
-      {/* Content Overlay */}
-      <div className="absolute inset-0 flex items-center justify-center text-center">
-        <div className="max-w-3xl px-4 animate-slide-up">
-          <h1 className="text-5xl md:text-7xl font-serif font-bold text-white mb-6 text-balance">
-            {slides[current].title}
-          </h1>
-          <p className="text-xl md:text-2xl text-white/90 mb-8 text-balance">{slides[current].subtitle}</p>
-          <button
-            className="px-8 py-3 bg-black hover:bg-black/90 text-white font-semibold 
-            rounded-lg transition-colors transform hover:scale-105 active:scale-95"
-          >
-            {getTranslation(language, "hero.explore")}
-          </button>
-        </div>
-      </div>
+              {/* Minimal Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
 
-      {/* Indicators */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-3">
-        {slides.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => setCurrent(index)}
-            className={`h-2 rounded-full transition-all ${index === current ? "w-8 bg-white" : "w-2 bg-white/50 hover:bg-white/75"}`}
-            aria-label={`Go to slide ${index + 1}`}
-          />
+              {/* Content - Minimal & Bottom */}
+              <div className="absolute inset-x-0 bottom-0 flex flex-col items-center px-8 pb-20 text-center">
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3, duration: 0.8 }}
+                >
+                  {/* Small Title */}
+                  <p
+                    className={`mb-6 text-sm font-light uppercase tracking-[0.3em] text-white ${
+                      isRtl ? "font-sans-ar" : "font-sans-en"
+                    }`}
+                  >
+                    {t(slide.titleKey)}
+                  </p>
+
+                  {/* CTA Button - Minimal */}
+                  <Link
+                    href={slide.link}
+                    className={`group relative inline-flex items-center gap-3 overflow-hidden border border-white px-8 py-3 text-[11px] font-normal uppercase tracking-[0.2em] text-white transition-all duration-500 hover:bg-white hover:text-black ${
+                      isRtl ? "font-sans-ar" : "font-sans-en"
+                    }`}
+                  >
+                    <span className="relative z-10">{t(slide.ctaKey)}</span>
+                    {isRtl ? (
+                      <ChevronLeft className="relative z-10 h-3 w-3 transition-transform duration-300 group-hover:-translate-x-1" />
+                    ) : (
+                      <ChevronRight className="relative z-10 h-3 w-3 transition-transform duration-300 group-hover:translate-x-1" />
+                    )}
+                  </Link>
+                </motion.div>
+              </div>
+            </div>
+          </SwiperSlide>
         ))}
+      </Swiper>
+
+      {/* Custom Navigation Arrows */}
+      <button
+        onClick={() => swiperRef.current?.slidePrev()}
+        aria-label="Previous slide"
+        className={`absolute top-1/2 z-10 -translate-y-1/2 bg-white/10 p-3 text-white backdrop-blur-sm transition-all hover:bg-white/20 ${
+          isRtl ? "right-8" : "left-8"
+        }`}
+      >
+        {isRtl ? (
+          <ChevronRight className="h-5 w-5 stroke-[1.5]" />
+        ) : (
+          <ChevronLeft className="h-5 w-5 stroke-[1.5]" />
+        )}
+      </button>
+
+      <button
+        onClick={() => swiperRef.current?.slideNext()}
+        aria-label="Next slide"
+        className={`absolute top-1/2 z-10 -translate-y-1/2 bg-white/10 p-3 text-white backdrop-blur-sm transition-all hover:bg-white/20 ${
+          isRtl ? "left-8" : "right-8"
+        }`}
+      >
+        {isRtl ? (
+          <ChevronLeft className="h-5 w-5 stroke-[1.5]" />
+        ) : (
+          <ChevronRight className="h-5 w-5 stroke-[1.5]" />
+        )}
+      </button>
+
+      {/* Custom Pagination */}
+      <div className="hero-pagination-wrapper absolute inset-x-0 bottom-8 z-10 flex justify-center">
+        <div className="hero-pagination" />
       </div>
-    </div>
-  )
+    </section>
+  );
 }

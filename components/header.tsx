@@ -1,118 +1,361 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import Link from "next/link"
-import { useTheme } from "@/lib/theme-context"
-import { getTranslation } from "@/lib/i18n"
+import { useState, useEffect, useLayoutEffect, useRef } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useTranslation } from "react-i18next";
+import { LanguageSwitcher } from "@/components/ui/language-switcher";
+import { Search, ShoppingBag, User, Menu, X, Sun, Moon } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { useDarkMode } from "@/hooks/use-dark-mode";
 
 export function Header() {
-  const { language, setLanguage, isDark, setIsDark } = useTheme()
-  const [mounted, setMounted] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
+  // Always start with false to match SSR (prevents hydration mismatch)
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const pathname = usePathname();
+  const { t, i18n } = useTranslation();
+  const isRtl = i18n.language === "ar";
+  const isHomePage = pathname === "/";
+  const { theme, toggleTheme, mounted } = useDarkMode();
+
+  // Transform state for scroll-linked logo (replaces ref + repeated compute)
+  const [transformValues, setTransformValues] = useState<{
+    translateX: number;
+    translateY: number;
+    scale: number;
+  } | null>(null);
+
+  // Apply background immediately after hydration (before paint) to prevent FOUC
+  useLayoutEffect(() => {
+    const scrolled = window.scrollY > 0;
+
+    if (scrolled) {
+      // Apply style directly to DOM before paint (prevents flash)
+      const header = headerRef.current;
+      if (header) {
+        header.style.backgroundColor = "rgb(var(--background))";
+        header.style.transition =
+          "background-color 1600ms cubic-bezier(0.22,1,0.36,1)";
+      }
+      // Update state after DOM update
+      requestAnimationFrame(() => {
+        setIsScrolled(true);
+      });
+    }
+  }, []);
 
   useEffect(() => {
-    setMounted(true)
-    const handleScroll = () => setScrolled(window.scrollY > 50)
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 0);
+    };
 
-  const toggleLanguage = () => {
-    setLanguage(language === "en" ? "ar" : "en")
-  }
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Disable body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    // Cleanup: restore scroll when component unmounts
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isMobileMenuOpen]);
+
+  const navLinks = [
+    { href: "/occasions", label: t("nav.occasions") },
+    { href: "#", label: t("nav.shop") },
+    { href: "#", label: t("nav.about") },
+    { href: "#", label: t("nav.contact") },
+  ];
+
+  // On homepage, use white text when not scrolled
+  // In dark mode, always use appropriate contrast
+  const textColor =
+    isHomePage && !isScrolled ? "text-white" : "text-foreground";
+  const hoverColor =
+    isHomePage && !isScrolled
+      ? "hover:text-white/70"
+      : "hover:text-foreground/70";
+
+  // Refs for scroll-linked logo
+  const heroRef = useRef<HTMLDivElement | null>(null);
+  const anchorRef = useRef<HTMLHeadingElement | null>(null);
+  const headerRef = useRef<HTMLElement | null>(null);
+
+  // Transform calculation on mount + resize (optimized - no repeated calls during scroll)
+  useEffect(() => {
+    if (!isHomePage) return;
+    const hero = heroRef.current;
+    const anchor = anchorRef.current;
+    if (!hero || !anchor) return;
+
+    const computeTransform = () => {
+      // Save current state
+      const prevTransform = hero.style.transform;
+      const prevTransition = hero.style.transition;
+
+      // Temporarily disable transition for measurement
+      hero.style.transition = "none";
+
+      // Measure hero in its base state (not scrolled)
+      hero.style.transform = "translate3d(0, 0, 0) scale(1)";
+      const hr = hero.getBoundingClientRect();
+      const ar = anchor.getBoundingClientRect();
+
+      // Restore previous state
+      hero.style.transform = prevTransform;
+      hero.style.transition = prevTransition;
+
+      // Calculate transform values
+      const dx = ar.left + ar.width / 2 - (hr.left + hr.width / 2);
+      const dy = ar.top + ar.height / 2 - (hr.top + hr.height / 2);
+      const scale = (ar.width || 1) / (hr.width || 1);
+
+      setTransformValues({
+        translateX: dx,
+        translateY: dy,
+        scale,
+      });
+    };
+
+    // Compute on mount
+    computeTransform();
+
+    // Re-compute on resize (double RAF to ensure stable layout after resize)
+    const onResize = () => {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(computeTransform);
+      });
+    };
+    window.addEventListener("resize", onResize);
+
+    return () => {
+      window.removeEventListener("resize", onResize);
+    };
+  }, [isHomePage]);
 
   return (
-    <header
-      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        scrolled ? "bg-background/95 backdrop-blur-md border-b border-black" : "bg-transparent"
-      }`}
-    >
-      <nav className="max-w-7xl mx-auto px-4 md:px-6 py-4 flex items-center justify-between">
-        {/* Logo with animation */}
-        <Link href="/" className="flex items-center gap-2 group">
-          <div className="relative w-10 h-10">
-            <div
-              className="absolute inset-0 bg-black rounded-lg 
-              transform group-hover:scale-110 transition-transform duration-300"
-              style={{
-                animation: "logoFloat 3s ease-in-out infinite",
-              }}
-            />
-            <div className="absolute inset-1 bg-white rounded-md flex items-center justify-center">
-              <span className="text-sm font-bold text-black">R</span>
+    <>
+      {/* Header */}
+      <header
+        ref={headerRef}
+        suppressHydrationWarning
+        className={`fixed top-0 z-50 w-full transition-all duration-1600 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+          isScrolled ? "bg-background shadow-sm" : "bg-transparent"
+        }`}
+        style={{
+          backgroundColor: isScrolled
+            ? "rgb(var(--background))"
+            : "transparent",
+          transition: "background-color 1600ms cubic-bezier(0.22,1,0.36,1)",
+        }}
+      >
+        <div className="mx-auto max-w-[1400px] px-0 lg:px-8">
+          <div className="relative flex h-18 items-center justify-between">
+            {/* Left - Navigation (Desktop) */}
+            <nav className="hidden flex-1 lg:flex">
+              <ul className="flex items-center gap-10">
+                {navLinks.slice(0, 2).map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className={`text-[13px] font-semibold uppercase tracking-[0.12em] transition-colors ${
+                        pathname === link.href
+                          ? textColor
+                          : `${textColor} ${hoverColor}`
+                      } ${isRtl ? "font-sans-ar" : "font-sans-en"}`}
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+
+            {/* Center - Logo (Desktop) / Left - Logo (Mobile) */}
+            <Link
+              href="/"
+              className="absolute left-0 top-1/2 -translate-y-1/2 shrink-0 pl-2 lg:static lg:left-auto lg:translate-x-0 lg:translate-y-0 lg:pl-0"
+            >
+              <h1
+                className={`text-[36px] font-semibold tracking-[0.25em] transition-colors ${textColor} font-sans-en`}
+                style={{
+                  fontFamily: "'Cormorant Garamond', serif",
+                  fontWeight: 500,
+                  visibility: isHomePage ? "hidden" : undefined,
+                }}
+                ref={anchorRef}
+                aria-hidden={isHomePage ? "true" : "false"}
+              >
+                ROSISTA
+              </h1>
+            </Link>
+
+            {/* Right - Navigation & Icons */}
+            <div className="absolute right-0 top-1/2 -translate-y-1/2 flex items-center gap-6 pr-2 lg:static lg:right-auto lg:top-auto lg:translate-y-0 lg:flex-1 lg:justify-end lg:gap-10 lg:pr-0">
+              {/* Desktop Navigation (Right) */}
+              <nav className="hidden lg:flex">
+                <ul className="flex items-center gap-10">
+                  {navLinks.slice(2).map((link) => (
+                    <li key={link.href}>
+                      <Link
+                        href={link.href}
+                        className={`text-[13px] font-semibold uppercase tracking-[0.12em] transition-colors ${
+                          pathname === link.href
+                            ? textColor
+                            : `${textColor} ${hoverColor}`
+                        } ${isRtl ? "font-sans-ar" : "font-sans-en"}`}
+                      >
+                        {link.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+
+              {/* Icons */}
+              <div
+                className={`flex items-center gap-6 ${
+                  isRtl ? "flex-row-reverse lg:flex-row" : ""
+                }`}
+              >
+                {/* Dark Mode Toggle */}
+                {mounted && (
+                  <button
+                    onClick={toggleTheme}
+                    aria-label={
+                      theme === "dark"
+                        ? "Switch to light mode"
+                        : "Switch to dark mode"
+                    }
+                    className={`transition-opacity hover:opacity-60 ${textColor}`}
+                  >
+                    {theme === "dark" ? (
+                      <Sun className="h-[18px] w-[18px] stroke-[1.5]" />
+                    ) : (
+                      <Moon className="h-[18px] w-[18px] stroke-[1.5]" />
+                    )}
+                  </button>
+                )}
+
+                {/* Language */}
+                <LanguageSwitcher
+                  className={textColor}
+                  hoverColor={hoverColor}
+                />
+
+                {/* Search */}
+                <button
+                  aria-label="Search"
+                  className={`transition-opacity hover:opacity-60 ${textColor}`}
+                >
+                  <Search className="h-[18px] w-[18px] stroke-[1.5]" />
+                </button>
+
+                {/* Account */}
+                <Link
+                  href="#"
+                  aria-label="Account"
+                  className={`hidden transition-opacity hover:opacity-60 sm:block ${textColor}`}
+                >
+                  <User className="h-[18px] w-[18px] stroke-[1.5]" />
+                </Link>
+
+                {/* Cart */}
+                <Link
+                  href="#"
+                  aria-label="Shopping bag"
+                  className={`relative transition-opacity hover:opacity-60 ${textColor}`}
+                >
+                  <ShoppingBag className="h-[18px] w-[18px] stroke-[1.5]" />
+                </Link>
+
+                {/* Mobile Menu */}
+                <button
+                  onClick={() => setIsMobileMenuOpen((prev) => !prev)}
+                  aria-label="Menu"
+                  className={`lg:hidden ${textColor}`}
+                >
+                  {isMobileMenuOpen ? (
+                    <X className="h-5 w-5 stroke-[1.5]" />
+                  ) : (
+                    <Menu className="h-5 w-5 stroke-[1.5]" />
+                  )}
+                </button>
+              </div>
             </div>
           </div>
-          <span className="text-xl font-serif font-bold text-black hidden sm:inline dark:text-white">ROSISTA</span>
-        </Link>
-
-        {/* Navigation Links */}
-        <div className="hidden md:flex items-center gap-8">
-          <Link
-            href="/"
-            className="text-sm text-black/80 hover:text-black transition-colors dark:text-white/80 dark:hover:text-white"
-          >
-            {getTranslation(language, "nav.home")}
-          </Link>
-          <Link
-            href="/occasions"
-            className="text-sm text-black/80 hover:text-black transition-colors dark:text-white/80 dark:hover:text-white"
-          >
-            {getTranslation(language, "nav.occasions")}
-          </Link>
-          <Link
-            href="#"
-            className="text-sm text-black/80 hover:text-black transition-colors dark:text-white/80 dark:hover:text-white"
-          >
-            {getTranslation(language, "nav.shop")}
-          </Link>
-          <Link
-            href="#"
-            className="text-sm text-black/80 hover:text-black transition-colors dark:text-white/80 dark:hover:text-white"
-          >
-            {getTranslation(language, "nav.about")}
-          </Link>
         </div>
+      </header>
 
-        {/* Right Controls */}
-        <div className="flex items-center gap-4">
-          {/* Theme Toggle */}
-          <button
-            onClick={() => setIsDark(!isDark)}
-            className="p-2 rounded-lg hover:bg-black/10 dark:hover:bg-white/10 transition-colors"
-            aria-label="Toggle theme"
-          >
-            {isDark ? (
-              <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M10.5 1.5a1 1 0 11-2 0 1 1 0 012 0z M10.5 18.5a1 1 0 11-2 0 1 1 0 012 0z M1.5 10.5a1 1 0 110-2 1 1 0 010 2z M18.5 10.5a1 1 0 110-2 1 1 0 010 2z M3.6 3.6a1 1 0 111.414-1.414 1 1 0 01-1.414 1.414z M15.78 15.78a1 1 0 111.414-1.414 1 1 0 01-1.414 1.414z M3.6 16.4a1 1 0 11-1.414-1.414 1 1 0 011.414 1.414z M15.78 4.22a1 1 0 11-1.414-1.414 1 1 0 011.414 1.414z" />
-              </svg>
-            ) : (
-              <svg className="w-5 h-5 text-black" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
-              </svg>
-            )}
-          </button>
-
-          {/* Language Toggle */}
-          <button
-            onClick={toggleLanguage}
-            className="px-3 py-1.5 text-sm font-medium rounded-lg bg-white hover:bg-black/10 
-            transition-colors text-black border border-black dark:bg-black dark:hover:bg-white/10 dark:text-white dark:border-white"
-          >
-            {language === "en" ? "ع" : "EN"}
-          </button>
+      {/* Scroll-linked big logo on homepage */}
+      {isHomePage && (
+        <div
+          ref={heroRef}
+          className="fixed left-1/2 top-[6vh] z-60 -translate-x-1/2 select-none font-semibold leading-none tracking-widest font-sans-en text-[20vw] sm:text-[12vw]"
+          style={{
+            fontFamily: "'Cormorant Garamond', serif",
+            fontWeight: 500,
+            willChange: "transform, opacity, color",
+            transformOrigin: "center center",
+            color: isScrolled ? "rgb(var(--foreground))" : "rgb(var(--white))",
+            pointerEvents: isScrolled ? "auto" : "none",
+            transform:
+              isScrolled && transformValues
+                ? `translate3d(${transformValues.translateX}px, ${transformValues.translateY}px, 0) scale(${transformValues.scale})`
+                : "translate3d(0, 0, 0) scale(1)",
+            transition:
+              "transform 1600ms cubic-bezier(0.22,1,0.36,1), color 1600ms cubic-bezier(0.22,1,0.36,1)",
+          }}
+        >
+          ROSISTA
         </div>
-      </nav>
+      )}
 
-      <style>{`
-        @keyframes logoFloat {
-          0%, 100% {
-            transform: translateY(0px);
-          }
-          50% {
-            transform: translateY(-4px);
-          }
-        }
-      `}</style>
-    </header>
-  )
+      {/* Mobile Menu */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-40 bg-background lg:hidden"
+          >
+            <div className="flex h-full flex-col px-8 pt-28">
+              <nav className="flex-1">
+                <ul className="space-y-8">
+                  {navLinks.map((link, index) => (
+                    <motion.li
+                      key={link.href}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                    >
+                      <Link
+                        href={link.href}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className={`block text-2xl font-light tracking-wider text-foreground ${
+                          isRtl ? "font-sans-ar" : "font-sans-en"
+                        }`}
+                      >
+                        {link.label}
+                      </Link>
+                    </motion.li>
+                  ))}
+                </ul>
+              </nav>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  );
 }

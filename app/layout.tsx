@@ -19,7 +19,7 @@ const geistMono = Geist_Mono({
 
 const Footer = dynamic(
   () => import("@/components/footer").then((mod) => ({ default: mod.Footer })),
-  { ssr: true }
+  { ssr: false }
 );
 
 export const metadata: Metadata = {

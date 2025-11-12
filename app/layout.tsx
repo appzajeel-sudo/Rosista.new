@@ -1,11 +1,11 @@
 import type React from "react";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import dynamic from "next/dynamic";
 import "./globals.css";
 import { ThemeProvider } from "@/lib/theme-context";
 import { I18nProvider } from "@/lib/i18n/I18nProvider";
 import { Header } from "@/components/header";
+import { FooterWrapper } from "@/components/footer-wrapper";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,11 +16,6 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
-
-const Footer = dynamic(
-  () => import("@/components/footer").then((mod) => ({ default: mod.Footer })),
-  { ssr: false }
-);
 
 export const metadata: Metadata = {
   title: "ROSISTA - Luxury Gifts",
@@ -72,7 +67,7 @@ export default function RootLayout({
           <ThemeProvider>
             <Header />
             <main className="min-h-screen">{children}</main>
-            <Footer />
+            <FooterWrapper />
           </ThemeProvider>
         </I18nProvider>
       </body>

@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
 import { Instagram, Facebook, Twitter, Mail, Phone } from "lucide-react";
@@ -7,6 +8,11 @@ import { Instagram, Facebook, Twitter, Mail, Phone } from "lucide-react";
 export function Footer() {
   const { t, i18n } = useTranslation();
   const isRtl = i18n.language === "ar";
+  const [currentYear, setCurrentYear] = useState(2024);
+
+  useEffect(() => {
+    setCurrentYear(new Date().getFullYear());
+  }, []);
 
   const links = {
     shop: [
@@ -269,8 +275,7 @@ export function Footer() {
             className={`text-xs ${isRtl ? "font-sans-ar" : "font-sans-en"}`}
             style={{ color: "rgb(var(--footer-foreground) / 0.6)" }}
           >
-            © {new Date().getFullYear()} ROSISTA.{" "}
-            {t("footer.rights")}
+            © {currentYear} ROSISTA. {t("footer.rights")}
           </p>
           <div className="flex items-center gap-4">
             <Link

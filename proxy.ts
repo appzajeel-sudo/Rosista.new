@@ -1,6 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server"
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const response = NextResponse.next()
 
   // Cache static assets for 1 year (immutable)
@@ -27,3 +27,4 @@ export function middleware(request: NextRequest) {
 export const config = {
   matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
 }
+

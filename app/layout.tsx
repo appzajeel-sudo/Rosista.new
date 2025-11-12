@@ -1,5 +1,6 @@
 import type React from "react";
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/lib/theme-context";
@@ -67,7 +68,9 @@ export default function RootLayout({
           <ThemeProvider>
             <Header />
             <main className="min-h-screen">{children}</main>
-            <FooterWrapper />
+            <Suspense fallback={null}>
+              <FooterWrapper />
+            </Suspense>
           </ThemeProvider>
         </I18nProvider>
       </body>

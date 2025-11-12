@@ -1,10 +1,10 @@
-"use cache"
+"use cache";
 
-import { HeroSlider } from "@/components/hero-slider"
-import { ShopByOccasion } from "@/components/shop-by-occasion"
-import { Categories } from "@/components/categories"
-import { BestSellers } from "@/components/best-sellers"
-import { FeaturedCollections } from "@/components/featured-collections"
+import { HeroSlider } from "@/components/hero-slider";
+import { ShopByOccasion } from "@/components/shop-by-occasion";
+import { Categories } from "@/components/categories";
+import { BestSellers } from "@/components/best-sellers";
+import { FeaturedCollections } from "@/components/featured-collections";
 
 export default async function HomePage() {
   return (
@@ -15,5 +15,5 @@ export default async function HomePage() {
       <BestSellers />
       <FeaturedCollections />
     </main>
-  )
+  );
 }

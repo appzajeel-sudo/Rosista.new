@@ -2,10 +2,31 @@
 
 import { useState, useEffect, useLayoutEffect, useRef } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
 import { LanguageSwitcher } from "@/components/ui/language-switcher";
-import { Search, ShoppingBag, User, Menu, X, Sun, Moon } from "lucide-react";
+import {
+  CommandDialog,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
+import {
+  Search,
+  ShoppingBag,
+  User,
+  Menu,
+  X,
+  Sun,
+  Moon,
+  Home,
+  Package,
+  Users,
+  Settings,
+  FileText,
+} from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useDarkMode } from "@/hooks/use-dark-mode";
 
@@ -13,8 +34,10 @@ export function Header() {
   // Always start with false to match SSR (prevents hydration mismatch)
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isCommandOpen, setIsCommandOpen] = useState(false);
 
   const pathname = usePathname();
+  const router = useRouter();
   const { t, i18n } = useTranslation();
   const isRtl = i18n.language === "ar";
   const isHomePage = pathname === "/";
@@ -68,6 +91,19 @@ export function Header() {
       document.body.style.overflow = "";
     };
   }, [isMobileMenuOpen]);
+
+  // Keyboard shortcut for Command Palette (⌘K or Ctrl+K)
+  useEffect(() => {
+    const down = (e: KeyboardEvent) => {
+      if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        setIsCommandOpen((open) => !open);
+      }
+    };
+
+    document.addEventListener("keydown", down);
+    return () => document.removeEventListener("keydown", down);
+  }, []);
 
   const navLinks = [
     { href: "/occasions", label: t("nav.occasions") },
@@ -254,6 +290,7 @@ export function Header() {
 
                 {/* Search */}
                 <button
+                  onClick={() => setIsCommandOpen(true)}
                   aria-label="Search"
                   className={`transition-opacity hover:opacity-60 ${textColor}`}
                 >
@@ -356,6 +393,85 @@ export function Header() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Command Palette */}
+      <CommandDialog
+        open={isCommandOpen}
+        onOpenChange={setIsCommandOpen}
+        title={t("command.title", "Command Palette")}
+        description={t(
+          "command.description",
+          "Search for pages and actions..."
+        )}
+      >
+        <CommandInput placeholder={t("command.placeholder", "اكتب للبحث...")} />
+        <CommandList>
+          <CommandEmpty>
+            {t("command.noResults", "لا توجد نتائج.")}
+          </CommandEmpty>
+          <CommandGroup heading={t("command.pages", "الصفحات")}>
+            <CommandItem
+              onSelect={() => {
+                setIsCommandOpen(false);
+                router.push("/");
+              }}
+            >
+              <Home className="mr-2 h-4 w-4" />
+              <span>{t("nav.home", "الرئيسية")}</span>
+            </CommandItem>
+            <CommandItem
+              onSelect={() => {
+                setIsCommandOpen(false);
+                router.push("/occasions");
+              }}
+            >
+              <Package className="mr-2 h-4 w-4" />
+              <span>{t("nav.occasions", "المناسبات")}</span>
+            </CommandItem>
+            <CommandItem
+              onSelect={() => {
+                setIsCommandOpen(false);
+                router.push("/ui-showcase");
+              }}
+            >
+              <FileText className="mr-2 h-4 w-4" />
+              <span>{t("command.uiComponents", "UI Components")}</span>
+            </CommandItem>
+          </CommandGroup>
+          <CommandGroup heading={t("command.actions", "الإجراءات")}>
+            <CommandItem
+              onSelect={() => {
+                setIsCommandOpen(false);
+                toggleTheme();
+              }}
+            >
+              {theme === "dark" ? (
+                <Sun className="mr-2 h-4 w-4" />
+              ) : (
+                <Moon className="mr-2 h-4 w-4" />
+              )}
+              <span>
+                {theme === "dark"
+                  ? t("command.switchToLight", "التبديل إلى الوضع الفاتح")
+                  : t("command.switchToDark", "التبديل إلى الوضع الداكن")}
+              </span>
+            </CommandItem>
+            <CommandItem
+              onSelect={() => {
+                setIsCommandOpen(false);
+                i18n.changeLanguage(i18n.language === "ar" ? "en" : "ar");
+              }}
+            >
+              <Users className="mr-2 h-4 w-4" />
+              <span>
+                {i18n.language === "ar"
+                  ? t("command.switchToEnglish", "التبديل إلى الإنجليزية")
+                  : t("command.switchToArabic", "التبديل إلى العربية")}
+              </span>
+            </CommandItem>
+          </CommandGroup>
+        </CommandList>
+      </CommandDialog>
     </>
   );
 }

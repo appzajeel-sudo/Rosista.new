@@ -94,5 +94,18 @@
     "terms": "Terms of Service",
     "cookies": "Cookie Settings",
     "rights": "All rights reserved"
+  },
+  "command": {
+    "title": "Command Palette",
+    "description": "Search for pages and actions...",
+    "placeholder": "Type to search...",
+    "noResults": "No results found.",
+    "pages": "Pages",
+    "actions": "Actions",
+    "uiComponents": "UI Components",
+    "switchToLight": "Switch to Light Mode",
+    "switchToDark": "Switch to Dark Mode",
+    "switchToEnglish": "Switch to English",
+    "switchToArabic": "Switch to Arabic"
   }
 }

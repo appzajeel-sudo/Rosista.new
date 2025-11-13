@@ -134,7 +134,7 @@ export function Categories() {
         </div>
 
         {/* Luxury Split Screen Design */}
-        <div className="grid grid-cols-2 divide-x divide-foreground/5 sm:grid-cols-2 sm:divide-x sm:divide-foreground/5 md:grid-cols-3 md:divide-x md:divide-foreground/5 lg:grid-cols-4 lg:divide-x lg:divide-foreground/5">
+        <div className="grid grid-cols-2 gap-0.5 border-2 border-white bg-white sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {CATEGORIES.map((category, index) => (
             <Link
               key={category.id}
@@ -155,21 +155,18 @@ export function Categories() {
                   blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI4MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj48c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojZjBmMGYwO3N0b3Atb3BhY2l0eToxIiAvPjxzdG9wIG9mZnNldD0iNTAlIiBzdHlsZT0ic3RvcC1jb2xvcjojZTBlMGUwO3N0b3Atb3BhY2l0eToxIiAvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6I2YwZjBmMDtzdG9wLW9wYWNpdHk6MSIgLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyYWQpIiAvPjwvc3ZnPg=="
                 />
 
-                {/* Subtle Overlay - Visible on Mobile, Hover on Desktop */}
-                <div className="absolute inset-0 bg-black/20 transition-all duration-1000 sm:bg-black/0 sm:group-hover:bg-black/5" />
-
                 {/* Text Content - Centered & Minimal */}
                 <div className="absolute inset-0 flex items-center justify-center px-2">
                   <div className="text-center">
                     <h3
-                      className={`text-sm font-bold text-white transition-all duration-700 sm:text-lg sm:text-foreground md:text-2xl lg:text-3xl xl:text-4xl ${
+                      className={`text-sm font-bold text-white transition-all duration-700 sm:text-lg md:text-2xl lg:text-3xl xl:text-4xl ${
                         isRtl ? "font-sans-ar" : "font-sans-en"
                       } sm:group-hover:opacity-80`}
                     >
                       {t(category.nameKey)}
                     </h3>
                     <p
-                      className={`mt-1 text-[10px] font-bold text-white/90 transition-all duration-700 sm:mt-2 sm:text-xs sm:text-foreground/60 sm:opacity-0 md:text-sm lg:text-base ${
+                      className={`mt-1 text-[10px] font-bold text-white/90 transition-all duration-700 sm:mt-2 sm:text-xs sm:opacity-0 md:text-sm lg:text-base ${
                         isRtl ? "font-sans-ar" : "font-sans-en"
                       } sm:group-hover:opacity-100 sm:group-hover:translate-y-0 sm:translate-y-4`}
                     >
@@ -179,7 +176,7 @@ export function Categories() {
                 </div>
 
                 {/* Elegant Border - Only on Hover (Desktop) */}
-                <div className="absolute inset-0 border border-foreground/0 transition-all duration-700 sm:group-hover:border-foreground/10" />
+                <div className="absolute inset-0 border border-white/0 transition-all duration-700 sm:group-hover:border-white/20" />
               </div>
             </Link>
           ))}

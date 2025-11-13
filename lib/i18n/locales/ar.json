@@ -60,7 +60,12 @@
     "lifestyle": "نمط الحياة",
     "chocolate": "الشوكولاتة",
     "flowers": "الزهور",
-    "perfumes": "العطور"
+    "perfumes": "العطور",
+    "watches": "الساعات",
+    "bags": "الحقائب",
+    "candles": "الشموع",
+    "cosmetics": "مستحضرات التجميل",
+    "gifts": "الهدايا"
   },
   "bestSellers": {
     "title": "الأكثر مبيعاً",

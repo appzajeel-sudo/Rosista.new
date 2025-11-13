@@ -408,18 +408,9 @@ html[dir="ltr"] {
   height: auto;
 }
 
-/* Categories Swiper - Coverflow Effect */
-.categories-swiper .swiper {
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.categories-swiper .swiper.swiper-initialized {
-  opacity: 1;
-}
-
-.categories-swiper .swiper-slide {
-  transition: transform 0.3s ease;
+/* Categories - Luxury Infinite Scroll */
+.categories-infinite-scroll {
+  will-change: transform;
 }
 
 /* Film Strip - Smooth rendering fix */

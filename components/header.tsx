@@ -199,8 +199,8 @@ export function Header() {
             {/* Left - Navigation (Desktop) */}
             <nav className="hidden flex-1 lg:flex">
               <ul className="flex items-center gap-10">
-                {navLinks.slice(0, 2).map((link) => (
-                  <li key={link.href}>
+                {navLinks.slice(0, 2).map((link, index) => (
+                  <li key={`nav-left-${link.label}-${index}`}>
                     <Link
                       href={link.href}
                       className={`text-[13px] font-bold uppercase tracking-[0.12em] transition-colors ${
@@ -240,8 +240,8 @@ export function Header() {
               {/* Desktop Navigation (Right) */}
               <nav className="hidden lg:flex">
                 <ul className="flex items-center gap-10">
-                  {navLinks.slice(2).map((link) => (
-                    <li key={link.href}>
+                  {navLinks.slice(2).map((link, index) => (
+                    <li key={`nav-right-${link.label}-${index}`}>
                       <Link
                         href={link.href}
                         className={`text-[13px] font-bold uppercase tracking-[0.12em] transition-colors ${
@@ -371,7 +371,7 @@ export function Header() {
                 <ul className="space-y-8">
                   {navLinks.map((link, index) => (
                     <motion.li
-                      key={link.href}
+                      key={`nav-mobile-${link.label}-${index}`}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.1 }}

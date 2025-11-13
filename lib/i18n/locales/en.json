@@ -60,7 +60,12 @@
     "lifestyle": "Lifestyle",
     "chocolate": "Chocolate",
     "flowers": "Flowers",
-    "perfumes": "Perfumes"
+    "perfumes": "Perfumes",
+    "watches": "Watches",
+    "bags": "Bags",
+    "candles": "Candles",
+    "cosmetics": "Cosmetics",
+    "gifts": "Gifts"
   },
   "bestSellers": {
     "title": "Best Sellers",

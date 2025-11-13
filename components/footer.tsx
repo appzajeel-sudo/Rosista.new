@@ -107,8 +107,8 @@ export function Footer() {
               {isRtl ? "روابط سريعة" : "Quick Links"}
             </h3>
             <ul className="space-y-3">
-              {links.shop.map((link) => (
-                <li key={link.href}>
+              {links.shop.map((link, index) => (
+                <li key={`shop-${link.href}-${index}`}>
                   <Link
                     href={link.href}
                     className={`text-sm transition-colors ${
@@ -144,8 +144,8 @@ export function Footer() {
               {t("footer.customer")}
             </h3>
             <ul className="space-y-3">
-              {links.support.map((link) => (
-                <li key={link.href}>
+              {links.support.map((link, index) => (
+                <li key={`support-${link.href}-${index}`}>
                   <Link
                     href={link.href}
                     className={`text-sm transition-colors ${

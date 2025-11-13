@@ -1,16 +1,8 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, EffectCoverflow } from "swiper/modules";
-import type { Swiper as SwiperType } from "swiper";
-
-// Import Swiper styles
-import "swiper/css";
-import "swiper/css/effect-coverflow";
 
 const CATEGORIES = [
   {
@@ -20,8 +12,7 @@ const CATEGORIES = [
     descriptionAr: "شوكولاتة فاخرة مصنوعة يدوياً",
     descriptionEn: "Handcrafted luxury chocolates",
     image:
-      "https://images.unsplash.com/photo-1511381939415-e44015466834?w=1200&h=800&fit=crop&q=80",
-    gradient: "from-amber-600 via-orange-500 to-amber-600",
+      "https://images.unsplash.com/photo-1511381939415-e44015466834?w=1200&h=1600&fit=crop&q=90",
   },
   {
     id: 2,
@@ -30,8 +21,7 @@ const CATEGORIES = [
     descriptionAr: "باقات ورد طبيعية رائعة",
     descriptionEn: "Stunning natural flower bouquets",
     image:
-      "https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=1200&h=800&fit=crop&q=80",
-    gradient: "from-rose-600 via-pink-500 to-rose-600",
+      "https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=1200&h=1600&fit=crop&q=90",
   },
   {
     id: 3,
@@ -40,8 +30,7 @@ const CATEGORIES = [
     descriptionAr: "عطور فاخرة من أجود الأنواع",
     descriptionEn: "Premium fragrances collection",
     image:
-      "https://images.unsplash.com/photo-1541643600914-78b084683601?w=1200&h=800&fit=crop&q=80",
-    gradient: "from-purple-600 via-violet-500 to-purple-600",
+      "https://images.unsplash.com/photo-1541643600914-78b084683601?w=1200&h=1600&fit=crop&q=90",
   },
   {
     id: 4,
@@ -50,213 +39,150 @@ const CATEGORIES = [
     descriptionAr: "مجوهرات راقية وأنيقة",
     descriptionEn: "Elegant fine jewelry pieces",
     image:
-      "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=1200&h=800&fit=crop&q=80",
-    gradient: "from-cyan-600 via-blue-500 to-cyan-600",
+      "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=1200&h=1600&fit=crop&q=90",
+  },
+  {
+    id: 5,
+    slug: "fragrances",
+    nameKey: "categories.fragrances",
+    descriptionAr: "عطور فاخرة من أرقى الماركات",
+    descriptionEn: "Luxury fragrances from finest brands",
+    image:
+      "https://images.unsplash.com/photo-1541643600914-78b084683601?w=1200&h=1600&fit=crop&q=90",
+  },
+  {
+    id: 6,
+    slug: "accessories",
+    nameKey: "categories.accessories",
+    descriptionAr: "إكسسوارات أنيقة ومميزة",
+    descriptionEn: "Elegant and unique accessories",
+    image:
+      "https://images.unsplash.com/photo-1594223274512-ad4803739b7c?w=1200&h=1600&fit=crop&q=90",
+  },
+  {
+    id: 7,
+    slug: "lifestyle",
+    nameKey: "categories.lifestyle",
+    descriptionAr: "منتجات نمط الحياة الفاخرة",
+    descriptionEn: "Luxury lifestyle products",
+    image:
+      "https://images.unsplash.com/photo-1556912172-45b7abe8b7e1?w=1200&h=1600&fit=crop&q=90",
+  },
+  {
+    id: 8,
+    slug: "watches",
+    nameKey: "categories.watches",
+    descriptionAr: "ساعات فاخرة من أرقى الماركات",
+    descriptionEn: "Luxury watches from finest brands",
+    image:
+      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1200&h=1600&fit=crop&q=90",
+  },
+  {
+    id: 9,
+    slug: "bags",
+    nameKey: "categories.bags",
+    descriptionAr: "حقائب فاخرة وأنيقة",
+    descriptionEn: "Elegant luxury bags",
+    image:
+      "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=1200&h=1600&fit=crop&q=90",
+  },
+  {
+    id: 10,
+    slug: "candles",
+    nameKey: "categories.candles",
+    descriptionAr: "شموع فاخرة بروائح مميزة",
+    descriptionEn: "Luxury candles with unique scents",
+    image:
+      "https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=1200&h=1600&fit=crop&q=90",
+  },
+  {
+    id: 11,
+    slug: "cosmetics",
+    nameKey: "categories.cosmetics",
+    descriptionAr: "مستحضرات تجميل فاخرة",
+    descriptionEn: "Luxury cosmetics collection",
+    image:
+      "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=1200&h=1600&fit=crop&q=90",
+  },
+  {
+    id: 12,
+    slug: "gifts",
+    nameKey: "categories.gifts",
+    descriptionAr: "هدايا فاخرة لكل مناسبة",
+    descriptionEn: "Luxury gifts for every occasion",
+    image:
+      "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=1200&h=1600&fit=crop&q=90",
   },
 ];
 
 export function Categories() {
-  const swiperRef = useRef<SwiperType | null>(null);
   const { t, i18n } = useTranslation();
   const isRtl = i18n.language === "ar";
-  const [isDark, setIsDark] = useState(false);
-
-  useEffect(() => {
-    const checkDarkMode = () => {
-      setIsDark(document.documentElement.classList.contains("dark"));
-    };
-    checkDarkMode();
-    const observer = new MutationObserver(checkDarkMode);
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["class"],
-    });
-    return () => observer.disconnect();
-  }, []);
 
   return (
-    <section className="relative overflow-hidden bg-background py-3 sm:py-5">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-5">
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `radial-gradient(circle at 1px 1px, rgb(0 0 0 / 0.15) 1px, transparent 0)`,
-            backgroundSize: "24px 24px",
-          }}
-        />
-      </div>
-
-      <div className="relative mx-auto max-w-[1650px] px-4 sm:px-8">
-        {/* Header */}
-        <div className="mb-8 text-center sm:mb-12">
-          <div className="relative inline-block">
-            <h2
-              className={`pb-3 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl ${
-                isRtl ? "font-sans-ar" : "font-sans-en"
-              }`}
-            >
-              {t("home.categories.title")}
-            </h2>
-            {/* Decorative Line */}
-            <div className="absolute bottom-0 left-1/2 flex -translate-x-1/2 items-center gap-2">
-              <div
-                className="h-0.5 w-6 rounded-full"
-                style={{
-                  backgroundColor: isDark
-                    ? "rgb(255, 255, 255)"
-                    : "rgb(107, 114, 128)",
-                }}
-              ></div>
-              <div
-                className="h-0.5 w-16"
-                style={{
-                  backgroundColor: isDark
-                    ? "rgb(250, 204, 21)"
-                    : "rgb(0, 0, 0)",
-                  clipPath:
-                    "polygon(0 0, calc(100% - 4px) 0, 100% 100%, 4px 100%)",
-                }}
-              ></div>
-              <div
-                className="h-0.5 w-6 rounded-full"
-                style={{
-                  backgroundColor: isDark
-                    ? "rgb(255, 255, 255)"
-                    : "rgb(107, 114, 128)",
-                }}
-              ></div>
-            </div>
-          </div>
+    <section className="relative bg-background">
+      <div className="mx-auto max-w-[1650px] px-6 sm:px-8">
+        {/* Header - Minimal & Elegant */}
+        <div className="pt-12 pb-8 text-center sm:pt-20 sm:pb-12 md:pt-24 md:pb-16">
+          <h2
+            className={`text-2xl font-bold tracking-tight text-foreground sm:text-4xl md:text-5xl lg:text-6xl ${
+              isRtl ? "font-sans-ar" : "font-sans-en"
+            }`}
+          >
+            {t("home.categories.title")}
+          </h2>
         </div>
 
-        {/* Swiper - Coverflow Effect */}
-        <div className="categories-swiper">
-          <Swiper
-            key={i18n.language}
-            modules={[Autoplay, EffectCoverflow]}
-            effect="coverflow"
-            grabCursor={true}
-            centeredSlides={true}
-            slidesPerView="auto"
-            loop={true}
-            speed={800}
-            observer={true}
-            observeParents={true}
-            watchSlidesProgress={true}
-            autoplay={{
-              delay: 3000,
-              disableOnInteraction: false,
-              pauseOnMouseEnter: false,
-            }}
-            dir={isRtl ? "rtl" : "ltr"}
-            coverflowEffect={{
-              rotate: 0,
-              stretch: 0,
-              depth: 150,
-              modifier: 1.5,
-              slideShadows: false,
-            }}
-            onSwiper={(swiper) => {
-              swiperRef.current = swiper;
-            }}
-            className="pb-0"
-          >
-            {[...CATEGORIES, ...CATEGORIES].map((category, index) => (
-              <SwiperSlide
-                key={`${category.id}-${index}`}
-                className="!w-[260px] sm:!w-[360px] lg:!w-[440px]"
-              >
-                <Link
-                  href={`/category/${category.slug}`}
-                  className="group block"
-                >
-                  <div className="relative rounded-3xl transition-all duration-500 overflow-hidden">
-                    {/* Image */}
-                    <div className="relative aspect-4/3 overflow-hidden rounded-3xl">
-                      <Image
-                        src={category.image}
-                        alt={t(category.nameKey)}
-                        fill
-                        sizes="(max-width: 640px) 260px, (max-width: 1024px) 360px, 440px"
-                        priority={index === 0}
-                        fetchPriority={index === 0 ? "high" : "auto"}
-                        quality={85}
-                        loading={index === 0 ? "eager" : "lazy"}
-                        className="object-cover transition-transform duration-700 group-hover:scale-110"
-                        placeholder="blur"
-                        blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI4MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj48c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojZjBmMGYwO3N0b3Atb3BhY2l0eToxIiAvPjxzdG9wIG9mZnNldD0iNTAlIiBzdHlsZT0ic3RvcC1jb2xvcjojZTBlMGUwO3N0b3Atb3BhY2l0eToxIiAvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6I2YwZjBmMDtzdG9wLW9wYWNpdHk6MSIgLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyYWQpIiAvPjwvc3ZnPg=="
-                      />
+        {/* Luxury Split Screen Design */}
+        <div className="grid grid-cols-2 divide-x divide-foreground/5 sm:grid-cols-2 sm:divide-x sm:divide-foreground/5 md:grid-cols-3 md:divide-x md:divide-foreground/5 lg:grid-cols-4 lg:divide-x lg:divide-foreground/5">
+          {CATEGORIES.map((category, index) => (
+            <Link
+              key={category.id}
+              href={`/category/${category.slug}`}
+              className="group relative block overflow-hidden bg-background"
+            >
+              {/* Large Image Container */}
+              <div className="relative aspect-square overflow-hidden sm:aspect-square md:aspect-4/5">
+                <Image
+                  src={category.image}
+                  alt={t(category.nameKey)}
+                  fill
+                  sizes="(max-width: 640px) 50vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                  className="object-cover transition-all duration-[2s] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group-hover:scale-[1.02]"
+                  priority={index < 4}
+                  quality={90}
+                  placeholder="blur"
+                  blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI4MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj48c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojZjBmMGYwO3N0b3Atb3BhY2l0eToxIiAvPjxzdG9wIG9mZnNldD0iNTAlIiBzdHlsZT0ic3RvcC1jb2xvcjojZTBlMGUwO3N0b3Atb3BhY2l0eToxIiAvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6I2YwZjBmMDtzdG9wLW9wYWNpdHk6MSIgLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyYWQpIiAvPjwvc3ZnPg=="
+                />
 
-                      {/* Gradient Overlay */}
-                      <div
-                        className={`absolute inset-0 bg-gradient-to-br ${category.gradient} opacity-30 mix-blend-multiply`}
-                      />
-                    </div>
+                {/* Subtle Overlay - Visible on Mobile, Hover on Desktop */}
+                <div className="absolute inset-0 bg-black/20 transition-all duration-1000 sm:bg-black/0 sm:group-hover:bg-black/5" />
 
-                    {/* Content */}
-                    <div className="absolute inset-0 flex flex-col justify-end p-4 sm:p-6">
-                      <div className="translate-y-2 transform transition-all duration-500 group-hover:translate-y-0">
-                        <h3
-                          className={`mb-1.5 text-xl font-bold text-white sm:text-2xl ${
-                            isRtl ? "font-sans-ar" : "font-sans-en"
-                          }`}
-                        >
-                          {t(category.nameKey)}
-                        </h3>
-
-                        <p
-                          className={`mb-3 text-xs text-white/90 opacity-0 transition-opacity duration-500 group-hover:opacity-100 sm:text-sm ${
-                            isRtl ? "font-sans-ar" : "font-sans-en"
-                          }`}
-                        >
-                          {isRtl
-                            ? category.descriptionAr
-                            : category.descriptionEn}
-                        </p>
-
-                        <div className="inline-flex items-center gap-2 rounded-full bg-white/20 px-3 py-1.5 text-xs font-semibold text-white backdrop-blur-sm transition-all duration-500 group-hover:bg-white group-hover:text-neutral-900 sm:px-4 sm:py-2 sm:text-sm">
-                          <span
-                            className={isRtl ? "font-sans-ar" : "font-sans-en"}
-                          >
-                            {isRtl ? "استكشف الآن" : "Explore Now"}
-                          </span>
-                          <svg
-                            className={`h-4 w-4 transition-transform ${
-                              isRtl ? "rotate-180" : ""
-                            } group-hover:translate-x-1`}
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M17 8l4 4m0 0l-4 4m4-4H3"
-                            />
-                          </svg>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Shine Effect */}
-                    <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-700 group-hover:opacity-100">
-                      <div
-                        className={`absolute top-0 h-full w-1/2 ${
-                          isRtl ? "-right-full" : "-left-full"
-                        } rotate-12 bg-gradient-to-r from-transparent via-white/30 to-transparent transition-all duration-700 ${
-                          isRtl
-                            ? "group-hover:right-full"
-                            : "group-hover:left-full"
-                        }`}
-                      />
-                    </div>
+                {/* Text Content - Centered & Minimal */}
+                <div className="absolute inset-0 flex items-center justify-center px-2">
+                  <div className="text-center">
+                    <h3
+                      className={`text-sm font-bold text-white transition-all duration-700 sm:text-lg sm:text-foreground md:text-2xl lg:text-3xl xl:text-4xl ${
+                        isRtl ? "font-sans-ar" : "font-sans-en"
+                      } sm:group-hover:opacity-80`}
+                    >
+                      {t(category.nameKey)}
+                    </h3>
+                    <p
+                      className={`mt-1 text-[10px] font-bold text-white/90 transition-all duration-700 sm:mt-2 sm:text-xs sm:text-foreground/60 sm:opacity-0 md:text-sm lg:text-base ${
+                        isRtl ? "font-sans-ar" : "font-sans-en"
+                      } sm:group-hover:opacity-100 sm:group-hover:translate-y-0 sm:translate-y-4`}
+                    >
+                      {isRtl ? category.descriptionAr : category.descriptionEn}
+                    </p>
                   </div>
-                </Link>
-              </SwiperSlide>
-            ))}
-          </Swiper>
+                </div>
+
+                {/* Elegant Border - Only on Hover (Desktop) */}
+                <div className="absolute inset-0 border border-foreground/0 transition-all duration-700 sm:group-hover:border-foreground/10" />
+              </div>
+            </Link>
+          ))}
         </div>
       </div>
     </section>

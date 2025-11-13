@@ -512,7 +512,7 @@ export default function UIShowcasePage() {
                   />
                   <label
                     htmlFor="terms"
-                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                    className="text-sm font-bold leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                   >
                     أوافق على الشروط والأحكام
                   </label>
@@ -521,7 +521,7 @@ export default function UIShowcasePage() {
                   <Checkbox id="newsletter" defaultChecked />
                   <label
                     htmlFor="newsletter"
-                    className="text-sm font-medium leading-none"
+                    className="text-sm font-bold leading-none"
                   >
                     الاشتراك في النشرة الإخبارية
                   </label>
@@ -537,11 +537,11 @@ export default function UIShowcasePage() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <label className="text-sm font-medium">تفعيل الإشعارات</label>
+                  <label className="text-sm font-bold">تفعيل الإشعارات</label>
                   <Switch checked={switched} onCheckedChange={setSwitched} />
                 </div>
                 <div className="flex items-center justify-between">
-                  <label className="text-sm font-medium">الوضع الليلي</label>
+                  <label className="text-sm font-bold">الوضع الليلي</label>
                   <Switch defaultChecked />
                 </div>
               </CardContent>
@@ -561,7 +561,7 @@ export default function UIShowcasePage() {
                   </TabsList>
                   <TabsContent value="account" className="mt-4">
                     <div className="space-y-2">
-                      <h3 className="text-sm font-medium">معلومات الحساب</h3>
+                      <h3 className="text-sm font-bold">معلومات الحساب</h3>
                       <p className="text-sm text-muted-foreground">
                         إدارة معلومات حسابك هنا
                       </p>
@@ -569,7 +569,7 @@ export default function UIShowcasePage() {
                   </TabsContent>
                   <TabsContent value="settings" className="mt-4">
                     <div className="space-y-2">
-                      <h3 className="text-sm font-medium">الإعدادات</h3>
+                      <h3 className="text-sm font-bold">الإعدادات</h3>
                       <p className="text-sm text-muted-foreground">
                         تعديل إعداداتك هنا
                       </p>
@@ -732,7 +732,7 @@ export default function UIShowcasePage() {
                   </PopoverTrigger>
                   <PopoverContent className="w-80">
                     <div className="space-y-2">
-                      <h4 className="font-medium leading-none">إعدادات</h4>
+                      <h4 className="font-bold leading-none">إعدادات</h4>
                       <p className="text-sm text-muted-foreground">
                         قم بتعديل الإعدادات من هنا
                       </p>
@@ -1015,7 +1015,7 @@ export default function UIShowcasePage() {
                   </TableHeader>
                   <TableBody>
                     <TableRow>
-                      <TableCell className="font-medium">
+                      <TableCell className="font-bold">
                         صندوق شوكولاتة
                       </TableCell>
                       <TableCell>299 ر.س</TableCell>
@@ -1024,14 +1024,14 @@ export default function UIShowcasePage() {
                       </TableCell>
                     </TableRow>
                     <TableRow>
-                      <TableCell className="font-medium">باقة ورد</TableCell>
+                      <TableCell className="font-bold">باقة ورد</TableCell>
                       <TableCell>450 ر.س</TableCell>
                       <TableCell>
                         <Badge variant="secondary">متوفر</Badge>
                       </TableCell>
                     </TableRow>
                     <TableRow>
-                      <TableCell className="font-medium">عطر فاخر</TableCell>
+                      <TableCell className="font-bold">عطر فاخر</TableCell>
                       <TableCell>850 ر.س</TableCell>
                       <TableCell>
                         <Badge variant="destructive">غير متوفر</Badge>
@@ -1130,7 +1130,7 @@ export default function UIShowcasePage() {
               <CardContent>
                 <Collapsible open={isOpen} onOpenChange={setIsOpen}>
                   <div className="flex items-center justify-between space-x-4">
-                    <h4 className="text-sm font-semibold">
+                    <h4 className="text-sm font-bold">
                       @peduarte قام بتحديث ملفاتك
                     </h4>
                     <CollapsibleTrigger asChild>
@@ -1279,7 +1279,7 @@ export default function UIShowcasePage() {
                           <AvatarFallback>RO</AvatarFallback>
                         </Avatar>
                         <div className="space-y-1">
-                          <h4 className="text-sm font-semibold">@rosista</h4>
+                          <h4 className="text-sm font-bold">@rosista</h4>
                           <p className="text-sm">
                             منصة ROSISTA للهدايا الفاخرة والمنتجات المميزة
                           </p>
@@ -1299,7 +1299,7 @@ export default function UIShowcasePage() {
                     </HoverCardTrigger>
                     <HoverCardContent>
                       <div className="space-y-2">
-                        <h4 className="text-sm font-semibold">
+                        <h4 className="text-sm font-bold">
                           معلومات إضافية
                         </h4>
                         <p className="text-sm text-muted-foreground">
@@ -1477,7 +1477,7 @@ export default function UIShowcasePage() {
                       <NavigationMenuContent>
                         <div className="grid gap-3 p-6 w-[400px]">
                           <NavigationMenuLink className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
-                            <div className="text-sm font-medium leading-none">
+                            <div className="text-sm font-bold leading-none">
                               الشوكولاتة
                             </div>
                             <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
@@ -1485,7 +1485,7 @@ export default function UIShowcasePage() {
                             </p>
                           </NavigationMenuLink>
                           <NavigationMenuLink className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
-                            <div className="text-sm font-medium leading-none">
+                            <div className="text-sm font-bold leading-none">
                               الورود
                             </div>
                             <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
@@ -1500,7 +1500,7 @@ export default function UIShowcasePage() {
                       <NavigationMenuContent>
                         <div className="grid gap-3 p-6 w-[400px]">
                           <NavigationMenuLink className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
-                            <div className="text-sm font-medium leading-none">
+                            <div className="text-sm font-bold leading-none">
                               أعياد الميلاد
                             </div>
                             <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
@@ -1528,13 +1528,13 @@ export default function UIShowcasePage() {
                 >
                   <ResizablePanel defaultSize={50}>
                     <div className="flex h-full items-center justify-center p-6">
-                      <span className="font-semibold">اللوحة الأولى</span>
+                      <span className="font-bold">اللوحة الأولى</span>
                     </div>
                   </ResizablePanel>
                   <ResizableHandle withHandle />
                   <ResizablePanel defaultSize={50}>
                     <div className="flex h-full items-center justify-center p-6">
-                      <span className="font-semibold">اللوحة الثانية</span>
+                      <span className="font-bold">اللوحة الثانية</span>
                     </div>
                   </ResizablePanel>
                 </ResizablePanelGroup>
@@ -1555,7 +1555,7 @@ export default function UIShowcasePage() {
                         <div className="p-1">
                           <Card>
                             <CardContent className="flex aspect-square items-center justify-center p-6">
-                              <span className="text-4xl font-semibold">
+                              <span className="text-4xl font-bold">
                                 {index + 1}
                               </span>
                             </CardContent>
@@ -2016,7 +2016,7 @@ export default function UIShowcasePage() {
                               <ShoppingBag className="h-4 w-4" />
                             </div>
                             <div className="grid flex-1 text-left text-sm leading-tight">
-                              <span className="truncate font-semibold">
+                              <span className="truncate font-bold">
                                 ROSISTA
                               </span>
                               <span className="truncate text-xs">
@@ -2138,7 +2138,7 @@ export default function UIShowcasePage() {
                         <div className="flex h-full flex-col gap-4 p-4">
                           <div className="flex items-center gap-2">
                             <SidebarTrigger />
-                            <h2 className="text-lg font-semibold">
+                            <h2 className="text-lg font-bold">
                               محتوى الصفحة
                             </h2>
                           </div>
@@ -2148,7 +2148,7 @@ export default function UIShowcasePage() {
                               Trigger لإظهار/إخفاء الشريط الجانبي.
                             </p>
                             <div className="mt-4 space-y-2">
-                              <p className="text-sm font-medium">
+                              <p className="text-sm font-bold">
                                 المكونات الفرعية المعروضة:
                               </p>
                               <ul className="list-disc list-inside space-y-1 text-sm text-muted-foreground">

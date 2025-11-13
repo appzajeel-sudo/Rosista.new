@@ -203,7 +203,7 @@ export function Header() {
                   <li key={link.href}>
                     <Link
                       href={link.href}
-                      className={`text-[13px] font-semibold uppercase tracking-[0.12em] transition-colors ${
+                      className={`text-[13px] font-bold uppercase tracking-[0.12em] transition-colors ${
                         pathname === link.href
                           ? textColor
                           : `${textColor} ${hoverColor}`
@@ -222,10 +222,10 @@ export function Header() {
               className="absolute left-0 top-1/2 -translate-y-1/2 shrink-0 pl-2 lg:static lg:left-auto lg:translate-x-0 lg:translate-y-0 lg:pl-0"
             >
               <h1
-                className={`text-[36px] font-semibold tracking-[0.25em] transition-colors ${textColor} font-sans-en`}
+                className={`text-[36px] font-bold tracking-[0.25em] transition-colors ${textColor} font-sans-en`}
                 style={{
                   fontFamily: "'Cormorant Garamond', serif",
-                  fontWeight: 500,
+                  fontWeight: 700,
                   visibility: isHomePage ? "hidden" : undefined,
                 }}
                 ref={anchorRef}
@@ -244,7 +244,7 @@ export function Header() {
                     <li key={link.href}>
                       <Link
                         href={link.href}
-                        className={`text-[13px] font-semibold uppercase tracking-[0.12em] transition-colors ${
+                        className={`text-[13px] font-bold uppercase tracking-[0.12em] transition-colors ${
                           pathname === link.href
                             ? textColor
                             : `${textColor} ${hoverColor}`
@@ -337,10 +337,10 @@ export function Header() {
       {isHomePage && (
         <div
           ref={heroRef}
-          className="fixed left-1/2 top-[6vh] z-60 -translate-x-1/2 select-none font-semibold leading-none tracking-widest font-sans-en text-[20vw] sm:text-[12vw]"
+          className="fixed left-1/2 top-[6vh] z-60 -translate-x-1/2 select-none font-bold leading-none tracking-widest font-sans-en text-[20vw] sm:text-[12vw]"
           style={{
             fontFamily: "'Cormorant Garamond', serif",
-            fontWeight: 500,
+            fontWeight: 700,
             willChange: "transform, opacity, color",
             transformOrigin: "center center",
             color: isScrolled ? "rgb(var(--foreground))" : "rgb(var(--white))",
@@ -379,7 +379,7 @@ export function Header() {
                       <Link
                         href={link.href}
                         onClick={() => setIsMobileMenuOpen(false)}
-                        className={`block text-2xl font-light tracking-wider text-foreground ${
+                        className={`block text-2xl font-bold tracking-wider text-foreground ${
                           isRtl ? "font-sans-ar" : "font-sans-en"
                         }`}
                       >

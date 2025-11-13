@@ -10,7 +10,6 @@ const nextConfig = {
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     qualities: [75, 90],
   },
-  cacheComponents: true,
   staticPageGenerationTimeout: 3600,
   headers: async () => {
     return [
@@ -37,6 +36,10 @@ const nextConfig = {
           {
             key: "X-XSS-Protection",
             value: "1; mode=block",
+          },
+          {
+            key: "Cache-Control",
+            value: "public, s-maxage=3600, stale-while-revalidate=86400",
           },
         ],
       },

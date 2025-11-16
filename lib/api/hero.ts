@@ -49,7 +49,6 @@ export async function fetchHeroPromotions(
 
     return [];
   } catch (error) {
-    console.error("Error fetching hero promotions:", error);
     return [];
   }
 }
@@ -83,7 +82,6 @@ export async function fetchHeroOccasion(
 
     return null;
   } catch (error) {
-    console.error("Error fetching hero occasion:", error);
     return null;
   }
 }
@@ -175,7 +173,6 @@ export async function fetchHeroSlides(
 
     return slides;
   } catch (error) {
-    console.error("Error fetching hero slides:", error);
     return [];
   }
 }

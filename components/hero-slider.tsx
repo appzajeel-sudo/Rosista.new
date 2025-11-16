@@ -33,9 +33,11 @@ export function HeroSlider({
 
   // ترجمة الـ slides بناءً على اللغة الحالية في Client
   const displaySlides = useMemo(() => {
+    let result: HeroSlide[];
+
     if (slides && slides.length > 0) {
       // ترجمة slides من Back-End بناءً على اللغة الحالية
-      return slides.map((slide) => {
+      result = slides.map((slide) => {
         // إذا كانت البيانات تحتوي على حقول الترجمة، استخدمها
         if (slide.titleAr && slide.titleEn) {
           const translatedSlide = {
@@ -72,19 +74,37 @@ export function HeroSlider({
         // إذا لم تكن موجودة، استخدم البيانات الحالية (من Server)
         return slide;
       });
+    } else {
+      // Fallback slides - تُترجم باستخدام ملفات الترجمة
+      result = (fallback || fallbackSlides).map(
+        (slide): HeroSlide => ({
+          id: String(slide.id),
+          image: slide.image,
+          title: t(slide.titleKey),
+          cta: t(slide.ctaKey),
+          link: slide.link,
+          type: "promotion" as const,
+        })
+      );
     }
 
-    // Fallback slides - تُترجم باستخدام ملفات الترجمة
-    return (fallback || fallbackSlides).map(
-      (slide): HeroSlide => ({
-        id: String(slide.id),
-        image: slide.image,
-        title: t(slide.titleKey),
-        cta: t(slide.ctaKey),
-        link: slide.link,
-        type: "promotion" as const,
-      })
-    );
+    // Debug: إرسال البيانات المعروضة إلى DataViewer (فقط في Development و Client-Side)
+    if (
+      process.env.NODE_ENV === "development" &&
+      typeof window !== "undefined"
+    ) {
+      window.dispatchEvent(
+        new CustomEvent("hero-slider-data-update", {
+          detail: {
+            slides: result,
+            language: currentLanguage,
+            timestamp: new Date().toISOString(),
+          },
+        })
+      );
+    }
+
+    return result;
   }, [slides, fallback, t, currentLanguage]);
 
   return (

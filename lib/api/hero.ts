@@ -118,7 +118,9 @@ function occasionToSlides(
   }
 
   const occasionLink = occasion.linkedOccasion
-    ? `/occasions/${occasion.linkedOccasion._id || ""}`
+    ? `/occasions/${
+        occasion.linkedOccasion.slug || occasion.linkedOccasion._id || ""
+      }`
     : "/occasions";
 
   return occasion.images.map((image, index) => ({

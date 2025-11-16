@@ -22,6 +22,7 @@ export interface LinkedOccasion {
   nameAr: string;
   nameEn: string;
   imageUrl?: string;
+  slug?: string;
 }
 
 export interface HeroOccasionResponse {

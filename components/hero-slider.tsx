@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
@@ -9,40 +9,83 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import type { Swiper as SwiperType } from "swiper";
+import type { HeroSlide, FallbackSlide } from "@/types/hero";
+import { fallbackSlides } from "@/lib/api/hero";
 
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-const SLIDES = [
-  {
-    id: 1,
-    image: "/luxury-gift-elegant-gold-wrapping.jpg",
-    titleKey: "hero.slide1.title",
-    ctaKey: "hero.slide1.cta",
-    link: "/occasions",
-  },
-  {
-    id: 2,
-    image: "/luxury-gifts-premium-collection.jpg",
-    titleKey: "hero.slide2.title",
-    ctaKey: "hero.slide2.cta",
-    link: "/occasions",
-  },
-  {
-    id: 3,
-    image: "/luxury-jewelry-diamonds-pearls.jpg",
-    titleKey: "hero.slide3.title",
-    ctaKey: "hero.slide3.cta",
-    link: "/occasions",
-  },
-];
+interface HeroSliderProps {
+  slides?: HeroSlide[];
+  fallbackSlides?: FallbackSlide[];
+}
 
-export function HeroSlider() {
+export function HeroSlider({
+  slides,
+  fallbackSlides: fallback,
+}: HeroSliderProps = {}) {
   const swiperRef = useRef<SwiperType | null>(null);
   const { t, i18n } = useTranslation();
   const isRtl = i18n.language === "ar";
+  const currentLanguage = i18n.language;
+
+  // ترجمة الـ slides بناءً على اللغة الحالية في Client
+  const displaySlides = useMemo(() => {
+    if (slides && slides.length > 0) {
+      // ترجمة slides من Back-End بناءً على اللغة الحالية
+      return slides.map((slide) => {
+        // إذا كانت البيانات تحتوي على حقول الترجمة، استخدمها
+        if (slide.titleAr && slide.titleEn) {
+          const translatedSlide = {
+            ...slide,
+            title: currentLanguage === "en" ? slide.titleEn : slide.titleAr,
+          };
+
+          // ترجمة subtitle (للعروض)
+          if (slide.subtitleAr && slide.subtitleEn) {
+            translatedSlide.subtitle =
+              currentLanguage === "en" ? slide.subtitleEn : slide.subtitleAr;
+          }
+
+          // ترجمة celebratoryMessage (للمناسبات)
+          if (slide.celebratoryMessageAr && slide.celebratoryMessageEn) {
+            translatedSlide.celebratoryMessage =
+              currentLanguage === "en"
+                ? slide.celebratoryMessageEn
+                : slide.celebratoryMessageAr;
+          }
+
+          // ترجمة CTA
+          if (slide.ctaAr && slide.ctaEn) {
+            // إذا كان CTA من Back-End، استخدمه
+            translatedSlide.cta =
+              currentLanguage === "en" ? slide.ctaEn : slide.ctaAr;
+          } else if (slide.type === "occasion") {
+            // إذا كان مناسبة، استخدم ترجمة من ملفات الترجمة
+            translatedSlide.cta = t("hero.shopNow", "تسوق الآن");
+          }
+
+          return translatedSlide;
+        }
+        // إذا لم تكن موجودة، استخدم البيانات الحالية (من Server)
+        return slide;
+      });
+    }
+
+    // Fallback slides - تُترجم باستخدام ملفات الترجمة
+    return (fallback || fallbackSlides).map(
+      (slide): HeroSlide => ({
+        id: String(slide.id),
+        image: slide.image,
+        title: t(slide.titleKey),
+        cta: t(slide.ctaKey),
+        link: slide.link,
+        type: "promotion" as const,
+      })
+    );
+  }, [slides, fallback, t, currentLanguage]);
 
   return (
     <section className="hero-slider relative h-[70vh] sm:h-screen w-full overflow-hidden">
@@ -75,16 +118,16 @@ export function HeroSlider() {
         }}
         className="h-full w-full"
       >
-        {SLIDES.map((slide) => (
+        {displaySlides.map((slide, index) => (
           <SwiperSlide key={slide.id} className="relative">
             <div className="relative h-full w-full">
               {/* Background Image */}
               <Image
                 src={slide.image}
-                alt={t(slide.titleKey)}
+                alt={slide.title}
                 fill
-                priority
-                fetchPriority="high"
+                priority={index === 0}
+                fetchPriority={index === 0 ? "high" : "auto"}
                 quality={90}
                 className="object-cover"
                 sizes="100vw"
@@ -102,14 +145,25 @@ export function HeroSlider() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3, duration: 0.8 }}
                 >
-                  {/* Small Title */}
+                  {/* Title */}
                   <p
-                    className={`mb-6 text-sm font-light uppercase tracking-[0.3em] text-white ${
+                    className={`mb-3 text-sm font-light uppercase tracking-[0.3em] text-white ${
                       isRtl ? "font-sans-ar" : "font-sans-en"
                     }`}
                   >
-                    {t(slide.titleKey)}
+                    {slide.title}
                   </p>
+
+                  {/* Subtitle (للعروض) أو Celebratory Message (للمناسبات) */}
+                  {(slide.subtitle || slide.celebratoryMessage) && (
+                    <p
+                      className={`mb-6 text-xs font-light tracking-wide text-white/90 ${
+                        isRtl ? "font-sans-ar" : "font-sans-en"
+                      }`}
+                    >
+                      {slide.subtitle || slide.celebratoryMessage}
+                    </p>
+                  )}
 
                   {/* CTA Button - Minimal */}
                   <Link
@@ -118,7 +172,7 @@ export function HeroSlider() {
                       isRtl ? "font-sans-ar" : "font-sans-en"
                     }`}
                   >
-                    <span className="relative z-10">{t(slide.ctaKey)}</span>
+                    <span className="relative z-10">{slide.cta}</span>
                     {isRtl ? (
                       <ChevronLeft className="relative z-10 h-3 w-3 transition-transform duration-300 group-hover:-translate-x-1" />
                     ) : (

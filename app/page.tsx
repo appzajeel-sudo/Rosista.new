@@ -1,5 +1,6 @@
-import { Suspense } from "react";
+import { Suspense, cache } from "react";
 import type { Metadata } from "next";
+import { headers, cookies } from "next/headers";
 import { HeroSlider } from "@/components/hero-slider";
 import { ShopByOccasion } from "@/components/sections/shop-by-occasion";
 import { Categories } from "@/components/sections/categories";
@@ -7,6 +8,8 @@ import { BestSellers } from "@/components/sections/best-sellers";
 import { FeaturedCollections } from "@/components/sections/featured-collections";
 import { LuxuryGifts } from "@/components/sections/luxury-gifts";
 import { SpecialOccasion } from "@/components/sections/special-occasion";
+import { fetchHeroSlides } from "@/lib/api/hero";
+import type { HeroSlide } from "@/types/hero";
 
 // ISR: إعادة توليد الصفحة كل 3600 ثانية (ساعة)
 export const revalidate = 3600;
@@ -36,11 +39,51 @@ export const metadata: Metadata = {
   },
 };
 
+// Cached function to detect language from headers/cookies
+const getLanguage = cache(async (): Promise<string> => {
+  const headersList = await headers();
+  const cookieStore = await cookies();
+
+  // Try to get language from cookie first (i18nextLng from i18next-browser-languagedetector)
+  const languageCookie =
+    cookieStore.get("i18nextLng")?.value || cookieStore.get("language")?.value;
+
+  if (languageCookie) {
+    // Convert en-US, en-GB, etc to en
+    if (languageCookie.startsWith("en")) return "en";
+    if (languageCookie.startsWith("ar")) return "ar";
+  }
+
+  // Fallback to Accept-Language header
+  const acceptLanguage = headersList.get("accept-language") || "ar";
+  if (acceptLanguage.toLowerCase().startsWith("en")) {
+    return "en";
+  }
+
+  // Default to Arabic
+  return "ar";
+});
+
+// Fetch hero slides server component
+async function HeroSliderServer() {
+  try {
+    const language = await getLanguage();
+    const slides: HeroSlide[] = await fetchHeroSlides(language, 10);
+
+    // If no slides from API, HeroSlider will use fallback
+    return <HeroSlider slides={slides.length > 0 ? slides : undefined} />;
+  } catch (error) {
+    console.error("Error fetching hero slides:", error);
+    // Return HeroSlider without slides (will use fallback)
+    return <HeroSlider />;
+  }
+}
+
 export default async function HomePage() {
   return (
     <main>
       <Suspense fallback={<div className="h-[70vh] sm:h-screen" />}>
-        <HeroSlider />
+        <HeroSliderServer />
       </Suspense>
       <Suspense fallback={<div className="h-96" />}>
         <ShopByOccasion />

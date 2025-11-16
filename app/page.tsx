@@ -1,10 +1,12 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
 import { HeroSlider } from "@/components/hero-slider";
-import { ShopByOccasion } from "@/components/shop-by-occasion";
-import { Categories } from "@/components/categories";
-import { BestSellers } from "@/components/best-sellers";
-import { FeaturedCollections } from "@/components/featured-collections";
+import { ShopByOccasion } from "@/components/sections/shop-by-occasion";
+import { Categories } from "@/components/sections/categories";
+import { BestSellers } from "@/components/sections/best-sellers";
+import { FeaturedCollections } from "@/components/sections/featured-collections";
+import { LuxuryGifts } from "@/components/sections/luxury-gifts";
+import { SpecialOccasion } from "@/components/sections/special-occasion";
 
 // ISR: إعادة توليد الصفحة كل 3600 ثانية (ساعة)
 export const revalidate = 3600;
@@ -40,7 +42,9 @@ export default async function HomePage() {
       <Suspense fallback={<div className="h-[70vh] sm:h-screen" />}>
         <HeroSlider />
       </Suspense>
-      <ShopByOccasion />
+      <Suspense fallback={<div className="h-96" />}>
+        <ShopByOccasion />
+      </Suspense>
       <Suspense fallback={<div className="h-96" />}>
         <Categories />
       </Suspense>
@@ -49,6 +53,12 @@ export default async function HomePage() {
       </Suspense>
       <Suspense fallback={<div className="h-96" />}>
         <FeaturedCollections />
+      </Suspense>
+      <Suspense fallback={<div className="h-96" />}>
+        <LuxuryGifts />
+      </Suspense>
+      <Suspense fallback={<div className="h-96" />}>
+        <SpecialOccasion />
       </Suspense>
     </main>
   );

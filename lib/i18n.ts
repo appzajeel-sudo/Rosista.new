@@ -136,7 +136,7 @@ export const translations = {
         viewMore: "عرض جميع المناسبات",
       },
       categories: {
-        title: "مجموعاتنا",
+        title: "فئاتنا",
       },
     },
     occasions: {
@@ -158,7 +158,7 @@ export const translations = {
       hajj: "الحج",
     },
     categories: {
-      title: "مجموعاتنا",
+      title: "فئاتنا",
       jewelry: "المجوهرات",
       fragrances: "العطور",
       accessories: "الإكسسوارات",

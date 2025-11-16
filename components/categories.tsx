@@ -121,9 +121,9 @@ export function Categories() {
 
   return (
     <section className="relative bg-background">
-      <div className="mx-auto max-w-[1650px] px-6 sm:px-8">
+      <div className="mx-auto max-w-[1650px] sm:px-6 md:px-8">
         {/* Header - Minimal & Elegant */}
-        <div className="pt-12 pb-8 text-center sm:pt-20 sm:pb-12 md:pt-24 md:pb-16">
+        <div className="pt-12 pb-8 text-center px-6 sm:pt-20 sm:pb-12 sm:px-0 md:pt-24 md:pb-16">
           <h2
             className={`text-2xl font-bold tracking-tight text-foreground sm:text-4xl md:text-5xl lg:text-6xl ${
               isRtl ? "font-sans-ar" : "font-sans-en"

@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { gsap } from "gsap";
 
 type Slide = {
-  id: number;
+  id: string;
   image: string;
 };
 

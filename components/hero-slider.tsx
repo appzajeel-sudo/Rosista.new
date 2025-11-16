@@ -88,22 +88,6 @@ export function HeroSlider({
       );
     }
 
-    // Debug: إرسال البيانات المعروضة إلى DataViewer (فقط في Development و Client-Side)
-    if (
-      process.env.NODE_ENV === "development" &&
-      typeof window !== "undefined"
-    ) {
-      window.dispatchEvent(
-        new CustomEvent("hero-slider-data-update", {
-          detail: {
-            slides: result,
-            language: currentLanguage,
-            timestamp: new Date().toISOString(),
-          },
-        })
-      );
-    }
-
     return result;
   }, [slides, fallback, t, currentLanguage]);
 

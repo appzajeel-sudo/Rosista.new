@@ -10,7 +10,6 @@ import { LuxuryGifts } from "@/components/sections/luxury-gifts";
 import { SpecialOccasion } from "@/components/sections/special-occasion";
 import { fetchHeroSlides } from "@/lib/api/hero";
 import type { HeroSlide } from "@/types/hero";
-import { DataViewerWrapper } from "@/components/debug/data-viewer-wrapper";
 
 // ISR: إعادة توليد الصفحة كل 3600 ثانية (ساعة)
 export const revalidate = 3600;
@@ -71,31 +70,8 @@ async function HeroSliderServer() {
     const language = await getLanguage();
     const slides: HeroSlide[] = await fetchHeroSlides(language, 10);
 
-    // Pass fetched data to DataViewer via script tag (only in development)
-    const fetchedDataForViewer =
-      process.env.NODE_ENV === "development"
-        ? {
-            slides,
-            language,
-            timestamp: new Date().toISOString(),
-          }
-        : null;
-
     // If no slides from API, HeroSlider will use fallback
-    return (
-      <>
-        {fetchedDataForViewer && (
-          <script
-            dangerouslySetInnerHTML={{
-              __html: `window.__HERO_FETCHED_DATA__ = ${JSON.stringify(
-                fetchedDataForViewer
-              )};`,
-            }}
-          />
-        )}
-        <HeroSlider slides={slides.length > 0 ? slides : undefined} />
-      </>
-    );
+    return <HeroSlider slides={slides.length > 0 ? slides : undefined} />;
   } catch (error) {
     // Return HeroSlider without slides (will use fallback)
     return <HeroSlider />;
@@ -126,8 +102,6 @@ export default async function HomePage() {
       <Suspense fallback={<div className="h-96" />}>
         <SpecialOccasion />
       </Suspense>
-      {/* Debug Data Viewer - فقط في Development Mode */}
-      <DataViewerWrapper />
     </main>
   );
 }

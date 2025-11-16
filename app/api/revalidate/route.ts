@@ -12,9 +12,13 @@ export async function POST(request: NextRequest) {
     // إلغاء كاش الصفحة الرئيسية
     revalidatePath("/");
 
+    // ✅ إلغاء كاش صفحة المناسبات
+    revalidatePath("/occasions");
+
     return NextResponse.json({
       revalidated: true,
       now: Date.now(),
+      paths: ["/", "/occasions"],
     });
   } catch (error: any) {
     return NextResponse.json(

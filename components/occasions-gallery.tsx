@@ -7,9 +7,12 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 
 type Occasion = {
-  id: number;
+  id: string;
   slug: string;
-  nameKey: string;
+  nameAr: string;
+  nameEn: string;
+  descriptionAr: string;
+  descriptionEn: string;
   image: string;
 };
 
@@ -21,12 +24,10 @@ function OccasionCard({
   occasion,
   index,
   isRtl,
-  t,
 }: {
   occasion: Occasion;
   index: number;
   isRtl: boolean;
-  t: (key: string) => string;
 }) {
   const [isHovered, setIsHovered] = useState(false);
 
@@ -54,7 +55,7 @@ function OccasionCard({
                 <div className="relative h-full w-full overflow-hidden bg-transparent">
                   <Image
                     src={occasion.image}
-                    alt={t(occasion.nameKey)}
+                    alt={isRtl ? occasion.nameAr : occasion.nameEn}
                     fill
                     className="object-cover"
                     sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
@@ -122,28 +123,48 @@ function OccasionCard({
                           : {}
                       }
                     >
-                      {t(occasion.nameKey)}
+                      {isRtl ? occasion.nameAr : occasion.nameEn}
                     </h3>
 
                     {/* Description */}
-                    <p
-                      className={`text-xs font-bold leading-relaxed text-black ${
-                        isRtl ? "font-sans-ar" : "font-sans-en"
-                      }`}
-                      style={
-                        !isRtl
-                          ? {
-                              fontFamily:
-                                "'Cormorant Garamond', 'Georgia', serif",
-                              letterSpacing: "0.02em",
-                            }
-                          : {}
-                      }
-                    >
-                      {isRtl
-                        ? "اكتشف مجموعتنا الحصرية من الهدايا المميزة"
-                        : "Discover our exclusive collection of unique gifts"}
-                    </p>
+                    {(isRtl ? occasion.descriptionAr : occasion.descriptionEn) && (
+                      <p
+                        className={`text-xs font-bold leading-relaxed text-black ${
+                          isRtl ? "font-sans-ar" : "font-sans-en"
+                        }`}
+                        style={
+                          !isRtl
+                            ? {
+                                fontFamily:
+                                  "'Cormorant Garamond', 'Georgia', serif",
+                                letterSpacing: "0.02em",
+                              }
+                            : {}
+                        }
+                      >
+                        {isRtl ? occasion.descriptionAr : occasion.descriptionEn}
+                      </p>
+                    )}
+                    {!(isRtl ? occasion.descriptionAr : occasion.descriptionEn) && (
+                      <p
+                        className={`text-xs font-bold leading-relaxed text-black ${
+                          isRtl ? "font-sans-ar" : "font-sans-en"
+                        }`}
+                        style={
+                          !isRtl
+                            ? {
+                                fontFamily:
+                                  "'Cormorant Garamond', 'Georgia', serif",
+                                letterSpacing: "0.02em",
+                              }
+                            : {}
+                        }
+                      >
+                        {isRtl
+                          ? "اكتشف مجموعتنا الحصرية من الهدايا المميزة"
+                          : "Discover our exclusive collection of unique gifts"}
+                      </p>
+                    )}
                   </div>
                 </div>
               </div>
@@ -155,7 +176,7 @@ function OccasionCard({
             className={`text-center ${isRtl ? "font-sans-ar" : "font-sans-en"}`}
           >
             <h3 className="text-sm font-bold text-foreground">
-              {t(occasion.nameKey)}
+              {isRtl ? occasion.nameAr : occasion.nameEn}
             </h3>
           </div>
         </div>
@@ -178,7 +199,6 @@ export function OccasionsGallery({ occasions }: Props) {
             occasion={occasion}
             index={index}
             isRtl={isRtl}
-            t={t}
           />
         ))}
       </div>

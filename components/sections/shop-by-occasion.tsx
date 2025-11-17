@@ -10,6 +10,7 @@ import type { Swiper as SwiperType } from "swiper";
 import { ChevronLeft, ChevronRight, ArrowUpRight } from "lucide-react";
 import { getActiveOccasions } from "@/lib/api/occasions";
 import type { Occasion } from "@/types/occasion";
+import { Skeleton } from "@/components/ui/skeleton";
 
 // Import Swiper styles
 import "swiper/css";
@@ -66,18 +67,24 @@ export function ShopByOccasion() {
         <div className="mx-auto max-w-[1650px] px-6 sm:px-8">
           <div className="mb-12">
             <div className="relative inline-block">
-              <h2
-                className={`pb-3 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl ${
-                  isRtl ? "font-sans-ar" : "font-sans-en"
-                }`}
-              >
-                {t("home.shopByOccasion.title")}
-              </h2>
+              <Skeleton className="h-9 w-64 sm:h-10 sm:w-80" />
             </div>
           </div>
-          <div className="h-96 flex items-center justify-center">
-            <div className="text-foreground/60">
-              {t("common.loading") || "Loading..."}
+
+          {/* Shimmer Skeleton Cards - يشبه المحتوى الفعلي */}
+          <div className="relative">
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+              {[...Array(5)].map((_, index) => (
+                <div key={index} className="space-y-3">
+                  {/* Image Skeleton - نفس aspect ratio */}
+                  <Skeleton className="aspect-[4/5] sm:aspect-[3/4] rounded-3xl" />
+                  {/* Text Skeleton */}
+                  <div className="px-4 space-y-2">
+                    <Skeleton className="h-4 w-full" />
+                    <Skeleton className="h-4 w-3/4" />
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>

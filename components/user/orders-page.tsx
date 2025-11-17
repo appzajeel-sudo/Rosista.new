@@ -28,6 +28,7 @@ import Link from "next/link";
 import Image from "next/image";
 import type { Order } from "@/types/user";
 import { getOrdersAction } from "@/app/actions/user";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export function OrdersPage() {
   const { i18n, t } = useTranslation();
@@ -278,11 +279,36 @@ export function OrdersPage() {
 
         {/* Orders List */}
         {isLoading ? (
-          <div className="text-center py-16">
-            <div className="w-16 h-16 border-4 border-primary-500 border-t-transparent rounded-full animate-spin mx-auto mb-6"></div>
-            <p className="text-neutral-900 dark:text-white font-medium">
-              {isRtl ? "جاري تحميل الطلبات..." : "Loading orders..."}
-            </p>
+          <div className="space-y-6 py-8">
+            {[...Array(3)].map((_, index) => (
+              <div key={index} className="rounded-lg border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 p-6">
+                <div className="space-y-4">
+                  {/* Order Header */}
+                  <div className="flex items-center justify-between">
+                    <Skeleton className="h-6 w-32" />
+                    <Skeleton className="h-6 w-24" />
+                  </div>
+                  {/* Order Items */}
+                  <div className="space-y-3">
+                    {[...Array(2)].map((_, itemIndex) => (
+                      <div key={itemIndex} className="flex gap-4">
+                        <Skeleton className="h-20 w-20 rounded-lg" />
+                        <div className="flex-1 space-y-2">
+                          <Skeleton className="h-4 w-3/4" />
+                          <Skeleton className="h-4 w-1/2" />
+                          <Skeleton className="h-4 w-1/4" />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  {/* Order Footer */}
+                  <div className="flex items-center justify-between pt-4 border-t border-neutral-200 dark:border-neutral-800">
+                    <Skeleton className="h-5 w-24" />
+                    <Skeleton className="h-9 w-28 rounded-lg" />
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         ) : filteredOrders.length === 0 ? (
           <motion.div

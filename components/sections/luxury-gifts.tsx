@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import { LuxuryGiftsClient } from "./luxury-gifts-client";
 import { getLuxuryGifts } from "@/lib/api/products";
 import type { Product } from "@/types/product";
+import { Skeleton } from "@/components/ui/skeleton";
 
 // Server Component to fetch luxury gifts
 async function LuxuryGiftsContent() {
@@ -34,7 +35,7 @@ function LuxuryGiftsLoading() {
     <section className="relative overflow-hidden bg-background py-3 sm:py-5">
       <div className="mx-auto max-w-[1650px] px-6 sm:px-8">
         <div className="mb-12">
-          <div className="h-8 bg-foreground/10 animate-pulse rounded w-48" />
+          <Skeleton className="h-8 w-48 sm:h-10 sm:w-64" />
         </div>
         <div className="relative">
           <div className="flex gap-4">
@@ -43,7 +44,7 @@ function LuxuryGiftsLoading() {
                 key={i}
                 className="shrink-0 w-[calc(50%-8px)] sm:w-[calc(33.333%-14px)] lg:w-[calc(20%-16px)]"
               >
-                <div className="aspect-3/4 bg-foreground/5 animate-pulse rounded-3xl" />
+                <Skeleton className="aspect-3/4 rounded-3xl" />
               </div>
             ))}
           </div>

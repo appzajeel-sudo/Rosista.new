@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
+import { useEffect, useState } from "react";
 
 type Category = {
   id: string;
@@ -21,23 +22,69 @@ type Props = {
 export function CategoriesClient({ categories }: Props) {
   const { t, i18n } = useTranslation();
   const isRtl = i18n.language === "ar";
+  const [isDark, setIsDark] = useState(false);
+
+  // Dark mode detection
+  useEffect(() => {
+    const checkDarkMode = () => {
+      setIsDark(document.documentElement.classList.contains("dark"));
+    };
+    checkDarkMode();
+    const observer = new MutationObserver(checkDarkMode);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+    return () => observer.disconnect();
+  }, []);
 
   if (!categories || categories.length === 0) {
     return null;
   }
 
   return (
-    <section className="relative bg-background">
-      <div className="mx-auto max-w-[1650px] sm:px-6 md:px-8">
-        {/* Header - Minimal & Elegant */}
-        <div className="pt-12 pb-8 text-center px-6 sm:pt-20 sm:pb-12 sm:px-0 md:pt-24 md:pb-16">
-          <h2
-            className={`text-2xl font-bold tracking-tight text-foreground sm:text-4xl md:text-5xl lg:text-6xl ${
-              isRtl ? "font-sans-ar" : "font-sans-en"
-            }`}
-          >
-            {t("home.categories.title")}
-          </h2>
+    <section className="relative overflow-hidden bg-background py-3 sm:py-5">
+      <div className="mx-auto max-w-[1650px] px-6 sm:px-8">
+        {/* Header - Elegant & Professional */}
+        <div className="mb-12">
+          <div className="relative inline-block">
+            <h2
+              className={`pb-3 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl ${
+                isRtl ? "font-sans-ar" : "font-sans-en"
+              }`}
+            >
+              {t("home.categories.title")}
+            </h2>
+            {/* Decorative Line */}
+            <div className="absolute bottom-0 left-1/2 flex -translate-x-1/2 items-center gap-2">
+              <div
+                className="h-0.5 w-6 rounded-full"
+                style={{
+                  backgroundColor: isDark
+                    ? "rgb(255, 255, 255)"
+                    : "rgb(107, 114, 128)",
+                }}
+              />
+              <div
+                className="h-0.5 w-16"
+                style={{
+                  backgroundColor: isDark
+                    ? "rgb(250, 204, 21)"
+                    : "rgb(0, 0, 0)",
+                  clipPath:
+                    "polygon(0 0, calc(100% - 4px) 0, 100% 100%, 4px 100%)",
+                }}
+              />
+              <div
+                className="h-0.5 w-6 rounded-full"
+                style={{
+                  backgroundColor: isDark
+                    ? "rgb(255, 255, 255)"
+                    : "rgb(107, 114, 128)",
+                }}
+              />
+            </div>
+          </div>
         </div>
 
         {/* Luxury Split Screen Design */}
@@ -55,7 +102,7 @@ export function CategoriesClient({ categories }: Props) {
                   alt={isRtl ? category.nameAr : category.nameEn}
                   fill
                   sizes="(max-width: 640px) 50vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                  className="object-cover transition-all duration-[2s] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group-hover:scale-[1.02]"
+                  className="object-cover transition-transform duration-[2s] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group-hover:scale-[1.02] will-change-transform"
                   priority={index < 4}
                   quality={100}
                 />
@@ -64,7 +111,7 @@ export function CategoriesClient({ categories }: Props) {
                 <div className="absolute inset-0 flex items-center justify-center px-2">
                   <div className="text-center">
                     <h3
-                      className={`text-sm font-bold text-white transition-all duration-700 sm:text-lg md:text-2xl lg:text-3xl xl:text-4xl ${
+                      className={`text-sm font-bold text-white transition-opacity duration-700 sm:text-lg md:text-2xl lg:text-3xl xl:text-4xl ${
                         isRtl ? "font-sans-ar" : "font-sans-en"
                       } sm:group-hover:opacity-80`}
                     >
@@ -81,7 +128,7 @@ export function CategoriesClient({ categories }: Props) {
                 </div>
 
                 {/* Elegant Border - Only on Hover (Desktop) */}
-                <div className="absolute inset-0 border border-white/0 transition-all duration-700 sm:group-hover:border-white/20" />
+                <div className="absolute inset-0 border border-white/0 transition-opacity duration-700 sm:group-hover:border-white/20" />
               </div>
             </Link>
           ))}

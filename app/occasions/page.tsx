@@ -106,7 +106,7 @@ function OccasionsLoading() {
               </div>
             ))}
           </div>
-        </div>
+      </div>
       </section>
     </div>
   );

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
@@ -8,7 +8,8 @@ import { CheckCircle, AlertCircle } from "lucide-react";
 import { saveGoogleAccessTokenAction } from "@/app/actions/auth";
 import { useAuth } from "@/context/AuthContext";
 
-export function GoogleCallbackPage() {
+// Component that uses useSearchParams - wrapped separately
+function GoogleCallbackContent() {
   const { i18n, t } = useTranslation();
   const isRtl = i18n.language === "ar";
   const router = useRouter();
@@ -43,10 +44,10 @@ export function GoogleCallbackPage() {
         try {
           // حفظ accessToken في httpOnly cookie
           await saveGoogleAccessTokenAction(accessToken);
-          
+
           // جلب بيانات المستخدم
           await checkAuthStatus();
-          
+
           // إعادة التوجيه بعد 1.5 ثانية
           setTimeout(() => {
             router.push("/");
@@ -75,15 +76,21 @@ export function GoogleCallbackPage() {
   const getErrorMessage = () => {
     const error = searchParams.get("error");
     if (!error) return t("auth.googleCallback.errorMessages.default");
-    
+
     const errorKey = error as keyof typeof errorMessages;
     const errorMessages = {
-      authentication_failed: t("auth.googleCallback.errorMessages.authentication_failed"),
+      authentication_failed: t(
+        "auth.googleCallback.errorMessages.authentication_failed"
+      ),
       server_error: t("auth.googleCallback.errorMessages.server_error"),
-      google_auth_failed: t("auth.googleCallback.errorMessages.google_auth_failed"),
+      google_auth_failed: t(
+        "auth.googleCallback.errorMessages.google_auth_failed"
+      ),
     };
-    
-    return errorMessages[errorKey] || t("auth.googleCallback.errorMessages.default");
+
+    return (
+      errorMessages[errorKey] || t("auth.googleCallback.errorMessages.default")
+    );
   };
 
   return (
@@ -104,8 +111,8 @@ export function GoogleCallbackPage() {
               hasError
                 ? "bg-red-500"
                 : hasToken
-                  ? "bg-green-500"
-                  : "bg-neutral-900 dark:bg-white"
+                ? "bg-green-500"
+                : "bg-neutral-900 dark:bg-white"
             }`}
           >
             {hasError ? (
@@ -159,8 +166,8 @@ export function GoogleCallbackPage() {
                   hasError
                     ? "bg-red-500"
                     : hasToken
-                      ? "bg-green-500"
-                      : "bg-neutral-900 dark:bg-white"
+                    ? "bg-green-500"
+                    : "bg-neutral-900 dark:bg-white"
                 }`}
                 animate={{
                   scale: [1, 1.5, 1],
@@ -180,3 +187,32 @@ export function GoogleCallbackPage() {
   );
 }
 
+// Loading fallback component
+function LoadingFallback() {
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-neutral-50 p-4 dark:bg-neutral-950">
+      <div className="w-full max-w-sm text-center">
+        <div className="p-8 sm:p-10">
+          <div className="mx-auto mb-8 flex h-16 w-16 items-center justify-center rounded-full bg-neutral-900 dark:bg-white">
+            <div className="h-8 w-8 animate-spin rounded-full border-4 border-neutral-300 border-t-neutral-900 dark:border-neutral-700 dark:border-t-white"></div>
+          </div>
+          <h1 className="mb-4 text-3xl font-bold text-neutral-900 dark:text-white">
+            جاري المعالجة...
+          </h1>
+          <p className="mb-6 text-sm leading-relaxed text-neutral-600 dark:text-neutral-400">
+            يرجى الانتظار...
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Main exported component with Suspense boundary
+export function GoogleCallbackPage() {
+  return (
+    <Suspense fallback={<LoadingFallback />}>
+      <GoogleCallbackContent />
+    </Suspense>
+  );
+}

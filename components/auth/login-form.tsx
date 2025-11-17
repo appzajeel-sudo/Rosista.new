@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
 import { Eye, EyeOff, ArrowRight, ArrowLeft, Mail, Phone } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
+import { useRecaptcha } from "@/hooks/useRecaptcha";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -14,6 +15,12 @@ export function LoginForm() {
   const isRtl = i18n.language === "ar";
   const router = useRouter();
   const { login, loginWithPhone } = useAuth();
+
+  // Initialize reCAPTCHA
+  const { executeRecaptcha, isLoaded: isRecaptchaLoaded } = useRecaptcha({
+    siteKey: process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || "",
+    action: "login",
+  });
 
   const [loginMethod, setLoginMethod] = useState<"email" | "phone">("email");
   const [formData, setFormData] = useState({
@@ -33,7 +40,17 @@ export function LoginForm() {
 
     try {
       if (loginMethod === "email") {
-        const captchaToken = "dummy-captcha-token";
+        // Execute reCAPTCHA
+        if (!isRecaptchaLoaded) {
+          setError(
+            t("auth.errors.recaptchaNotLoaded") ||
+              "reCAPTCHA is not ready. Please wait a moment and try again."
+          );
+          setIsLoading(false);
+          return;
+        }
+
+        const captchaToken = await executeRecaptcha();
         await login({
           email: formData.email,
           password: formData.password,
@@ -42,7 +59,9 @@ export function LoginForm() {
       } else {
         await loginWithPhone(formData.phoneNumber);
         router.push(
-          `/auth/phone-login-verification?phoneNumber=${encodeURIComponent(formData.phoneNumber)}`
+          `/auth/phone-login-verification?phoneNumber=${encodeURIComponent(
+            formData.phoneNumber
+          )}`
         );
       }
     } catch (err: any) {
@@ -189,7 +208,9 @@ export function LoginForm() {
                 }`}
               >
                 <Mail size={18} />
-                <span className="font-medium">{t("auth.login.methodEmail")}</span>
+                <span className="font-medium">
+                  {t("auth.login.methodEmail")}
+                </span>
               </button>
               <button
                 type="button"
@@ -204,7 +225,9 @@ export function LoginForm() {
                 }`}
               >
                 <Phone size={18} />
-                <span className="font-medium">{t("auth.login.methodPhone")}</span>
+                <span className="font-medium">
+                  {t("auth.login.methodPhone")}
+                </span>
               </button>
             </div>
           </div>
@@ -233,7 +256,9 @@ export function LoginForm() {
                       onChange={handleChange}
                       dir="ltr"
                       className={`w-full border-b-2 border-neutral-300 bg-transparent px-0 py-2.5 text-left text-neutral-900 transition-colors placeholder:text-neutral-400 focus:border-primary-500 focus:outline-none dark:border-neutral-700 dark:text-white dark:placeholder:text-neutral-500 dark:focus:border-primary-400 ${
-                        isRtl ? "placeholder:text-right" : "placeholder:text-left"
+                        isRtl
+                          ? "placeholder:text-right"
+                          : "placeholder:text-left"
                       }`}
                       placeholder={t("auth.login.emailPlaceholder")}
                       required
@@ -253,7 +278,9 @@ export function LoginForm() {
                         onChange={handleChange}
                         dir="ltr"
                         className={`w-full border-b-2 border-neutral-300 bg-transparent px-0 py-2.5 pr-10 text-left text-neutral-900 transition-colors placeholder:text-neutral-400 focus:border-primary-500 focus:outline-none dark:border-neutral-700 dark:text-white dark:placeholder:text-neutral-500 dark:focus:border-primary-400 rtl:pl-10 rtl:pr-0 ${
-                          isRtl ? "placeholder:text-right" : "placeholder:text-left"
+                          isRtl
+                            ? "placeholder:text-right"
+                            : "placeholder:text-left"
                         }`}
                         placeholder={t("auth.login.passwordPlaceholder")}
                         required
@@ -263,7 +290,11 @@ export function LoginForm() {
                         onClick={() => setShowPassword(!showPassword)}
                         className="absolute right-0 top-1/2 -translate-y-1/2 text-neutral-400 transition-colors hover:text-neutral-600 dark:hover:text-neutral-300 rtl:left-0 rtl:right-auto"
                       >
-                        {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                        {showPassword ? (
+                          <EyeOff size={18} />
+                        ) : (
+                          <Eye size={18} />
+                        )}
                       </button>
                     </div>
                   </div>

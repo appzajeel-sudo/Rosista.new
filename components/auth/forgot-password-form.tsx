@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, ArrowLeft, Key, CheckCircle } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
+import { useRecaptcha } from "@/hooks/useRecaptcha";
 import Link from "next/link";
 
 export function ForgotPasswordForm() {
@@ -13,6 +14,12 @@ export function ForgotPasswordForm() {
   const isRtl = i18n.language === "ar";
   const router = useRouter();
   const { requestPasswordReset } = useAuth();
+
+  // Initialize reCAPTCHA
+  const { executeRecaptcha, isLoaded: isRecaptchaLoaded } = useRecaptcha({
+    siteKey: process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || "",
+    action: "password_reset",
+  });
 
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -26,7 +33,14 @@ export function ForgotPasswordForm() {
     setError(null);
 
     try {
-      const captchaToken = "dummy-captcha-token";
+      // Execute reCAPTCHA
+      if (!isRecaptchaLoaded) {
+        setError(t("auth.errors.recaptchaNotLoaded") || "reCAPTCHA is not ready. Please wait a moment and try again.");
+        setIsLoading(false);
+        return;
+      }
+
+      const captchaToken = await executeRecaptcha();
       await requestPasswordReset({
         email,
         captchaToken,

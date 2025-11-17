@@ -275,7 +275,8 @@
       "phoneVerificationFailed": "Failed to verify phone number",
       "sendPhoneVerificationFailed": "Failed to send phone verification code",
       "phoneLoginFailed": "Failed to login with phone",
-      "verifyPhoneLoginFailed": "Failed to verify phone login"
+      "verifyPhoneLoginFailed": "Failed to verify phone login",
+      "recaptchaNotLoaded": "reCAPTCHA is not ready. Please wait a moment and try again."
     },
     "success": {
       "loginSuccess": "Login successful",

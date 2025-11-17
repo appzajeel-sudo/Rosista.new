@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
 import { Eye, EyeOff, ArrowRight, ArrowLeft } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
+import { useRecaptcha } from "@/hooks/useRecaptcha";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -14,6 +15,12 @@ export function SignupForm() {
   const isRtl = i18n.language === "ar";
   const router = useRouter();
   const { signup } = useAuth();
+
+  // Initialize reCAPTCHA
+  const { executeRecaptcha, isLoaded: isRecaptchaLoaded } = useRecaptcha({
+    siteKey: process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || "",
+    action: "signup",
+  });
 
   const [formData, setFormData] = useState({
     name: "",
@@ -49,7 +56,18 @@ export function SignupForm() {
     setIsLoading(true);
 
     try {
-      const captchaToken = "dummy-captcha-token";
+      // Execute reCAPTCHA
+      if (!isRecaptchaLoaded) {
+        setError(
+          t("auth.errors.recaptchaNotLoaded") ||
+            "reCAPTCHA is not ready. Please wait a moment and try again."
+        );
+        setIsLoading(false);
+        return;
+      }
+
+      const captchaToken = await executeRecaptcha();
+
       await signup({
         name: formData.name,
         email: formData.email,

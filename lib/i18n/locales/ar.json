@@ -275,7 +275,8 @@
       "phoneVerificationFailed": "فشل التحقق من رقم الهاتف",
       "sendPhoneVerificationFailed": "فشل إرسال رمز التحقق للهاتف",
       "phoneLoginFailed": "فشل تسجيل الدخول بالهاتف",
-      "verifyPhoneLoginFailed": "فشل التحقق من تسجيل الدخول بالهاتف"
+      "verifyPhoneLoginFailed": "فشل التحقق من تسجيل الدخول بالهاتف",
+      "recaptchaNotLoaded": "reCAPTCHA غير جاهز. يرجى الانتظار قليلاً والمحاولة مرة أخرى."
     },
     "success": {
       "loginSuccess": "تم تسجيل الدخول بنجاح",

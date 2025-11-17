@@ -37,7 +37,7 @@
       "viewMore": "عرض جميع المناسبات"
     },
     "categories": {
-      "title": "فئاتنا"
+      "title": "فئاتنا الحصرية"
     }
   },
   "occasions": {
@@ -85,6 +85,12 @@
   "featuredCollections": {
     "title": "مجموعات مميزة",
     "badge": "مميز"
+  },
+  "luxuryGifts": {
+    "title": "هدايا فاخرة"
+  },
+  "specialOccasion": {
+    "title": "مناسبة خاصة"
   },
   "footer": {
     "about": "حول",

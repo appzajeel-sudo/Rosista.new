@@ -36,7 +36,7 @@ export const translations = {
         viewMore: "View All Occasions",
       },
       categories: {
-        title: "Our Collections",
+        title: "Our Exclusive Categories",
       },
     },
     occasions: {
@@ -79,6 +79,12 @@ export const translations = {
     featuredCollections: {
       title: "Featured Collections",
       badge: "Featured",
+    },
+    luxuryGifts: {
+      title: "Luxury Gifts",
+    },
+    specialOccasion: {
+      title: "Special Occasion",
     },
     footer: {
       about: "About",
@@ -136,7 +142,7 @@ export const translations = {
         viewMore: "عرض جميع المناسبات",
       },
       categories: {
-        title: "فئاتنا",
+        title: "فئاتنا الحصرية",
       },
     },
     occasions: {
@@ -179,6 +185,12 @@ export const translations = {
     featuredCollections: {
       title: "مجموعات مميزة",
       badge: "مميز",
+    },
+    luxuryGifts: {
+      title: "هدايا فاخرة",
+    },
+    specialOccasion: {
+      title: "مناسبة خاصة",
     },
     footer: {
       about: "حول",

@@ -202,7 +202,7 @@ export function LuxuryGiftsClient({ products }: Props) {
                         fetchPriority={index === 0 ? "high" : "auto"}
                         quality={100}
                         loading={index === 0 ? "eager" : "lazy"}
-                        className="object-cover"
+                        className="object-cover transition-transform duration-[2s] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group-hover:scale-[1.02] will-change-transform"
                       />
 
                       {/* Luxury Gift Badge */}
@@ -226,7 +226,7 @@ export function LuxuryGiftsClient({ products }: Props) {
                           e.stopPropagation();
                           // TODO: Add to favorites functionality
                         }}
-                        className={`absolute top-3 z-10 flex h-9 w-9 items-center justify-center rounded-full opacity-0 -translate-y-3 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0 cursor-pointer ${
+                        className={`absolute top-3 z-10 flex h-9 w-9 items-center justify-center rounded-full opacity-0 -translate-y-3 transition-all duration-700 group-hover:opacity-100 group-hover:translate-y-0 cursor-pointer ${
                           isRtl ? "left-3" : "right-3"
                         }`}
                         style={{
@@ -240,8 +240,8 @@ export function LuxuryGiftsClient({ products }: Props) {
                       </button>
 
                       {/* Hover Overlay */}
-                      <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/40 via-black/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                      <div className="absolute inset-x-0 bottom-0 p-4 opacity-0 translate-y-3 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
+                      <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/40 via-black/10 to-transparent opacity-0 transition-opacity duration-700 group-hover:opacity-100" />
+                      <div className="absolute inset-x-0 bottom-0 p-4 opacity-0 translate-y-3 transition-all duration-700 group-hover:opacity-100 group-hover:translate-y-0">
                         {(isRtl ? product.descriptionAr : product.descriptionEn) && (
                           <p
                             className={`mx-auto mb-3 max-w-[85%] text-center text-xs text-white/90 line-clamp-3 ${

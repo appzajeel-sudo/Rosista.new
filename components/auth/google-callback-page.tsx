@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, Suspense } from "react";
+import { useEffect, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
@@ -8,8 +8,7 @@ import { CheckCircle, AlertCircle } from "lucide-react";
 import { saveGoogleAccessTokenAction } from "@/app/actions/auth";
 import { useAuth } from "@/context/AuthContext";
 
-// Component that uses useSearchParams - wrapped separately
-function GoogleCallbackContent() {
+export function GoogleCallbackPage() {
   const { i18n, t } = useTranslation();
   const isRtl = i18n.language === "ar";
   const router = useRouter();
@@ -184,35 +183,5 @@ function GoogleCallbackContent() {
         </div>
       </motion.div>
     </div>
-  );
-}
-
-// Loading fallback component
-function LoadingFallback() {
-  return (
-    <div className="flex min-h-screen items-center justify-center bg-neutral-50 p-4 dark:bg-neutral-950">
-      <div className="w-full max-w-sm text-center">
-        <div className="p-8 sm:p-10">
-          <div className="mx-auto mb-8 flex h-16 w-16 items-center justify-center rounded-full bg-neutral-900 dark:bg-white">
-            <div className="h-8 w-8 animate-spin rounded-full border-4 border-neutral-300 border-t-neutral-900 dark:border-neutral-700 dark:border-t-white"></div>
-          </div>
-          <h1 className="mb-4 text-3xl font-bold text-neutral-900 dark:text-white">
-            جاري المعالجة...
-          </h1>
-          <p className="mb-6 text-sm leading-relaxed text-neutral-600 dark:text-neutral-400">
-            يرجى الانتظار...
-          </p>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// Main exported component with Suspense boundary
-export function GoogleCallbackPage() {
-  return (
-    <Suspense fallback={<LoadingFallback />}>
-      <GoogleCallbackContent />
-    </Suspense>
   );
 }

@@ -74,7 +74,7 @@ export function EmailVerificationForm() {
   };
 
   const handleCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.replace(/\D/g, "").slice(0, 6);
+    const value = e.target.value.slice(0, 6);
     setVerificationCode(value);
     setError(null);
   };
@@ -92,7 +92,7 @@ export function EmailVerificationForm() {
         className="w-full max-w-md"
       >
         {/* Card */}
-        <div className="rounded-2xl border border-neutral-200 bg-white shadow-xl dark:border-neutral-800 dark:bg-neutral-900">
+        <div className="rounded-2xl">
           <div className="p-8 sm:p-10">
             {/* Header */}
             <div className="mb-8 text-center">
@@ -147,8 +147,6 @@ export function EmailVerificationForm() {
               <motion.button
                 type="submit"
                 disabled={isLoading || verificationCode.length !== 6}
-                whileHover={{ scale: 1.01 }}
-                whileTap={{ scale: 0.99 }}
                 className="w-full rounded-lg bg-neutral-900 px-4 py-3 font-semibold text-white transition-colors hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-100"
               >
                 {isLoading ? (

@@ -9,10 +9,7 @@ import {
 } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
-import type {
-  UserProfile,
-  UpdateProfileRequest,
-} from "@/types/user";
+import type { UserProfile, UpdateProfileRequest } from "@/types/user";
 import {
   getUserProfileAction,
   updateProfileAction,
@@ -32,7 +29,10 @@ interface UserContextType {
   updatePassword: (oldPassword: string, newPassword: string) => Promise<void>;
   uploadProfilePicture: (file: File) => Promise<void>;
   requestEmailUpdate: (newEmail: string) => Promise<void>;
-  verifyEmailUpdate: (verificationCode: string, password: string) => Promise<void>;
+  verifyEmailUpdate: (
+    verificationCode: string,
+    password: string
+  ) => Promise<void>;
   deleteAccount: (password: string, confirmation: string) => Promise<void>;
   refreshProfile: () => Promise<void>;
 }
@@ -77,7 +77,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     try {
       const result = await updateProfileAction(data);
       setProfile(result.user);
-      
+
       // تحديث AuthContext user state
       await checkAuthStatus();
 
@@ -152,8 +152,10 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 
       // Update profile with new image URL
       const result = await uploadProfilePictureAction(uploadResult.secure_url);
-      setProfile((prev) => (prev ? { ...prev, profilePicture: result.profilePicture } : null));
-      
+      setProfile((prev) =>
+        prev ? { ...prev, profilePicture: result.profilePicture } : null
+      );
+
       // تحديث AuthContext user state
       await checkAuthStatus();
     } catch (error: any) {
@@ -176,7 +178,10 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const verifyEmailUpdate = async (verificationCode: string, password: string) => {
+  const verifyEmailUpdate = async (
+    verificationCode: string,
+    password: string
+  ) => {
     setIsLoading(true);
     try {
       await verifyEmailUpdateAction(verificationCode, password);
@@ -226,4 +231,3 @@ export function useUser() {
   }
   return context;
 }
-

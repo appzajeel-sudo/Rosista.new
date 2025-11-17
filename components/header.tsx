@@ -17,6 +17,8 @@ import {
   Search,
   ShoppingBag,
   User,
+  UserCircle,
+  CircleUser,
   Menu,
   X,
   Sun,
@@ -204,7 +206,7 @@ export function Header() {
       <header
         ref={headerRef}
         suppressHydrationWarning
-        className={`fixed top-0 z-50 w-full transition-all duration-1600 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+        className={`fixed top-0 z-[100] w-full transition-all duration-1600 ease-[cubic-bezier(0.22,1,0.36,1)] ${
           isScrolled ? "bg-background shadow-sm" : "bg-transparent"
         }`}
         style={{
@@ -320,15 +322,15 @@ export function Header() {
                 {/* Account */}
                 {isAuthenticated ? (
                   <div
-                    className="relative hidden sm:block"
+                    className="relative hidden sm:flex sm:items-center"
                     ref={userMenuRef}
                   >
                     <button
                       onClick={() => setShowUserMenu(!showUserMenu)}
-                      className={`transition-opacity hover:opacity-60 ${textColor}`}
+                      className={`flex items-center transition-opacity hover:opacity-60 ${textColor}`}
                       aria-label="Account"
                     >
-                      <User className="h-[18px] w-[18px] stroke-[1.5]" />
+                      <CircleUser className="h-[18px] w-[18px] stroke-[1.5]" />
                     </button>
                     <AnimatePresence>
                       {showUserMenu && (
@@ -337,7 +339,7 @@ export function Header() {
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: -4 }}
                           transition={{ duration: 0.15 }}
-                          className={`absolute mt-1 w-48 bg-white dark:bg-neutral-900 shadow-lg z-[60] border border-neutral-200 dark:border-neutral-800 rounded-md overflow-hidden ${
+                          className={`absolute top-full mt-2 w-48 bg-white dark:bg-neutral-900 shadow-lg z-[9999] border border-neutral-200 dark:border-neutral-800 rounded-md overflow-hidden ${
                             isRtl ? "left-0" : "right-0"
                           }`}
                         >
@@ -384,10 +386,10 @@ export function Header() {
                 ) : (
                   <Link
                     href="/auth/login"
-                    aria-label="Account"
+                    aria-label="Login"
                     className={`hidden transition-opacity hover:opacity-60 sm:block ${textColor}`}
                   >
-                    <User className="h-[18px] w-[18px] stroke-[1.5]" />
+                    <UserCircle className="h-[18px] w-[18px] stroke-[1.5]" />
                   </Link>
                 )}
 

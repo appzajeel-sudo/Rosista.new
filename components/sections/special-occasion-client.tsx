@@ -10,7 +10,7 @@ import type { Swiper as SwiperType } from "swiper";
 import {
   ChevronLeft,
   ChevronRight,
-  Sparkles,
+  CalendarHeart,
   ShoppingCart,
   Heart,
 } from "lucide-react";
@@ -216,7 +216,7 @@ export function SpecialOccasionClient({ products }: Props) {
                         aria-label="Special Occasion"
                         title="Special Occasion"
                       >
-                        <Sparkles className="h-3.5 w-3.5 text-yellow-500" />
+                        <CalendarHeart className="h-3.5 w-3.5 text-rose-500" />
                       </div>
 
                       {/* Favorite Icon */}
@@ -242,13 +242,17 @@ export function SpecialOccasionClient({ products }: Props) {
                       {/* Hover Overlay */}
                       <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/40 via-black/10 to-transparent opacity-0 transition-opacity duration-700 group-hover:opacity-100" />
                       <div className="absolute inset-x-0 bottom-0 p-4 opacity-0 translate-y-3 transition-all duration-700 group-hover:opacity-100 group-hover:translate-y-0">
-                        {(isRtl ? product.descriptionAr : product.descriptionEn) && (
+                        {(isRtl
+                          ? product.descriptionAr
+                          : product.descriptionEn) && (
                           <p
                             className={`mx-auto mb-3 max-w-[85%] text-center text-xs text-white/90 line-clamp-3 ${
                               isRtl ? "font-sans-ar" : "font-sans-en"
                             }`}
                           >
-                            {isRtl ? product.descriptionAr : product.descriptionEn}
+                            {isRtl
+                              ? product.descriptionAr
+                              : product.descriptionEn}
                           </p>
                         )}
                         <div className="pointer-events-auto mx-auto w-max">
@@ -302,4 +306,3 @@ export function SpecialOccasionClient({ products }: Props) {
     </section>
   );
 }
-

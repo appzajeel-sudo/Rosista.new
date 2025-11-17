@@ -216,7 +216,7 @@ export function LuxuryGiftsClient({ products }: Props) {
                         aria-label="Luxury Gift"
                         title="Luxury Gift"
                       >
-                        <Gift className="h-3.5 w-3.5 text-purple-500" />
+                        <Gift className="h-3.5 w-3.5 text-violet-600" />
                       </div>
 
                       {/* Favorite Icon */}

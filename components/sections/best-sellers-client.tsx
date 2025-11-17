@@ -216,7 +216,7 @@ export function BestSellersClient({ products }: Props) {
                         aria-label="Best Seller"
                         title="Best Seller"
                       >
-                        <Crown className="h-3.5 w-3.5 text-red-500" />
+                        <Crown className="h-3.5 w-3.5 text-amber-600" />
                       </div>
 
                       {/* Favorite Icon */}

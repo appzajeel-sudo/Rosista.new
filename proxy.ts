@@ -1,6 +1,25 @@
 import { type NextRequest, NextResponse } from "next/server"
 
 export function proxy(request: NextRequest) {
+  const { pathname } = request.nextUrl;
+
+  // الصفحات المحمية التي تتطلب تسجيل دخول
+  const protectedRoutes = ["/profile", "/orders"];
+
+  // التحقق من وجود token في cookies
+  const token = request.cookies.get("accessToken")?.value;
+  const isAuthenticated = !!token;
+
+  // إذا كان المستخدم يحاول الوصول لصفحة محمية بدون token
+  if (protectedRoutes.some((route) => pathname.startsWith(route))) {
+    if (!isAuthenticated) {
+      // إعادة التوجيه إلى صفحة تسجيل الدخول مع الحفاظ على URL الأصلي
+      const loginUrl = new URL("/auth/login", request.url);
+      loginUrl.searchParams.set("redirect", pathname);
+      return NextResponse.redirect(loginUrl);
+    }
+  }
+
   const response = NextResponse.next()
 
   // Cache static assets for 1 year (immutable)

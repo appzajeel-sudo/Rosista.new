@@ -424,7 +424,9 @@ export function Header() {
       {isHomePage && (
         <div
           ref={heroRef}
-          className="fixed left-1/2 top-[6vh] z-60 -translate-x-1/2 select-none font-bold leading-none tracking-widest font-sans-en text-[20vw] sm:text-[12vw]"
+          className={`fixed left-1/2 top-[6vh] -translate-x-1/2 select-none font-bold leading-none tracking-widest font-sans-en text-[20vw] sm:text-[12vw] ${
+            isScrolled ? "z-[101]" : "z-60"
+          }`}
           style={{
             fontFamily: "'Cormorant Garamond', serif",
             fontWeight: 700,

@@ -10,7 +10,11 @@ import { useRecaptcha } from "@/hooks/useRecaptcha";
 import Link from "next/link";
 import Image from "next/image";
 
-export function LoginForm() {
+interface LoginFormProps {
+  redirectTo?: string;
+}
+
+export function LoginForm({ redirectTo = "/" }: LoginFormProps) {
   const { i18n, t } = useTranslation();
   const isRtl = i18n.language === "ar";
   const router = useRouter();
@@ -51,11 +55,14 @@ export function LoginForm() {
         }
 
         const captchaToken = await executeRecaptcha();
-        await login({
-          email: formData.email,
-          password: formData.password,
-          captchaToken,
-        });
+        await login(
+          {
+            email: formData.email,
+            password: formData.password,
+            captchaToken,
+          },
+          redirectTo
+        );
       } else {
         await loginWithPhone(formData.phoneNumber);
         router.push(

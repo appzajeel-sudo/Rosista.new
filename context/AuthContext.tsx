@@ -17,7 +17,7 @@ interface AuthContextType {
   user: User | null;
   isAuthenticated: boolean;
   isLoading: boolean;
-  login: (data: LoginRequest) => Promise<void>;
+  login: (data: LoginRequest, redirectTo?: string) => Promise<void>;
   signup: (data: SignupRequest) => Promise<void>;
   logout: () => Promise<void>;
   verifyEmail: (data: EmailVerificationRequest) => Promise<void>;
@@ -64,14 +64,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const login = async (data: LoginRequest) => {
+  const login = async (data: LoginRequest, redirectTo: string = "/") => {
     try {
       await loginAction(data);
       // بعد تسجيل الدخول الناجح، جلب بيانات المستخدم
       const userData = await getUserAction();
       if (userData) {
         setUser(userData);
-        router.push("/");
+        router.push(redirectTo);
       }
     } catch (error: any) {
       console.error("Login error:", error);

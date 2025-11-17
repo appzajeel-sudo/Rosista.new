@@ -33,6 +33,20 @@ export function HeroSlider({
 
   // ترجمة الـ slides بناءً على اللغة الحالية في Client
   const displaySlides = useMemo(() => {
+    // الصورة الثابتة الأولى
+    const staticHeroSlide: HeroSlide = {
+      id: "static-hero-rosista",
+      image:
+        "https://res.cloudinary.com/djpl34pm6/image/upload/v1763408263/categories/tjzswp5hbygwdi8v77mh.png",
+      title:
+        currentLanguage === "en"
+          ? "Luxury Gifts for Every Moment"
+          : "هدايا فاخرة لكل لحظة",
+      cta: currentLanguage === "en" ? "Shop Now" : "تسوق الآن",
+      link: "/",
+      type: "promotion",
+    };
+
     let result: HeroSlide[];
 
     if (slides && slides.length > 0) {
@@ -88,7 +102,8 @@ export function HeroSlider({
       );
     }
 
-    return result;
+    // إضافة الصورة الثابتة في البداية
+    return [staticHeroSlide, ...result];
   }, [slides, fallback, t, currentLanguage]);
 
   return (

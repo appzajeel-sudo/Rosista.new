@@ -108,7 +108,7 @@ export function LoginForm({ redirectTo = "/" }: LoginFormProps) {
             fill
             className="object-cover"
             priority
-            quality={90}
+            quality={100}
           />
         </div>
 

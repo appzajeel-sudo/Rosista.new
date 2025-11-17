@@ -24,7 +24,7 @@ export function OptimizedImage({
   priority = false,
   fill = false,
   sizes,
-  quality = 75,
+  quality = 100,
   fetchPriority = "auto",
 }: OptimizedImageProps) {
   const [isLoading, setIsLoading] = useState(true)

@@ -6,6 +6,11 @@
     "about": "عن",
     "contact": "اتصل"
   },
+  "header": {
+    "profile": "الملف الشخصي",
+    "orders": "الطلبات",
+    "logout": "تسجيل الخروج"
+  },
   "hero": {
     "title": "هدايا فاخرة لكل لحظة",
     "subtitle": "مجموعات منتقاة من الهدايا الرقيقة التي تحتفل باللحظات الثمينة في الحياة",
@@ -113,5 +118,330 @@
     "switchToDark": "التبديل إلى الوضع الداكن",
     "switchToEnglish": "التبديل إلى الإنجليزية",
     "switchToArabic": "التبديل إلى العربية"
+  },
+  "auth": {
+    "login": {
+      "title": "تسجيل الدخول",
+      "subtitle": "مرحباً بك مرة أخرى",
+      "email": "البريد الإلكتروني",
+      "password": "كلمة المرور",
+      "forgotPassword": "نسيت كلمة المرور؟",
+      "submit": "تسجيل الدخول",
+      "noAccount": "ليس لديك حساب؟",
+      "signup": "إنشاء حساب",
+      "emailPlaceholder": "أدخل بريدك الإلكتروني",
+      "passwordPlaceholder": "أدخل كلمة المرور",
+      "methodEmail": "بالإيميل",
+      "methodPhone": "بالهاتف",
+      "continueWith": "أو",
+      "googleButton": "Google",
+      "phonePlaceholder": "+966501234567",
+      "sendCode": "إرسال رمز التحقق"
+    },
+    "signup": {
+      "title": "إنشاء حساب جديد",
+      "subtitle": "انضم إلينا اليوم",
+      "name": "الاسم الكامل",
+      "email": "البريد الإلكتروني",
+      "password": "كلمة المرور",
+      "confirmPassword": "تأكيد كلمة المرور",
+      "submit": "إنشاء الحساب",
+      "hasAccount": "لديك حساب بالفعل؟",
+      "login": "تسجيل الدخول",
+      "namePlaceholder": "أدخل اسمك الكامل",
+      "emailPlaceholder": "أدخل بريدك الإلكتروني",
+      "passwordPlaceholder": "أدخل كلمة المرور",
+      "confirmPasswordPlaceholder": "أعد إدخال كلمة المرور",
+      "passwordStrength": {
+        "weak": "ضعيف",
+        "fair": "متوسط",
+        "good": "جيد",
+        "strong": "قوي"
+      },
+      "passwordMismatch": "كلمات المرور غير متطابقة"
+    },
+    "verifyEmail": {
+      "title": "تحقق من بريدك الإلكتروني",
+      "subtitle": "لقد أرسلنا رمز التحقق إلى",
+      "code": "رمز التحقق",
+      "codePlaceholder": "000000",
+      "submit": "تحقق من الرمز",
+      "noCode": "لم تستلم الرمز؟",
+      "resend": "إعادة إرسال الرمز",
+      "resendIn": "إعادة الإرسال خلال",
+      "changeEmail": "تريد تغيير البريد الإلكتروني؟",
+      "backToSignup": "العودة للتسجيل"
+    },
+    "forgotPassword": {
+      "title": "نسيت كلمة المرور؟",
+      "subtitle": "لا تقلق، سنرسل لك رابط إعادة التعيين",
+      "email": "البريد الإلكتروني",
+      "emailPlaceholder": "أدخل بريدك الإلكتروني",
+      "submit": "إرسال رابط إعادة التعيين",
+      "successTitle": "تم إرسال الرابط",
+      "successMessage": "تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني. يرجى التحقق من صندوق الوارد.",
+      "backToLogin": "العودة لتسجيل الدخول",
+      "rememberPassword": "تذكرت كلمة المرور؟",
+      "signIn": "تسجيل الدخول"
+    },
+    "resetPassword": {
+      "title": "إعادة تعيين كلمة المرور",
+      "subtitle": "أدخل كلمة المرور الجديدة",
+      "newPassword": "كلمة المرور الجديدة",
+      "confirmPassword": "تأكيد كلمة المرور",
+      "submit": "تحديث كلمة المرور",
+      "successTitle": "تم تحديث كلمة المرور",
+      "successMessage": "تم تحديث كلمة المرور بنجاح. يمكنك الآن تسجيل الدخول باستخدام كلمة المرور الجديدة.",
+      "backToLogin": "العودة لتسجيل الدخول",
+      "passwordMismatch": "كلمات المرور غير متطابقة",
+      "passwordStrength": {
+        "weak": "ضعيف",
+        "fair": "متوسط",
+        "good": "جيد",
+        "strong": "قوي"
+      }
+    },
+    "phoneVerification": {
+      "title": "تحقق من رقم الهاتف",
+      "subtitle": "لقد أرسلنا رمز التحقق إلى",
+      "code": "رمز التحقق",
+      "codePlaceholder": "000000",
+      "submit": "تحقق من الرمز",
+      "noCode": "لم تستلم الرمز؟",
+      "resend": "إعادة إرسال الرمز",
+      "resendIn": "إعادة الإرسال خلال",
+      "phoneNumberDisplay": "رقم الهاتف"
+    },
+    "phoneSetup": {
+      "title": "أضف رقم هاتفك",
+      "subtitle": "لاستكمال إنشاء حسابك، يرجى إضافة رقم هاتفك وتأكيده",
+      "phoneNumber": "رقم الهاتف",
+      "phonePlaceholder": "+966501234567",
+      "phoneHint": "يرجى إدخال رقم الهاتف السعودي (مثال: +966501234567)",
+      "whyNeedPhone": "لماذا نحتاج رقم هاتفك؟",
+      "reasons": {
+        "security": "تأمين حسابك بشكل إضافي",
+        "notifications": "إشعارات الطلبات المهمة",
+        "quickLogin": "تسجيل دخول سريع بالهاتف",
+        "delivery": "تحديثات التوصيل"
+      },
+      "sendCode": "إرسال رمز التحقق",
+      "verifyCode": "رمز التحقق",
+      "changePhone": "تغيير رقم الهاتف",
+      "footerNote": "هذه الخطوة مطلوبة لتأمين حسابك وتحسين تجربة التسوق",
+      "step1Title": "أضف رقم هاتفك",
+      "step2Title": "تحقق من رقم الهاتف",
+      "step1Subtitle": "لاستكمال إنشاء حسابك، يرجى إضافة رقم هاتفك وتأكيده",
+      "step2Subtitle": "أدخل الرمز المرسل إلى رقم هاتفك",
+      "verifyAndComplete": "تأكيد وإنهاء التسجيل"
+    },
+    "phoneLogin": {
+      "title": "تحقق من رقم الهاتف",
+      "subtitle": "أدخل الرمز المرسل إلى",
+      "code": "رمز التحقق",
+      "codePlaceholder": "000000",
+      "submit": "تسجيل الدخول",
+      "noCode": "لم تستلم الرمز؟",
+      "resend": "إعادة إرسال الرمز",
+      "resendIn": "إعادة الإرسال خلال",
+      "phoneNumberDisplay": "رقم الهاتف",
+      "backToLogin": "العودة لتسجيل الدخول"
+    },
+    "googleCallback": {
+      "processing": "جاري المعالجة...",
+      "processingMessage": "يرجى الانتظار بينما نقوم بمعالجة تسجيل دخولك.",
+      "success": "تم تسجيل الدخول بنجاح",
+      "successMessage": "مرحباً بك! سيتم إعادة توجيهك للصفحة الرئيسية.",
+      "error": "فشل في المصادقة",
+      "errorMessages": {
+        "authentication_failed": "فشل في المصادقة مع جوجل",
+        "server_error": "خطأ في الخادم، يرجى المحاولة مرة أخرى",
+        "google_auth_failed": "تم إلغاء تسجيل الدخول بجوجل",
+        "default": "حدث خطأ غير متوقع"
+      }
+    },
+    "errors": {
+      "loginFailed": "فشل تسجيل الدخول",
+      "signupFailed": "فشل إنشاء الحساب",
+      "verificationFailed": "فشل التحقق من البريد الإلكتروني",
+      "invalidCredentials": "بيانات الدخول غير صحيحة",
+      "accountNotVerified": "الحساب غير موثق",
+      "emailExists": "البريد الإلكتروني مستخدم بالفعل",
+      "invalidCode": "رمز التحقق غير صحيح",
+      "codeExpired": "انتهت صلاحية رمز التحقق",
+      "resendFailed": "فشل إعادة إرسال الرمز",
+      "passwordResetFailed": "فشل طلب إعادة تعيين كلمة المرور",
+      "resetPasswordFailed": "فشل إعادة تعيين كلمة المرور",
+      "phoneVerificationFailed": "فشل التحقق من رقم الهاتف",
+      "sendPhoneVerificationFailed": "فشل إرسال رمز التحقق للهاتف",
+      "phoneLoginFailed": "فشل تسجيل الدخول بالهاتف",
+      "verifyPhoneLoginFailed": "فشل التحقق من تسجيل الدخول بالهاتف"
+    },
+    "success": {
+      "loginSuccess": "تم تسجيل الدخول بنجاح",
+      "signupSuccess": "تم إنشاء الحساب بنجاح",
+      "verificationSuccess": "تم التحقق من البريد الإلكتروني بنجاح",
+      "codeSent": "تم إرسال رمز التحقق",
+      "codeResent": "تم إعادة إرسال رمز التحقق"
+    }
+  },
+  "profile": {
+    "title": "الملف الشخصي",
+    "subtitle": "إدارة معلوماتك الشخصية",
+    "tabs": {
+      "profile": "الملف الشخصي",
+      "password": "كلمة المرور",
+      "email": "البريد الإلكتروني",
+      "delete": "حذف الحساب"
+    },
+    "stats": {
+      "totalOrders": "إجمالي الطلبات",
+      "favorites": "المفضلة",
+      "loyaltyPoints": "نقاط الولاء",
+      "cartItems": "السلة"
+    },
+    "accountStatus": {
+      "verified": "موثق",
+      "phoneVerified": "موثق بالهاتف",
+      "notVerified": "غير موثق"
+    },
+    "personalInfo": "المعلومات الشخصية",
+    "manageData": "إدارة بياناتك الشخصية",
+    "edit": "تعديل",
+    "cancel": "إلغاء",
+    "save": "حفظ",
+    "fullName": "الاسم الكامل",
+    "username": "اسم المستخدم",
+    "emailAddress": "البريد الإلكتروني",
+    "phoneNumber": "رقم الهاتف",
+    "changeEmailNote": "لتغيير البريد الإلكتروني، استخدم قسم \"تحديث البريد الإلكتروني\"",
+    "updatePhone": "تحديث رقم الهاتف",
+    "verifyPhone": "تحقق من رقم الهاتف",
+    "profilePicture": "صورة الملف الشخصي",
+    "uploadPicture": "رفع صورة",
+    "removePicture": "إزالة الصورة",
+    "namePlaceholder": "أدخل اسمك الكامل",
+    "usernamePlaceholder": "أدخل اسم المستخدم",
+    "phonePlaceholder": "+966501234567",
+    "phoneVerificationRequired": "يرجى التحقق من رقم الهاتف الجديد",
+    "phoneUpdated": "تم تحديث رقم الهاتف",
+    "updateSuccess": "تم التحديث بنجاح",
+    "updateError": "فشل في التحديث"
+  },
+  "passwordUpdate": {
+    "title": "تحديث كلمة المرور",
+    "subtitle": "تأمين حسابك",
+    "oldPassword": "كلمة المرور الحالية",
+    "newPassword": "كلمة المرور الجديدة",
+    "confirmPassword": "تأكيد كلمة المرور",
+    "submit": "تحديث كلمة المرور",
+    "oldPasswordPlaceholder": "أدخل كلمة المرور الحالية",
+    "newPasswordPlaceholder": "أدخل كلمة المرور الجديدة",
+    "confirmPasswordPlaceholder": "أعد إدخال كلمة المرور الجديدة",
+    "passwordStrength": {
+      "weak": "ضعيف",
+      "fair": "متوسط",
+      "good": "جيد",
+      "strong": "قوي"
+    },
+    "passwordMismatch": "كلمات المرور غير متطابقة",
+    "updateSuccess": "تم تحديث كلمة المرور بنجاح",
+    "updateError": "فشل في تحديث كلمة المرور"
+  },
+  "emailUpdate": {
+    "title": "تحديث البريد الإلكتروني",
+    "subtitle": "تحديث بريدك الإلكتروني",
+    "currentEmail": "البريد الحالي",
+    "newEmail": "البريد الإلكتروني الجديد",
+    "verificationCode": "رمز التحقق",
+    "password": "كلمة المرور",
+    "submit": "إرسال",
+    "verify": "تحقق",
+    "newEmailPlaceholder": "أدخل البريد الإلكتروني الجديد",
+    "codePlaceholder": "000000",
+    "passwordPlaceholder": "أدخل كلمة المرور",
+    "step1Title": "طلب تحديث البريد",
+    "step2Title": "تحقق من البريد الجديد",
+    "step1Subtitle": "أدخل البريد الإلكتروني الجديد",
+    "step2Subtitle": "أدخل رمز التحقق المرسل إلى البريد الجديد وكلمة المرور",
+    "requestSuccess": "تم إرسال رمز التحقق إلى البريد الجديد",
+    "verifySuccess": "تم تحديث البريد الإلكتروني بنجاح",
+    "updateError": "فشل في تحديث البريد الإلكتروني"
+  },
+  "deleteAccount": {
+    "title": "حذف الحساب",
+    "subtitle": "حذف حسابك نهائياً",
+    "warning": "تحذير مهم",
+    "areYouSure": "هل أنت متأكد؟",
+    "whatWillBeDeleted": "ما سيتم حذفه",
+    "items": {
+      "orders": "جميع الطلبات",
+      "favorites": "قائمة المفضلة",
+      "cart": "محتويات السلة",
+      "profile": "الملف الشخصي",
+      "reviews": "التقييمات"
+    },
+    "password": "كلمة المرور",
+    "confirmation": "تأكيد الحذف",
+    "confirmationPlaceholder": "اكتب DELETE للتأكيد",
+    "confirmationNote": "يجب كتابة \"DELETE\" بالحروف الكبيرة للتأكيد",
+    "submit": "حذف الحساب",
+    "passwordPlaceholder": "أدخل كلمة المرور",
+    "deleteSuccess": "تم حذف الحساب بنجاح",
+    "deleteError": "فشل في حذف الحساب"
+  },
+  "orders": {
+    "title": "طلباتي",
+    "subtitle": "تتبع وإدارة طلباتك بسهولة",
+    "stats": {
+      "totalOrders": "إجمالي الطلبات",
+      "delivered": "تم التسليم",
+      "processing": "قيد المعالجة",
+      "totalSpent": "إجمالي المبلغ"
+    },
+    "filters": {
+      "all": "جميع الطلبات",
+      "pending": "في الانتظار",
+      "processing": "قيد المعالجة",
+      "shipped": "تم الشحن",
+      "delivered": "تم التسليم",
+      "cancelled": "ملغي"
+    },
+    "searchPlaceholder": "البحث في الطلبات...",
+    "noOrders": "لا توجد طلبات",
+    "noResults": "لا توجد نتائج",
+    "clearFilters": "مسح الفلاتر",
+    "startShopping": "ابدأ التسوق",
+    "orderNumber": "طلب رقم",
+    "orderDate": "تاريخ الطلب",
+    "items": "المنتجات",
+    "taxIncluded": "شامل الضريبة",
+    "subtotal": "المجموع الفرعي",
+    "tax": "الضريبة (14%)",
+    "shipping": "الشحن",
+    "total": "المجموع",
+    "shippingInfo": "معلومات الشحن",
+    "trackingNumber": "رقم التتبع",
+    "actions": {
+      "view": "عرض",
+      "hide": "إخفاء",
+      "track": "تتبع الطلب",
+      "rate": "تقييم الطلب",
+      "cancel": "إلغاء الطلب",
+      "reorder": "إعادة الطلب"
+    },
+    "viewDetails": "عرض التفاصيل",
+    "hideDetails": "إخفاء التفاصيل",
+    "needHelp": "هل تحتاج مساعدة؟",
+    "helpMessage": "فريق خدمة العملاء لدينا متاح على مدار الساعة لمساعدتك في أي استفسارات حول طلباتك.",
+    "contactUs": "تواصل معنا",
+    "faq": "الأسئلة الشائعة",
+    "status": {
+      "pending": "في الانتظار",
+      "processing": "قيد المعالجة",
+      "shipped": "تم الشحن",
+      "delivered": "تم التسليم",
+      "cancelled": "ملغي"
+    }
   }
 }

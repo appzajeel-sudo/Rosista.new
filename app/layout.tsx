@@ -5,6 +5,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/lib/theme-context";
 import { I18nProvider } from "@/lib/i18n/I18nProvider";
+import { AuthProvider } from "@/context/AuthContext";
+import { UserProvider } from "@/context/UserContext";
 import { Header } from "@/components/header";
 import { FooterWrapper } from "@/components/footer-wrapper";
 
@@ -66,11 +68,15 @@ export default function RootLayout({
       >
         <I18nProvider>
           <ThemeProvider>
-            <Header />
-            <main className="min-h-screen">{children}</main>
-            <Suspense fallback={null}>
-              <FooterWrapper />
-            </Suspense>
+            <AuthProvider>
+              <UserProvider>
+                <Header />
+                <main className="min-h-screen">{children}</main>
+                <Suspense fallback={null}>
+                  <FooterWrapper />
+                </Suspense>
+              </UserProvider>
+            </AuthProvider>
           </ThemeProvider>
         </I18nProvider>
       </body>

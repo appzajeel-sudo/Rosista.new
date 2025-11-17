@@ -26,15 +26,18 @@ import {
   Users,
   Settings,
   FileText,
+  LogOut,
 } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useDarkMode } from "@/hooks/use-dark-mode";
+import { useAuth } from "@/context/AuthContext";
 
 export function Header() {
   // Always start with false to match SSR (prevents hydration mismatch)
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isCommandOpen, setIsCommandOpen] = useState(false);
+  const [showUserMenu, setShowUserMenu] = useState(false);
 
   const pathname = usePathname();
   const router = useRouter();
@@ -42,6 +45,7 @@ export function Header() {
   const isRtl = i18n.language === "ar";
   const isHomePage = pathname === "/";
   const { theme, toggleTheme, mounted } = useDarkMode();
+  const { user, isAuthenticated, logout } = useAuth();
 
   // Transform state for scroll-linked logo (replaces ref + repeated compute)
   const [transformValues, setTransformValues] = useState<{
@@ -103,6 +107,22 @@ export function Header() {
 
     document.addEventListener("keydown", down);
     return () => document.removeEventListener("keydown", down);
+  }, []);
+
+  // Close user menu when clicking outside
+  const userMenuRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        userMenuRef.current &&
+        !userMenuRef.current.contains(event.target as Node)
+      ) {
+        setShowUserMenu(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   const navLinks = [
@@ -298,13 +318,78 @@ export function Header() {
                 </button>
 
                 {/* Account */}
-                <Link
-                  href="#"
-                  aria-label="Account"
-                  className={`hidden transition-opacity hover:opacity-60 sm:block ${textColor}`}
-                >
-                  <User className="h-[18px] w-[18px] stroke-[1.5]" />
-                </Link>
+                {isAuthenticated ? (
+                  <div
+                    className="relative hidden sm:block"
+                    ref={userMenuRef}
+                  >
+                    <button
+                      onClick={() => setShowUserMenu(!showUserMenu)}
+                      className={`transition-opacity hover:opacity-60 ${textColor}`}
+                      aria-label="Account"
+                    >
+                      <User className="h-[18px] w-[18px] stroke-[1.5]" />
+                    </button>
+                    <AnimatePresence>
+                      {showUserMenu && (
+                        <motion.div
+                          initial={{ opacity: 0, y: -4 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -4 }}
+                          transition={{ duration: 0.15 }}
+                          className={`absolute mt-1 w-48 bg-white dark:bg-neutral-900 shadow-lg z-[60] border border-neutral-200 dark:border-neutral-800 rounded-md overflow-hidden ${
+                            isRtl ? "left-0" : "right-0"
+                          }`}
+                        >
+                          <Link
+                            href="/profile"
+                            className="flex items-center px-3 py-2 text-sm text-foreground hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
+                            onClick={() => setShowUserMenu(false)}
+                          >
+                            <User
+                              size={16}
+                              className={isRtl ? "ml-3" : "mr-3"}
+                            />
+                            {t("header.profile", "الملف الشخصي")}
+                          </Link>
+                          <Link
+                            href="/orders"
+                            className="flex items-center px-3 py-2 text-sm text-foreground hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
+                            onClick={() => setShowUserMenu(false)}
+                          >
+                            <Package
+                              size={16}
+                              className={isRtl ? "ml-3" : "mr-3"}
+                            />
+                            {t("header.orders", "الطلبات")}
+                          </Link>
+                          <hr className="my-1 border-neutral-200 dark:border-neutral-800" />
+                          <button
+                            onClick={async () => {
+                              await logout();
+                              setShowUserMenu(false);
+                            }}
+                            className="flex items-center w-full text-left px-3 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
+                          >
+                            <LogOut
+                              size={16}
+                              className={isRtl ? "ml-3" : "mr-3"}
+                            />
+                            {t("header.logout", "تسجيل الخروج")}
+                          </button>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                ) : (
+                  <Link
+                    href="/auth/login"
+                    aria-label="Account"
+                    className={`hidden transition-opacity hover:opacity-60 sm:block ${textColor}`}
+                  >
+                    <User className="h-[18px] w-[18px] stroke-[1.5]" />
+                  </Link>
+                )}
 
                 {/* Cart */}
                 <Link

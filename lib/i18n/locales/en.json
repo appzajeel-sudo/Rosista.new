@@ -6,6 +6,11 @@
     "about": "About",
     "contact": "Contact"
   },
+  "header": {
+    "profile": "Profile",
+    "orders": "Orders",
+    "logout": "Logout"
+  },
   "hero": {
     "title": "Luxury Gifts for Every Moment",
     "subtitle": "Curated collections of exquisite gifts that celebrate life's precious moments",
@@ -113,5 +118,330 @@
     "switchToDark": "Switch to Dark Mode",
     "switchToEnglish": "Switch to English",
     "switchToArabic": "Switch to Arabic"
+  },
+  "auth": {
+    "login": {
+      "title": "Sign in",
+      "subtitle": "Welcome back",
+      "email": "Email",
+      "password": "Password",
+      "forgotPassword": "Forgot password?",
+      "submit": "Sign in",
+      "noAccount": "Don't have an account?",
+      "signup": "Create account",
+      "emailPlaceholder": "Enter your email",
+      "passwordPlaceholder": "Enter your password",
+      "methodEmail": "Email",
+      "methodPhone": "Phone",
+      "continueWith": "Or continue with",
+      "googleButton": "Google",
+      "phonePlaceholder": "+966501234567",
+      "sendCode": "Send verification code"
+    },
+    "signup": {
+      "title": "Create account",
+      "subtitle": "Join us today",
+      "name": "Full Name",
+      "email": "Email",
+      "password": "Password",
+      "confirmPassword": "Confirm Password",
+      "submit": "Create account",
+      "hasAccount": "Already have an account?",
+      "login": "Sign in",
+      "namePlaceholder": "Enter your full name",
+      "emailPlaceholder": "Enter your email",
+      "passwordPlaceholder": "Enter your password",
+      "confirmPasswordPlaceholder": "Re-enter your password",
+      "passwordStrength": {
+        "weak": "Weak",
+        "fair": "Fair",
+        "good": "Good",
+        "strong": "Strong"
+      },
+      "passwordMismatch": "Passwords do not match"
+    },
+    "verifyEmail": {
+      "title": "Verify your email",
+      "subtitle": "We sent a verification code to",
+      "code": "Verification Code",
+      "codePlaceholder": "000000",
+      "submit": "Verify code",
+      "noCode": "Didn't receive the code?",
+      "resend": "Resend code",
+      "resendIn": "Resend in",
+      "changeEmail": "Want to change email?",
+      "backToSignup": "Back to signup"
+    },
+    "forgotPassword": {
+      "title": "Forgot password?",
+      "subtitle": "Don't worry, we'll send you a reset link",
+      "email": "Email",
+      "emailPlaceholder": "Enter your email",
+      "submit": "Send reset link",
+      "successTitle": "Check your email",
+      "successMessage": "We've sent a password reset link to your email address. Please check your inbox and follow the instructions.",
+      "backToLogin": "Back to login",
+      "rememberPassword": "Remember your password?",
+      "signIn": "Sign in"
+    },
+    "resetPassword": {
+      "title": "Reset password",
+      "subtitle": "Enter your new password",
+      "newPassword": "New Password",
+      "confirmPassword": "Confirm Password",
+      "submit": "Update password",
+      "successTitle": "Password updated",
+      "successMessage": "Your password has been updated successfully. You can now sign in with your new password.",
+      "backToLogin": "Back to login",
+      "passwordMismatch": "Passwords do not match",
+      "passwordStrength": {
+        "weak": "Weak",
+        "fair": "Fair",
+        "good": "Good",
+        "strong": "Strong"
+      }
+    },
+    "phoneVerification": {
+      "title": "Verify phone number",
+      "subtitle": "We sent a verification code to",
+      "code": "Verification Code",
+      "codePlaceholder": "000000",
+      "submit": "Verify code",
+      "noCode": "Didn't receive the code?",
+      "resend": "Resend code",
+      "resendIn": "Resend in",
+      "phoneNumberDisplay": "Phone number"
+    },
+    "phoneSetup": {
+      "title": "Add your phone number",
+      "subtitle": "To complete your account setup, please add and verify your phone number",
+      "phoneNumber": "Phone Number",
+      "phonePlaceholder": "+966501234567",
+      "phoneHint": "Please enter Saudi phone number (e.g., +966501234567)",
+      "whyNeedPhone": "Why do we need your phone number?",
+      "reasons": {
+        "security": "Additional account security",
+        "notifications": "Important order notifications",
+        "quickLogin": "Quick phone login option",
+        "delivery": "Delivery updates"
+      },
+      "sendCode": "Send verification code",
+      "verifyCode": "Verification Code",
+      "changePhone": "Change phone number",
+      "footerNote": "This step is required to secure your account and improve your shopping experience",
+      "step1Title": "Add your phone number",
+      "step2Title": "Verify phone number",
+      "step1Subtitle": "To complete your account setup, please add and verify your phone number",
+      "step2Subtitle": "Enter the code sent to your phone number",
+      "verifyAndComplete": "Verify & complete registration"
+    },
+    "phoneLogin": {
+      "title": "Verify phone number",
+      "subtitle": "Enter the code sent to",
+      "code": "Verification Code",
+      "codePlaceholder": "000000",
+      "submit": "Sign in",
+      "noCode": "Didn't receive the code?",
+      "resend": "Resend code",
+      "resendIn": "Resend in",
+      "phoneNumberDisplay": "Phone number",
+      "backToLogin": "Back to login"
+    },
+    "googleCallback": {
+      "processing": "Processing...",
+      "processingMessage": "Please wait while we process your sign-in.",
+      "success": "Successfully signed in",
+      "successMessage": "Welcome! You will be redirected to the homepage.",
+      "error": "Authentication failed",
+      "errorMessages": {
+        "authentication_failed": "Failed to authenticate with Google",
+        "server_error": "Server error, please try again",
+        "google_auth_failed": "Google sign-in was cancelled",
+        "default": "An unexpected error occurred"
+      }
+    },
+    "errors": {
+      "loginFailed": "Login failed",
+      "signupFailed": "Signup failed",
+      "verificationFailed": "Email verification failed",
+      "invalidCredentials": "Invalid login credentials",
+      "accountNotVerified": "Account not verified",
+      "emailExists": "Email already exists",
+      "invalidCode": "Invalid verification code",
+      "codeExpired": "Verification code expired",
+      "resendFailed": "Failed to resend code",
+      "passwordResetFailed": "Failed to request password reset",
+      "resetPasswordFailed": "Failed to reset password",
+      "phoneVerificationFailed": "Failed to verify phone number",
+      "sendPhoneVerificationFailed": "Failed to send phone verification code",
+      "phoneLoginFailed": "Failed to login with phone",
+      "verifyPhoneLoginFailed": "Failed to verify phone login"
+    },
+    "success": {
+      "loginSuccess": "Login successful",
+      "signupSuccess": "Account created successfully",
+      "verificationSuccess": "Email verified successfully",
+      "codeSent": "Verification code sent",
+      "codeResent": "Verification code resent"
+    }
+  },
+  "profile": {
+    "title": "Profile",
+    "subtitle": "Manage your personal information",
+    "tabs": {
+      "profile": "Profile",
+      "password": "Password",
+      "email": "Email",
+      "delete": "Delete Account"
+    },
+    "stats": {
+      "totalOrders": "Total Orders",
+      "favorites": "Favorites",
+      "loyaltyPoints": "Loyalty Points",
+      "cartItems": "Cart Items"
+    },
+    "accountStatus": {
+      "verified": "Verified",
+      "phoneVerified": "Phone Verified",
+      "notVerified": "Not Verified"
+    },
+    "personalInfo": "Personal Information",
+    "manageData": "Manage your personal data",
+    "edit": "Edit",
+    "cancel": "Cancel",
+    "save": "Save",
+    "fullName": "Full Name",
+    "username": "Username",
+    "emailAddress": "Email Address",
+    "phoneNumber": "Phone Number",
+    "changeEmailNote": "To change email, use the \"Update Email\" section",
+    "updatePhone": "Update Phone Number",
+    "verifyPhone": "Verify Phone Number",
+    "profilePicture": "Profile Picture",
+    "uploadPicture": "Upload Picture",
+    "removePicture": "Remove Picture",
+    "namePlaceholder": "Enter your full name",
+    "usernamePlaceholder": "Enter your username",
+    "phonePlaceholder": "+966501234567",
+    "phoneVerificationRequired": "Please verify the new phone number",
+    "phoneUpdated": "Phone number updated",
+    "updateSuccess": "Updated successfully",
+    "updateError": "Failed to update"
+  },
+  "passwordUpdate": {
+    "title": "Update Password",
+    "subtitle": "Secure your account",
+    "oldPassword": "Current Password",
+    "newPassword": "New Password",
+    "confirmPassword": "Confirm Password",
+    "submit": "Update Password",
+    "oldPasswordPlaceholder": "Enter your current password",
+    "newPasswordPlaceholder": "Enter your new password",
+    "confirmPasswordPlaceholder": "Re-enter your new password",
+    "passwordStrength": {
+      "weak": "Weak",
+      "fair": "Fair",
+      "good": "Good",
+      "strong": "Strong"
+    },
+    "passwordMismatch": "Passwords do not match",
+    "updateSuccess": "Password updated successfully",
+    "updateError": "Failed to update password"
+  },
+  "emailUpdate": {
+    "title": "Update Email",
+    "subtitle": "Update your email address",
+    "currentEmail": "Current Email",
+    "newEmail": "New Email",
+    "verificationCode": "Verification Code",
+    "password": "Password",
+    "submit": "Send",
+    "verify": "Verify",
+    "newEmailPlaceholder": "Enter new email",
+    "codePlaceholder": "000000",
+    "passwordPlaceholder": "Enter your password",
+    "step1Title": "Request Email Update",
+    "step2Title": "Verify New Email",
+    "step1Subtitle": "Enter your new email address",
+    "step2Subtitle": "Enter the verification code sent to the new email and your password",
+    "requestSuccess": "Verification code sent to new email",
+    "verifySuccess": "Email updated successfully",
+    "updateError": "Failed to update email"
+  },
+  "deleteAccount": {
+    "title": "Delete Account",
+    "subtitle": "Permanently delete your account",
+    "warning": "Important Warning",
+    "areYouSure": "Are you sure?",
+    "whatWillBeDeleted": "What will be deleted",
+    "items": {
+      "orders": "All orders",
+      "favorites": "Favorites list",
+      "cart": "Cart contents",
+      "profile": "Profile data",
+      "reviews": "Reviews"
+    },
+    "password": "Password",
+    "confirmation": "Delete Confirmation",
+    "confirmationPlaceholder": "Type DELETE to confirm",
+    "confirmationNote": "You must type \"DELETE\" in uppercase to confirm",
+    "submit": "Delete Account",
+    "passwordPlaceholder": "Enter your password",
+    "deleteSuccess": "Account deleted successfully",
+    "deleteError": "Failed to delete account"
+  },
+  "orders": {
+    "title": "My Orders",
+    "subtitle": "Track and manage your orders easily",
+    "stats": {
+      "totalOrders": "Total Orders",
+      "delivered": "Delivered",
+      "processing": "Processing",
+      "totalSpent": "Total Spent"
+    },
+    "filters": {
+      "all": "All Orders",
+      "pending": "Pending",
+      "processing": "Processing",
+      "shipped": "Shipped",
+      "delivered": "Delivered",
+      "cancelled": "Cancelled"
+    },
+    "searchPlaceholder": "Search orders...",
+    "noOrders": "No Orders Yet",
+    "noResults": "No Results Found",
+    "clearFilters": "Clear Filters",
+    "startShopping": "Start Shopping",
+    "orderNumber": "Order #",
+    "orderDate": "Order Date",
+    "items": "Items",
+    "taxIncluded": "Tax included",
+    "subtotal": "Subtotal",
+    "tax": "Tax (14%)",
+    "shipping": "Shipping",
+    "total": "Total",
+    "shippingInfo": "Shipping Information",
+    "trackingNumber": "Tracking Number",
+    "actions": {
+      "view": "View",
+      "hide": "Hide",
+      "track": "Track Order",
+      "rate": "Rate Order",
+      "cancel": "Cancel Order",
+      "reorder": "Reorder"
+    },
+    "viewDetails": "View Details",
+    "hideDetails": "Hide Details",
+    "needHelp": "Need Help?",
+    "helpMessage": "Our customer service team is available 24/7 to help you with any questions about your orders.",
+    "contactUs": "Contact Us",
+    "faq": "FAQ",
+    "status": {
+      "pending": "Pending",
+      "processing": "Processing",
+      "shipped": "Shipped",
+      "delivered": "Delivered",
+      "cancelled": "Cancelled"
+    }
   }
 }

@@ -44,9 +44,9 @@ export function CategoriesClient({ categories }: Props) {
 
   return (
     <section className="relative overflow-hidden bg-background py-3 sm:py-5">
-      <div className="mx-auto max-w-[1650px] px-6 sm:px-8">
+      <div className="mx-auto w-full sm:max-w-[1650px] sm:px-8">
         {/* Header - Elegant & Professional */}
-        <div className="mb-12">
+        <div className="mb-12 px-6 sm:px-0">
           <div className="relative inline-block">
             <h2
               className={`pb-3 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl ${
@@ -88,7 +88,7 @@ export function CategoriesClient({ categories }: Props) {
         </div>
 
         {/* Luxury Split Screen Design */}
-        <div className="grid grid-cols-2 gap-0.5 border-2 border-white bg-white sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-0.5 border-y-2 border-x-0 border-white bg-white sm:border-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {categories.map((category, index) => (
             <Link
               key={category.id}
@@ -111,14 +111,14 @@ export function CategoriesClient({ categories }: Props) {
                 <div className="absolute inset-0 flex items-center justify-center px-2">
                   <div className="text-center">
                     <h3
-                      className={`text-sm font-bold text-white transition-opacity duration-700 sm:text-lg md:text-2xl lg:text-3xl xl:text-4xl ${
+                      className={`text-xl font-bold text-white transition-opacity duration-700 sm:text-lg md:text-2xl lg:text-3xl xl:text-4xl ${
                         isRtl ? "font-sans-ar" : "font-sans-en"
                       } sm:group-hover:opacity-80`}
                     >
                       {isRtl ? category.nameAr : category.nameEn}
                     </h3>
                     <p
-                      className={`mt-1 text-[10px] font-bold text-white/90 transition-all duration-700 sm:mt-2 sm:text-xs sm:opacity-0 md:text-sm lg:text-base ${
+                      className={`hidden mt-1 text-[10px] font-bold text-white/90 transition-all duration-700 sm:block sm:mt-2 sm:text-xs sm:opacity-0 md:text-sm lg:text-base ${
                         isRtl ? "font-sans-ar" : "font-sans-en"
                       } sm:group-hover:opacity-100 sm:group-hover:translate-y-0 sm:translate-y-4`}
                     >

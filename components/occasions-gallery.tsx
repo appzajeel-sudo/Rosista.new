@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 type Occasion = {
   id: string;
@@ -30,12 +30,24 @@ function OccasionCard({
   isRtl: boolean;
 }) {
   const [isHovered, setIsHovered] = useState(false);
+  const [isMobile, setIsMobile] = useState(true);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   return (
     <div
       className="group"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      onMouseEnter={() => !isMobile && setIsHovered(true)}
+      onMouseLeave={() => !isMobile && setIsHovered(false)}
     >
       <Link
         href={`/occasions/${occasion.slug}`}
@@ -46,7 +58,7 @@ function OccasionCard({
           <div className="relative aspect-[3/3.8] sm:aspect-4/5 mb-4 perspective-1000">
             <motion.div
               className="relative h-full w-full preserve-3d"
-              animate={{ rotateY: isHovered ? 180 : 0 }}
+              animate={{ rotateY: !isMobile && isHovered ? 180 : 0 }}
               transition={{ duration: 0.6, ease: "easeInOut" }}
               style={{ transformStyle: "preserve-3d" }}
             >

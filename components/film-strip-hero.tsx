@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { useTranslation } from "react-i18next";
 import { gsap } from "gsap";
+import { Skeleton } from "@/components/ui/skeleton";
 
 type Slide = {
   id: string;
@@ -19,7 +20,7 @@ export function FilmStripHero({ slides }: Props) {
   const isRtl = i18n.language === "ar";
   const containerRef = useRef<HTMLDivElement>(null);
   const animationRef = useRef<gsap.core.Tween | null>(null);
-  const [isReady, setIsReady] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   // Duplicate slides 2 times for seamless infinite loop
   const duplicatedSlides = [...slides, ...slides];
@@ -30,12 +31,10 @@ export function FilmStripHero({ slides }: Props) {
     const container = containerRef.current;
     let slidesWidth = container.scrollWidth / 2;
 
-    // Function to update slides width
     const updateWidth = () => {
       slidesWidth = container.scrollWidth / 2;
     };
 
-    // Create infinite scroll animation
     const createAnimation = () => {
       if (animationRef.current) {
         animationRef.current.kill();
@@ -43,77 +42,35 @@ export function FilmStripHero({ slides }: Props) {
 
       updateWidth();
 
-      // بدء من الموضع الصحيح بدون قفزة
       gsap.set(container, {
         x: 0,
-        opacity: 0, // إخفاء في البداية
       });
 
-      // Fade in سلس قبل بدء الحركة
-      gsap.to(container, {
-        opacity: 1,
-        duration: 0.8,
-        ease: "power2.out",
-        onComplete: () => {
-          // بدء الحركة بعد fade in
-          animationRef.current = gsap.to(container, {
-            x: isRtl ? slidesWidth : -slidesWidth,
-            duration: 30,
-            ease: "none",
-            repeat: -1,
-            modifiers: {
-              x: (x) => {
-                const num = parseFloat(x);
-                // Seamlessly loop position
-                if (isRtl) {
-                  return num >= slidesWidth ? `${num - slidesWidth}` : x;
-                } else {
-                  return num <= -slidesWidth ? `${num + slidesWidth}` : x;
-                }
-              },
-            },
-          });
-          setIsReady(true);
+      animationRef.current = gsap.to(container, {
+        x: isRtl ? slidesWidth : -slidesWidth,
+        duration: 30,
+        ease: "none",
+        repeat: -1,
+        modifiers: {
+          x: (x) => {
+            const num = parseFloat(x);
+            if (isRtl) {
+              return num >= slidesWidth ? `${num - slidesWidth}` : x;
+            } else {
+              return num <= -slidesWidth ? `${num + slidesWidth}` : x;
+            }
+          },
         },
       });
     };
 
-    // انتظار تحميل الصور أولاً
-    const images = container.querySelectorAll("img");
-    let loadedImages = 0;
-    const totalImages = images.length;
+    const timeout = setTimeout(() => {
+      setIsLoading(false);
+      requestAnimationFrame(() => {
+        createAnimation();
+      });
+    }, 1000);
 
-    if (totalImages === 0) {
-      // إذا لم تكن هناك صور، ابدأ بعد تأخير قصير
-      const timeoutId = setTimeout(() => {
-        requestAnimationFrame(() => {
-          createAnimation();
-        });
-      }, 150);
-      return () => clearTimeout(timeoutId);
-    }
-
-    const checkAllLoaded = () => {
-      loadedImages++;
-      if (loadedImages === totalImages) {
-        // جميع الصور تم تحميلها، ابدأ الحركة
-        requestAnimationFrame(() => {
-          createAnimation();
-        });
-      }
-    };
-
-    // التحقق من الصور المحملة مسبقاً أو انتظار تحميلها
-    images.forEach((img) => {
-      if (img.complete && img.naturalHeight !== 0) {
-        checkAllLoaded();
-      } else {
-        img.addEventListener("load", checkAllLoaded, { once: true });
-        img.addEventListener("error", checkAllLoaded, { once: true }); // حتى لو فشل التحميل
-      }
-    });
-
-    // Handle window resize
     const handleResize = () => {
       if (animationRef.current) {
         animationRef.current.kill();
@@ -123,16 +80,12 @@ export function FilmStripHero({ slides }: Props) {
 
     window.addEventListener("resize", handleResize);
 
-    // Cleanup
     return () => {
+      clearTimeout(timeout);
       window.removeEventListener("resize", handleResize);
       if (animationRef.current) {
         animationRef.current.kill();
       }
-      images.forEach((img) => {
-        img.removeEventListener("load", checkAllLoaded);
-        img.removeEventListener("error", checkAllLoaded);
-      });
     };
   }, [slides, isRtl]);
 
@@ -144,13 +97,23 @@ export function FilmStripHero({ slides }: Props) {
         <div className="absolute bottom-0 left-0 right-0 z-10 h-2 bg-background md:h-2.5 lg:h-3" />
 
         {/* Animated Film Strip - GSAP */}
-        <div className="overflow-hidden">
+        <div className="overflow-hidden relative">
+          {isLoading && (
+            <div className="absolute inset-0 z-20 flex gap-0">
+              {[...Array(8)].map((_, index) => (
+                <Skeleton
+                  key={index}
+                  className="h-[280px] w-[200px] shrink-0 sm:h-[320px] sm:w-[240px] md:h-[380px] md:w-[300px] lg:h-[420px] lg:w-[340px]"
+                />
+              ))}
+            </div>
+          )}
+
           <div
             ref={containerRef}
             className="flex gap-0 film-strip-scroll"
             style={{
               willChange: "transform",
-              opacity: isReady ? 1 : 0, // إخفاء حتى جاهز
             }}
           >
             {duplicatedSlides.map((slide, index) => (

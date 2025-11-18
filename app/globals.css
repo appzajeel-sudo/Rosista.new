@@ -391,7 +391,6 @@ html[dir="ltr"] {
 
 .best-sellers-swiper .swiper-slide {
   height: auto;
-  transition: transform 0.3s ease;
 }
 
 /* Featured Collections Swiper */
@@ -514,6 +513,20 @@ html[dir="ltr"] {
 
   .transition-smooth-lg {
     transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .line-clamp-3-desktop {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  @media (max-width: 639px) {
+    .line-clamp-3-desktop {
+      display: none;
+    }
   }
 }
 

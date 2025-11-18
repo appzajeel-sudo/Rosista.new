@@ -172,6 +172,8 @@ export function SpecialOccasionClient({ products }: Props) {
             speed={600}
             dir={isRtl ? "rtl" : "ltr"}
             grabCursor={true}
+            observer={true}
+            observeParents={true}
             onSwiper={(swiper) => {
               swiperRef.current = swiper;
             }}
@@ -202,16 +204,17 @@ export function SpecialOccasionClient({ products }: Props) {
                         fetchPriority={index === 0 ? "high" : "auto"}
                         quality={100}
                         loading={index === 0 ? "eager" : "lazy"}
-                        className="object-cover transition-transform duration-[2s] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group-hover:scale-[1.02] will-change-transform"
+                        className="object-cover transition-transform duration-[2s] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] sm:group-hover:scale-[1.02] will-change-transform"
                       />
 
                       {/* Special Occasion Badge */}
                       <div
-                        className={`absolute top-3 flex h-7 w-7 items-center justify-center rounded-full ${
+                        className={`hidden sm:flex absolute top-3 h-7 w-7 items-center justify-center rounded-full ${
                           isRtl ? "right-3" : "left-3"
                         }`}
                         style={{
                           backgroundColor: "rgb(var(--background))",
+                          transform: "translateZ(0)",
                         }}
                         aria-label="Special Occasion"
                         title="Special Occasion"
@@ -226,27 +229,34 @@ export function SpecialOccasionClient({ products }: Props) {
                           e.stopPropagation();
                           // TODO: Add to favorites functionality
                         }}
-                        className={`absolute top-3 z-10 flex h-9 w-9 items-center justify-center rounded-full opacity-0 -translate-y-3 transition-all duration-700 group-hover:opacity-100 group-hover:translate-y-0 cursor-pointer ${
+                        className={`absolute top-3 z-10 flex h-7 w-7 sm:h-9 sm:w-9 items-center justify-center rounded-full opacity-100 translate-y-0 sm:opacity-0 sm:-translate-y-3 transition-all duration-700 sm:group-hover:opacity-100 sm:group-hover:translate-y-0 cursor-pointer ${
                           isRtl ? "left-3" : "right-3"
                         }`}
                         style={{
                           backgroundColor: "rgb(var(--background))",
+                          transform: "translateZ(0)",
                         }}
                         aria-label={
                           isRtl ? "إضافة إلى المفضلة" : "Add to favorites"
                         }
                       >
-                        <Heart className="h-4 w-4 text-foreground" />
+                        <Heart className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-foreground" />
                       </button>
 
                       {/* Hover Overlay */}
-                      <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/40 via-black/10 to-transparent opacity-0 transition-opacity duration-700 group-hover:opacity-100" />
-                      <div className="absolute inset-x-0 bottom-0 p-4 opacity-0 translate-y-3 transition-all duration-700 group-hover:opacity-100 group-hover:translate-y-0">
+                      <div 
+                        className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/40 via-black/10 to-transparent opacity-0 transition-opacity duration-700 sm:group-hover:opacity-100"
+                        style={{ transform: "translateZ(0)" }}
+                      />
+                      <div 
+                        className="absolute inset-x-0 bottom-0 px-4 pt-4 pb-3 sm:p-4 opacity-100 translate-y-0 sm:opacity-0 sm:translate-y-3 transition-all duration-700 sm:group-hover:opacity-100 sm:group-hover:translate-y-0"
+                        style={{ transform: "translateZ(0)" }}
+                      >
                         {(isRtl
                           ? product.descriptionAr
                           : product.descriptionEn) && (
                           <p
-                            className={`mx-auto mb-3 max-w-[85%] text-center text-xs text-white/90 line-clamp-3 ${
+                            className={`sm:block mx-auto mb-3 max-w-[85%] text-center text-xs text-white/90 line-clamp-3-desktop ${
                               isRtl ? "font-sans-ar" : "font-sans-en"
                             }`}
                           >
@@ -259,14 +269,14 @@ export function SpecialOccasionClient({ products }: Props) {
                           <button
                             type="button"
                             aria-label={isRtl ? "أضف إلى السلة" : "Add to cart"}
-                            className={`inline-flex items-center gap-2 rounded-full px-5 py-2 text-sm font-medium text-foreground transition-opacity hover:opacity-90 cursor-pointer ${
+                            className={`inline-flex items-center gap-1.5 sm:gap-2 rounded-full px-4 py-1.5 sm:px-5 sm:py-2 text-xs sm:text-sm font-medium text-foreground transition-opacity hover:opacity-90 cursor-pointer ${
                               isRtl ? "font-sans-ar" : "font-sans-en"
                             }`}
                             style={{
                               backgroundColor: "rgb(var(--background))",
                             }}
                           >
-                            <ShoppingCart className="h-4 w-4" />
+                            <ShoppingCart className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                             <span>
                               {isRtl ? "أضف إلى السلة" : "Add to Cart"}
                             </span>

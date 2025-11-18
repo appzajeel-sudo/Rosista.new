@@ -41,7 +41,7 @@ async function OccasionsContent() {
 
         {/* Occasions Gallery */}
         <section className="relative w-full bg-background pt-4 pb-16 md:pt-8 md:pb-20 lg:pt-0 lg:pb-24">
-          <div className="mx-auto w-[95%] max-w-[1650px] px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto w-[95%] max-w-[1650px] px-0 sm:px-6 lg:px-8">
             <div className="mb-12 text-center">
               <h2 className="text-2xl font-medium text-foreground md:text-3xl font-sans-ar">
                 المناسبات - اكتشف مجموعتنا الحصرية
@@ -93,7 +93,7 @@ function OccasionsLoading() {
 
       {/* Gallery Skeleton */}
       <section className="relative w-full bg-background pt-4 pb-16 md:pt-8 md:pb-20 lg:pt-0 lg:pb-24">
-        <div className="mx-auto w-[95%] max-w-[1650px] px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto w-[95%] max-w-[1650px] px-0 sm:px-6 lg:px-8">
           <div className="mb-12 text-center">
             <Skeleton className="h-9 w-64 mx-auto sm:h-10 sm:w-80" />
           </div>

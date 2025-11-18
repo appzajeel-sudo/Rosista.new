@@ -33,6 +33,7 @@ import {
 import { AnimatePresence, motion } from "framer-motion";
 import { useDarkMode } from "@/hooks/use-dark-mode";
 import { useAuth } from "@/context/AuthContext";
+import { Sheet, SheetContent } from "@/components/ui/sheet";
 
 export function Header() {
   // Always start with false to match SSR (prevents hydration mismatch)
@@ -306,7 +307,7 @@ export function Header() {
                         ? "Switch to light mode"
                         : "Switch to dark mode"
                     }
-                    className={`transition-opacity hover:opacity-60 ${textColor}`}
+                    className={`hidden lg:block transition-opacity hover:opacity-60 ${textColor}`}
                   >
                     {theme === "dark" ? (
                       <Sun className="h-[18px] w-[18px] stroke-[1.5]" />
@@ -317,10 +318,12 @@ export function Header() {
                 )}
 
                 {/* Language */}
-                <LanguageSwitcher
-                  className={textColor}
-                  hoverColor={hoverColor}
-                />
+                <div className="hidden lg:block">
+                  <LanguageSwitcher
+                    className={textColor}
+                    hoverColor={hoverColor}
+                  />
+                </div>
 
                 {/* Search */}
                 <button
@@ -459,41 +462,142 @@ export function Header() {
       )}
 
       {/* Mobile Menu */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-40 bg-background lg:hidden"
-          >
-            <div className="flex h-full flex-col px-8 pt-28">
+      <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
+        <SheetContent
+          side={isRtl ? "left" : "right"}
+          className="w-3/4 sm:max-w-sm p-0 border-0 bg-gradient-to-br from-background via-background to-neutral-50 dark:from-neutral-900 dark:via-neutral-800 dark:to-neutral-900 shadow-2xl z-[101]"
+          style={{
+            background:
+              "linear-gradient(135deg, rgb(var(--background)) 0%, rgb(var(--neutral-50)) 50%, rgb(var(--background)) 100%)",
+          }}
+        >
+          <div className="flex h-full flex-col relative overflow-hidden">
+            {/* Decorative gradient overlay */}
+            <div
+              className="absolute inset-0 opacity-30 pointer-events-none"
+              style={{
+                background:
+                  "radial-gradient(circle at top right, rgb(var(--primary-500) / 0.1) 0%, transparent 50%), radial-gradient(circle at bottom left, rgb(var(--secondary-500) / 0.1) 0%, transparent 50%)",
+              }}
+            />
+
+            {/* Content */}
+            <div className="relative flex-1 flex flex-col px-8 pt-16 pb-8">
+              {/* Header Section */}
+              <div className="mb-12 pb-8 border-b border-neutral-200 dark:border-neutral-700">
+                <h2
+                  className={`text-3xl font-bold tracking-widest text-foreground ${
+                    isRtl ? "font-sans-ar" : "font-sans-en"
+                  }`}
+                  style={{
+                    fontFamily: "'Cormorant Garamond', serif",
+                    fontWeight: 700,
+                  }}
+                >
+                  {isRtl ? "القائمة" : "MENU"}
+                </h2>
+                <div className="mt-2 h-0.5 w-16 bg-gradient-to-r from-primary-500 to-secondary-500" />
+              </div>
+
+              {/* Navigation Links */}
               <nav className="flex-1">
-                <ul className="space-y-8">
-                  {navLinks.map((link, index) => (
-                    <motion.li
-                      key={`nav-mobile-${link.label}-${index}`}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: index * 0.1 }}
-                    >
-                      <Link
-                        href={link.href}
-                        onClick={() => setIsMobileMenuOpen(false)}
-                        className={`block text-2xl font-bold tracking-wider text-foreground ${
-                          isRtl ? "font-sans-ar" : "font-sans-en"
-                        }`}
+                <ul className="space-y-2">
+                  <AnimatePresence>
+                    {navLinks.map((link, index) => (
+                      <motion.li
+                        key={`nav-mobile-${link.label}-${index}`}
+                        initial={{ opacity: 0, x: isRtl ? 20 : -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: isRtl ? 20 : -20 }}
+                        transition={{ delay: index * 0.08, duration: 0.3 }}
+                        className="relative group"
                       >
-                        {link.label}
-                      </Link>
-                    </motion.li>
-                  ))}
+                        <Link
+                          href={link.href}
+                          onClick={() => setIsMobileMenuOpen(false)}
+                          className={`relative block px-4 py-4 text-xl font-bold tracking-wider text-foreground transition-all duration-300 rounded-lg overflow-hidden ${
+                            isRtl ? "font-sans-ar" : "font-sans-en"
+                          } ${
+                            pathname === link.href
+                              ? "text-primary-600 dark:text-primary-400"
+                              : "hover:text-primary-600 dark:hover:text-primary-400"
+                          }`}
+                        >
+                          {/* Hover background effect */}
+                          <span
+                            className="absolute inset-0 bg-gradient-to-r from-primary-500/10 to-secondary-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                            style={{
+                              background:
+                                pathname === link.href
+                                  ? "linear-gradient(to right, rgb(var(--primary-500) / 0.15), rgb(var(--secondary-500) / 0.15))"
+                                  : "linear-gradient(to right, rgb(var(--primary-500) / 0.08), rgb(var(--secondary-500) / 0.08))",
+                            }}
+                          />
+
+                          {/* Active indicator */}
+                          {pathname === link.href && (
+                            <motion.span
+                              layoutId="activeIndicator"
+                              className={`absolute top-1/2 -translate-y-1/2 w-1 h-8 bg-gradient-to-b from-primary-500 to-secondary-500 ${
+                                isRtl
+                                  ? "right-0 rounded-l-full"
+                                  : "left-0 rounded-r-full"
+                              }`}
+                              initial={{ opacity: 0 }}
+                              animate={{ opacity: 1 }}
+                              transition={{ duration: 0.3 }}
+                            />
+                          )}
+
+                          {/* Text content */}
+                          <span className="relative z-10">{link.label}</span>
+                        </Link>
+                      </motion.li>
+                    ))}
+                  </AnimatePresence>
                 </ul>
               </nav>
+
+              {/* Settings Section */}
+              <div className="mt-8 pt-8 border-t border-neutral-200 dark:border-neutral-700">
+                <div className="flex items-center gap-3">
+                  {/* Theme Toggle */}
+                  {mounted && (
+                    <button
+                      onClick={toggleTheme}
+                      className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-lg transition-all duration-200 bg-neutral-100/50 dark:bg-neutral-800/50 hover:bg-neutral-200/50 dark:hover:bg-neutral-700/50 active:scale-95"
+                      aria-label={
+                        theme === "dark"
+                          ? "Switch to light mode"
+                          : "Switch to dark mode"
+                      }
+                    >
+                      {theme === "dark" ? (
+                        <Sun className="h-5 w-5 text-foreground" />
+                      ) : (
+                        <Moon className="h-5 w-5 text-foreground" />
+                      )}
+                    </button>
+                  )}
+
+                  {/* Language Toggle */}
+                  <button
+                    onClick={() => {
+                      i18n.changeLanguage(i18n.language === "ar" ? "en" : "ar");
+                    }}
+                    className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-lg transition-all duration-200 bg-neutral-100/50 dark:bg-neutral-800/50 hover:bg-neutral-200/50 dark:hover:bg-neutral-700/50 active:scale-95"
+                    aria-label="Toggle language"
+                  >
+                    <span className="text-base font-bold tracking-wider text-foreground">
+                      {i18n.language === "ar" ? "EN" : "AR"}
+                    </span>
+                  </button>
+                </div>
+              </div>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </div>
+        </SheetContent>
+      </Sheet>
 
       {/* Command Palette */}
       <CommandDialog

@@ -148,7 +148,8 @@ export function Header() {
   const anchorRef = useRef<HTMLHeadingElement | null>(null);
   const headerRef = useRef<HTMLElement | null>(null);
 
-  // Transform calculation on mount + resize (optimized - no repeated calls during scroll)
+  // Transform calculation on mount + window resize (width change)
+  // لا إعادة حساب عند viewport height changes (browser chrome) أثناء scroll
   useEffect(() => {
     if (!isHomePage) return;
     const hero = heroRef.current;
@@ -184,14 +185,25 @@ export function Header() {
       });
     };
 
-    // Compute on mount
-    computeTransform();
-
-    // Re-compute on resize (double RAF to ensure stable layout after resize)
-    const onResize = () => {
+    // Compute on mount - انتظر حتى يستقر layout
+    requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         requestAnimationFrame(computeTransform);
       });
+    });
+
+    // إعادة الحساب فقط عند تغيير عرض المتصفح (window resize)
+    // لا إعادة حساب عند viewport height changes (browser chrome) أثناء scroll
+    let lastWindowWidth = window.innerWidth;
+    const onResize = () => {
+      const currentWindowWidth = window.innerWidth;
+      // فقط عند تغيير العرض، وليس الارتفاع
+      if (currentWindowWidth !== lastWindowWidth) {
+        lastWindowWidth = currentWindowWidth;
+        requestAnimationFrame(() => {
+          requestAnimationFrame(computeTransform);
+        });
+      }
     };
     window.addEventListener("resize", onResize);
 

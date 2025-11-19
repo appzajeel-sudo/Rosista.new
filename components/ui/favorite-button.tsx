@@ -79,7 +79,7 @@ export function FavoriteButton({
     setPrevFavoriteState(isProductFavorite);
   }, [isProductFavorite, prevFavoriteState]);
 
-  const handleToggle = async (e: React.MouseEvent) => {
+  const handleToggle = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
 
@@ -94,38 +94,39 @@ export function FavoriteButton({
       return;
     }
 
-    try {
-      if (isProductFavorite) {
-        await removeFromFavorites(productId);
-      } else {
-        // Convert Product to Favorite format
-        // Support multiple image field names
-        const imageUrl = 
-          (product as any).imageUrl || 
-          (product as any).mainImage || 
-          (product as any).image || 
-          "";
+    // استدعاء الدالة بدون انتظار (fire and forget)
+    if (isProductFavorite) {
+      removeFromFavorites(productId).catch((error) => {
+        console.error("Error removing from favorites:", error);
+      });
+    } else {
+      // Convert Product to Favorite format
+      // Support multiple image field names
+      const imageUrl = 
+        (product as any).imageUrl || 
+        (product as any).mainImage || 
+        (product as any).image || 
+        "";
 
-        await addToFavorites({
-          id: productId,
-          nameEn: product.nameEn,
-          nameAr: product.nameAr,
-          price: product.price,
-          imageUrl: imageUrl,
-          categoryId: (product as any).categoryId,
-          occasionId: (product as any).occasionId,
-          isBestSeller: 
-            (product as any).isBestSeller || 
-            (product as any).productStatus?.includes("best-seller") || 
-            false,
-          isSpecialGift: 
-            (product as any).isSpecialGift || 
-            (product as any).productStatus?.includes("special-gift") || 
-            false,
-        });
-      }
-    } catch (error) {
-      console.error("Error toggling favorite:", error);
+      addToFavorites({
+        id: productId,
+        nameEn: product.nameEn,
+        nameAr: product.nameAr,
+        price: product.price,
+        imageUrl: imageUrl,
+        categoryId: (product as any).categoryId,
+        occasionId: (product as any).occasionId,
+        isBestSeller: 
+          (product as any).isBestSeller || 
+          (product as any).productStatus?.includes("best-seller") || 
+          false,
+        isSpecialGift: 
+          (product as any).isSpecialGift || 
+          (product as any).productStatus?.includes("special-gift") || 
+          false,
+      }).catch((error) => {
+        console.error("Error adding to favorites:", error);
+      });
     }
   };
 

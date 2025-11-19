@@ -140,7 +140,27 @@ export const FavoritesProvider = ({ children }: { children: ReactNode }) => {
         return;
       }
 
-      setIsLoading(true);
+      // Optimistic update: تحديث الحالة فوراً
+      const tempFavorite: FavoriteItem = {
+        ...product,
+        dateAdded: new Date().toISOString(),
+      };
+      
+      // حفظ الحالة السابقة للتراجع في حالة الفشل
+      const previousFavorites = [...favorites];
+      const previousCount = favoritesCount;
+      
+      // تحديث الحالة فوراً
+      setFavorites((prev) => {
+        // تجنب الإضافة المكررة
+        if (prev.some((fav) => fav.id === product.id)) {
+          return prev;
+        }
+        return [tempFavorite, ...prev];
+      });
+      setFavoritesCount((prev) => prev + 1);
+
+      // إرسال الطلب في الخلفية
       try {
         const requestData: AddToFavoritesRequest = {
           productData: {
@@ -158,13 +178,16 @@ export const FavoritesProvider = ({ children }: { children: ReactNode }) => {
 
         const response = await addToFavoritesAction(requestData);
 
-        // Update local state
+        // تحديث الحالة بالبيانات الصحيحة من السيرفر
         const newFavorite: FavoriteItem = {
           ...product,
           dateAdded: response.favorite.dateAdded,
         };
-        setFavorites((prev) => [newFavorite, ...prev]);
-        setFavoritesCount((prev) => prev + 1);
+        setFavorites((prev) => {
+          // إزالة النسخة المؤقتة وإضافة النسخة الصحيحة
+          const filtered = prev.filter((fav) => fav.id !== product.id);
+          return [newFavorite, ...filtered];
+        });
 
         toast({
           title: isRtl ? "تم الإضافة" : "Added",
@@ -174,6 +197,11 @@ export const FavoritesProvider = ({ children }: { children: ReactNode }) => {
         });
       } catch (error: any) {
         console.error("Error adding to favorites:", error);
+        
+        // إرجاع الحالة إلى ما كانت عليه في حالة الفشل
+        setFavorites(previousFavorites);
+        setFavoritesCount(previousCount);
+        
         toast({
           title: isRtl ? "خطأ" : "Error",
           description:
@@ -181,11 +209,9 @@ export const FavoritesProvider = ({ children }: { children: ReactNode }) => {
             (isRtl ? "فشل إضافة المنتج" : "Failed to add product"),
           variant: "destructive",
         });
-      } finally {
-        setIsLoading(false);
       }
     },
-    [isAuthenticated, toast, isRtl]
+    [isAuthenticated, toast, isRtl, favorites, favoritesCount]
   );
 
   const handleRemoveFromFavorites = useCallback(
@@ -194,11 +220,18 @@ export const FavoritesProvider = ({ children }: { children: ReactNode }) => {
         return;
       }
 
-      setIsLoading(true);
+      // Optimistic update: تحديث الحالة فوراً
+      // حفظ الحالة السابقة للتراجع في حالة الفشل
+      const previousFavorites = [...favorites];
+      const previousCount = favoritesCount;
+      
+      // تحديث الحالة فوراً
+      setFavorites((prev) => prev.filter((fav) => fav.id !== productId));
+      setFavoritesCount((prev) => Math.max(0, prev - 1));
+
+      // إرسال الطلب في الخلفية
       try {
         await removeFromFavoritesAction(productId);
-        setFavorites((prev) => prev.filter((fav) => fav.id !== productId));
-        setFavoritesCount((prev) => Math.max(0, prev - 1));
 
         toast({
           title: isRtl ? "تم الحذف" : "Removed",
@@ -208,6 +241,11 @@ export const FavoritesProvider = ({ children }: { children: ReactNode }) => {
         });
       } catch (error: any) {
         console.error("Error removing from favorites:", error);
+        
+        // إرجاع الحالة إلى ما كانت عليه في حالة الفشل
+        setFavorites(previousFavorites);
+        setFavoritesCount(previousCount);
+        
         toast({
           title: isRtl ? "خطأ" : "Error",
           description:
@@ -215,11 +253,9 @@ export const FavoritesProvider = ({ children }: { children: ReactNode }) => {
             (isRtl ? "فشل حذف المنتج" : "Failed to remove product"),
           variant: "destructive",
         });
-      } finally {
-        setIsLoading(false);
       }
     },
-    [isAuthenticated, toast, isRtl]
+    [isAuthenticated, toast, isRtl, favorites, favoritesCount]
   );
 
   const handleClearFavorites = useCallback(async () => {

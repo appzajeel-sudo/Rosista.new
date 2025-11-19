@@ -11,7 +11,9 @@ import {
   Search,
   ArrowRight,
   SlidersHorizontal,
+  Check,
 } from "lucide-react";
+import { toast } from "sonner";
 import { motion, AnimatePresence } from "framer-motion";
 import { useFavorites } from "@/context/FavoritesContext";
 import { useCart } from "@/context/CartContext";
@@ -61,6 +63,7 @@ export default function FavoritesPage() {
 
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState("recent");
+  const [addedItems, setAddedItems] = useState<Set<string>>(new Set());
 
   // Filter and sort favorites
   const filteredFavorites = useMemo(
@@ -299,10 +302,20 @@ export default function FavoritesPage() {
                         src={item.imageUrl}
                         alt={isRtl ? item.nameAr : item.nameEn}
                         fill
-                        className="object-cover transition-transform duration-700 group-hover:scale-105"
+                        className="object-cover transition-transform duration-[2s] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] sm:group-hover:scale-[1.02] will-change-transform"
                       />
+                      
+                      {/* Hover Overlay */}
+                      <div
+                        className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/40 via-black/10 to-transparent opacity-0 transition-opacity duration-700 sm:group-hover:opacity-100"
+                        style={{ transform: "translateZ(0)" }}
+                      />
+
                       {/* Overlay Button */}
-                      <div className="absolute inset-x-0 bottom-0 p-2 opacity-100 transition-opacity duration-300 sm:p-4 lg:opacity-0 lg:group-hover:opacity-100">
+                      <div 
+                        className="absolute inset-x-0 bottom-0 p-2 opacity-100 translate-y-0 sm:opacity-0 sm:translate-y-3 transition-all duration-700 sm:group-hover:opacity-100 sm:group-hover:translate-y-0 sm:p-4"
+                        style={{ transform: "translateZ(0)" }}
+                      >
                         <Button
                           onClick={(e) => {
                             e.preventDefault();
@@ -318,10 +331,40 @@ export default function FavoritesPage() {
                               isBestSeller: item.isBestSeller,
                               isSpecialGift: item.isSpecialGift,
                             });
+                            
+                            // Visual feedback
+                            setAddedItems(prev => {
+                              const next = new Set(prev);
+                              next.add(item.id);
+                              return next;
+                            });
+                            
+                            toast.success(isRtl ? "تمت الإضافة للسلة" : "Added to cart");
+
+                            setTimeout(() => {
+                              setAddedItems(prev => {
+                                const next = new Set(prev);
+                                next.delete(item.id);
+                                return next;
+                              });
+                            }, 2000);
                           }}
-                          className="h-8 w-full rounded-none bg-white/90 text-[10px] text-black backdrop-blur-sm hover:bg-white dark:bg-black/90 dark:text-white dark:hover:bg-black sm:h-9 sm:text-xs"
+                          className={cn(
+                            "h-8 w-full rounded-none text-[10px] transition-all duration-300 sm:h-9 sm:text-xs",
+                            addedItems.has(item.id)
+                              ? "bg-green-600 text-white hover:bg-green-700 disabled:opacity-100 dark:bg-green-600 dark:text-white dark:hover:bg-green-700"
+                              : "bg-white/90 text-black backdrop-blur-sm hover:bg-white dark:bg-black/90 dark:text-white dark:hover:bg-black"
+                          )}
+                          disabled={addedItems.has(item.id)}
                         >
-                          {isRtl ? "إضافة للسلة" : "ADD TO CART"}
+                          {addedItems.has(item.id) ? (
+                            <div className="flex items-center justify-center gap-2">
+                              <Check className="h-3 w-3 sm:h-4 sm:w-4" />
+                              <span>{isRtl ? "تمت الإضافة" : "ADDED"}</span>
+                            </div>
+                          ) : (
+                            isRtl ? "إضافة للسلة" : "ADD TO CART"
+                          )}
                         </Button>
                       </div>
                     </div>

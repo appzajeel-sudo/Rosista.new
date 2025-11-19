@@ -230,6 +230,7 @@ export function Header() {
             ? "rgb(var(--background))"
             : "transparent",
           transition: "background-color 1600ms cubic-bezier(0.22,1,0.36,1)",
+          paddingRight: "var(--removed-body-scroll-bar-size, 0px)",
         }}
       >
         <div className="mx-auto max-w-[1400px] px-0 lg:px-8">
@@ -472,6 +473,7 @@ export function Header() {
                 : "translate3d(0, 0, 0) scale(1)",
             transition:
               "transform 1600ms cubic-bezier(0.22,1,0.36,1), color 1600ms cubic-bezier(0.22,1,0.36,1)",
+            left: "calc(50% - var(--removed-body-scroll-bar-size, 0px) / 2)",
           }}
         >
           ROSISTA

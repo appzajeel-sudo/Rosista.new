@@ -35,6 +35,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useDarkMode } from "@/hooks/use-dark-mode";
 import { useAuth } from "@/context/AuthContext";
 import { useFavorites } from "@/context/FavoritesContext";
+import { useCart } from "@/context/CartContext";
 import { Sheet, SheetContent } from "@/components/ui/sheet";
 
 export function Header() {
@@ -52,6 +53,7 @@ export function Header() {
   const { theme, toggleTheme, mounted } = useDarkMode();
   const { user, isAuthenticated, logout } = useAuth();
   const { favoritesCount } = useFavorites();
+  const { cartCount } = useCart();
 
   // Transform state for scroll-linked logo (replaces ref + repeated compute)
   const [transformValues, setTransformValues] = useState<{
@@ -428,11 +430,16 @@ export function Header() {
 
                 {/* Cart */}
                 <Link
-                  href="#"
+                  href="/cart"
                   aria-label="Shopping bag"
                   className={`relative transition-opacity hover:opacity-60 ${textColor}`}
                 >
                   <ShoppingBag className="h-[18px] w-[18px] stroke-[1.5]" />
+                  {cartCount > 0 && (
+                    <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[10px] text-white">
+                      {cartCount > 9 ? "9+" : cartCount}
+                    </span>
+                  )}
                 </Link>
 
                 {/* Mobile Menu */}
@@ -569,7 +576,12 @@ export function Header() {
                           )}
 
                           {/* Text content */}
-                          <span className="relative z-10" suppressHydrationWarning>{link.label}</span>
+                          <span
+                            className="relative z-10"
+                            suppressHydrationWarning
+                          >
+                            {link.label}
+                          </span>
                         </Link>
                       </motion.li>
                     ))}

@@ -450,5 +450,21 @@
       "delivered": "Delivered",
       "cancelled": "Cancelled"
     }
+  },
+  "cart": {
+    "title": "Cart",
+    "empty": "Cart Empty",
+    "emptyDescription": "You haven't added any items to cart yet",
+    "total": "TOTAL",
+    "checkout": "CHECKOUT",
+    "clear": "CLEAR CART",
+    "clearConfirm": "Are you sure?",
+    "clearDescription": "This action cannot be undone. This will permanently delete all items from your cart.",
+    "addToCart": "Add to Cart",
+    "remove": "Remove",
+    "quantity": "Quantity",
+    "increase": "Increase",
+    "decrease": "Decrease",
+    "subtotal": "Subtotal"
   }
 }

@@ -4,9 +4,17 @@ import { useState, useMemo, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
-import { Heart, ShoppingBag, X, Search, ArrowRight, SlidersHorizontal } from "lucide-react";
+import {
+  Heart,
+  ShoppingBag,
+  X,
+  Search,
+  ArrowRight,
+  SlidersHorizontal,
+} from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useFavorites } from "@/context/FavoritesContext";
+import { useCart } from "@/context/CartContext";
 import { useAuth } from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -48,6 +56,7 @@ export default function FavoritesPage() {
   const isRtl = i18n.language === "ar";
   const { favorites, removeFromFavorites, clearFavorites, isLoading } =
     useFavorites();
+  const { addToCart } = useCart();
   const { isAuthenticated, isLoading: isAuthLoading } = useAuth();
 
   const [searchTerm, setSearchTerm] = useState("");
@@ -150,7 +159,6 @@ export default function FavoritesPage() {
   return (
     <section className="min-h-screen bg-white dark:bg-black pt-28 pb-12 sm:pt-40 sm:pb-20">
       <div className="container mx-auto max-w-7xl px-4 md:px-8">
-        
         {/* Header */}
         <div className="mb-8 flex flex-col items-center justify-center gap-6 border-b border-neutral-200 dark:border-neutral-800 pb-6 text-center sm:mb-16 sm:gap-8 sm:pb-8">
           {/* Toolbar */}
@@ -170,8 +178,12 @@ export default function FavoritesPage() {
             </div>
 
             <div className="flex items-center gap-2">
-              <Select value={sortBy} onValueChange={setSortBy} dir={isRtl ? "rtl" : "ltr"}>
-                <SelectTrigger 
+              <Select
+                value={sortBy}
+                onValueChange={setSortBy}
+                dir={isRtl ? "rtl" : "ltr"}
+              >
+                <SelectTrigger
                   className={cn(
                     "h-9 w-[140px] rounded-none border-neutral-200 bg-transparent text-xs uppercase focus:ring-0 dark:border-neutral-800",
                     isRtl ? "text-right" : "text-left"
@@ -180,29 +192,32 @@ export default function FavoritesPage() {
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent className="rounded-none border-neutral-200 bg-white dark:bg-neutral-900 dark:border-neutral-800">
-                  <SelectItem 
-                    value="recent" 
+                  <SelectItem
+                    value="recent"
                     className={cn(
-                      "text-xs uppercase", 
-                      isRtl && "text-right pr-2 pl-8 [&>span]:left-2 [&>span]:right-auto"
+                      "text-xs uppercase",
+                      isRtl &&
+                        "text-right pr-2 pl-8 [&>span]:left-2 [&>span]:right-auto"
                     )}
                   >
                     {isRtl ? "الأحدث" : "Newest"}
                   </SelectItem>
-                  <SelectItem 
-                    value="price-low" 
+                  <SelectItem
+                    value="price-low"
                     className={cn(
-                      "text-xs uppercase", 
-                      isRtl && "text-right pr-2 pl-8 [&>span]:left-2 [&>span]:right-auto"
+                      "text-xs uppercase",
+                      isRtl &&
+                        "text-right pr-2 pl-8 [&>span]:left-2 [&>span]:right-auto"
                     )}
                   >
                     {isRtl ? "الأقل سعراً" : "Price Low"}
                   </SelectItem>
-                  <SelectItem 
-                    value="price-high" 
+                  <SelectItem
+                    value="price-high"
                     className={cn(
-                      "text-xs uppercase", 
-                      isRtl && "text-right pr-2 pl-8 [&>span]:left-2 [&>span]:right-auto"
+                      "text-xs uppercase",
+                      isRtl &&
+                        "text-right pr-2 pl-8 [&>span]:left-2 [&>span]:right-auto"
                     )}
                   >
                     {isRtl ? "الأعلى سعراً" : "Price High"}
@@ -231,9 +246,17 @@ export default function FavoritesPage() {
                           : "This action cannot be undone. This will permanently delete all items from your favorites."}
                       </DialogDescription>
                     </DialogHeader>
-                    <DialogFooter className={cn(isRtl && "flex-row-reverse sm:flex-row-reverse sm:justify-start")}>
+                    <DialogFooter
+                      className={cn(
+                        isRtl &&
+                          "flex-row-reverse sm:flex-row-reverse sm:justify-start"
+                      )}
+                    >
                       <DialogClose asChild>
-                        <Button variant="outline" className="rounded-none border-neutral-200 uppercase dark:border-neutral-800">
+                        <Button
+                          variant="outline"
+                          className="rounded-none border-neutral-200 uppercase dark:border-neutral-800"
+                        >
                           {isRtl ? "إلغاء" : "Cancel"}
                         </Button>
                       </DialogClose>
@@ -271,20 +294,37 @@ export default function FavoritesPage() {
                 >
                   {/* Image */}
                   <Link href={`/product/${item.id}`} className="block">
-                      <div className="relative mb-3 aspect-[3/4] w-full overflow-hidden bg-neutral-100 dark:bg-neutral-900 sm:mb-4">
-                        <Image
-                          src={item.imageUrl}
-                          alt={isRtl ? item.nameAr : item.nameEn}
-                          fill
-                          className="object-cover transition-transform duration-700 group-hover:scale-105"
-                        />
-                        {/* Overlay Button */}
-                        <div className="absolute inset-x-0 bottom-0 p-2 opacity-100 transition-opacity duration-300 sm:p-4 lg:opacity-0 lg:group-hover:opacity-100">
-                          <Button className="h-8 w-full rounded-none bg-white/90 text-[10px] text-black backdrop-blur-sm hover:bg-white dark:bg-black/90 dark:text-white dark:hover:bg-black sm:h-9 sm:text-xs">
-                            {isRtl ? "إضافة للسلة" : "ADD TO CART"}
-                          </Button>
-                        </div>
+                    <div className="relative mb-3 aspect-[3/4] w-full overflow-hidden bg-neutral-100 dark:bg-neutral-900 sm:mb-4">
+                      <Image
+                        src={item.imageUrl}
+                        alt={isRtl ? item.nameAr : item.nameEn}
+                        fill
+                        className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
+                      {/* Overlay Button */}
+                      <div className="absolute inset-x-0 bottom-0 p-2 opacity-100 transition-opacity duration-300 sm:p-4 lg:opacity-0 lg:group-hover:opacity-100">
+                        <Button
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            addToCart({
+                              id: item.id,
+                              nameEn: item.nameEn,
+                              nameAr: item.nameAr,
+                              price: item.price,
+                              imageUrl: item.imageUrl,
+                              categoryId: item.categoryId,
+                              occasionId: item.occasionId,
+                              isBestSeller: item.isBestSeller,
+                              isSpecialGift: item.isSpecialGift,
+                            });
+                          }}
+                          className="h-8 w-full rounded-none bg-white/90 text-[10px] text-black backdrop-blur-sm hover:bg-white dark:bg-black/90 dark:text-white dark:hover:bg-black sm:h-9 sm:text-xs"
+                        >
+                          {isRtl ? "إضافة للسلة" : "ADD TO CART"}
+                        </Button>
                       </div>
+                    </div>
                   </Link>
 
                   {/* Info */}
@@ -312,7 +352,8 @@ export default function FavoritesPage() {
               ))}
             </motion.div>
           ) : (
-            !isLoading && searchTerm && (
+            !isLoading &&
+            searchTerm && (
               <div className="py-20 text-center">
                 <p className="text-lg font-medium uppercase tracking-widest text-neutral-400">
                   {isRtl ? "لا توجد نتائج" : "NO RESULTS FOUND"}

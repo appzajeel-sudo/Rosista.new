@@ -7,13 +7,11 @@ import { useTranslation } from "react-i18next";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
 import type { Swiper as SwiperType } from "swiper";
-import {
-  ChevronLeft,
-  ChevronRight,
-  Gem,
-  ShoppingCart,
-} from "lucide-react";
+import { ChevronLeft, ChevronRight, Gem, ShoppingCart } from "lucide-react";
 import { FavoriteButton } from "@/components/ui/favorite-button";
+import { useCart } from "@/context/CartContext";
+import { useAuth } from "@/context/AuthContext";
+import { useToast } from "@/hooks/use-toast";
 
 // Import Swiper styles
 import "swiper/css";
@@ -53,6 +51,9 @@ export function FeaturedCollectionsClient({ products }: Props) {
   const { t, i18n } = useTranslation();
   const isRtl = i18n.language === "ar";
   const [isDark, setIsDark] = useState(false);
+  const { addToCart } = useCart();
+  const { isAuthenticated } = useAuth();
+  const { toast } = useToast();
 
   useEffect(() => {
     const checkDarkMode = () => {
@@ -240,11 +241,11 @@ export function FeaturedCollectionsClient({ products }: Props) {
                       </div>
 
                       {/* Hover Overlay */}
-                      <div 
+                      <div
                         className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/40 via-black/10 to-transparent opacity-0 transition-opacity duration-700 sm:group-hover:opacity-100"
                         style={{ transform: "translateZ(0)" }}
                       />
-                      <div 
+                      <div
                         className="absolute inset-x-0 bottom-0 px-4 pt-4 pb-3 sm:p-4 opacity-100 translate-y-0 sm:opacity-0 sm:translate-y-3 transition-all duration-700 sm:group-hover:opacity-100 sm:group-hover:translate-y-0"
                         style={{ transform: "translateZ(0)" }}
                       >
@@ -264,6 +265,33 @@ export function FeaturedCollectionsClient({ products }: Props) {
                         <div className="pointer-events-auto mx-auto w-max">
                           <button
                             type="button"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              if (!isAuthenticated) {
+                                toast({
+                                  title: isRtl
+                                    ? "تسجيل الدخول مطلوب"
+                                    : "Login Required",
+                                  description: isRtl
+                                    ? "يجب تسجيل الدخول لإضافة المنتجات إلى السلة"
+                                    : "Please login to add products to cart",
+                                  variant: "destructive",
+                                });
+                                return;
+                              }
+                              addToCart({
+                                id: product.id,
+                                nameEn: product.nameEn,
+                                nameAr: product.nameAr,
+                                price: product.price,
+                                imageUrl: product.image,
+                                categoryId: undefined,
+                                occasionId: undefined,
+                                isBestSeller: false,
+                                isSpecialGift: false,
+                              });
+                            }}
                             aria-label={isRtl ? "أضف إلى السلة" : "Add to cart"}
                             className={`inline-flex items-center gap-1.5 sm:gap-2 rounded-full px-4 py-1.5 sm:px-5 sm:py-2 text-xs sm:text-sm font-medium text-foreground transition-opacity hover:opacity-90 cursor-pointer ${
                               isRtl ? "font-sans-ar" : "font-sans-en"

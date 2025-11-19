@@ -3,6 +3,7 @@ import { FeaturedCollectionsClient } from "./featured-collections-client";
 import { getSpecialGifts } from "@/lib/api/products";
 import type { Product } from "@/types/product";
 import { Skeleton } from "@/components/ui/skeleton";
+import { ServerLogger } from "@/components/debug/server-logger";
 
 // Server Component to fetch featured collections
 async function FeaturedCollectionsContent() {
@@ -22,7 +23,12 @@ async function FeaturedCollectionsContent() {
       image: product.mainImage,
     }));
 
-    return <FeaturedCollectionsClient products={displayProducts} />;
+    return (
+      <>
+        <ServerLogger source="FeaturedCollections" data={products} />
+        <FeaturedCollectionsClient products={displayProducts} />
+      </>
+    );
   } catch (error) {
     console.error("Error loading featured collections:", error);
     return null; // Don't render section if error

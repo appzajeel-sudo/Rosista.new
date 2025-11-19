@@ -13,6 +13,7 @@ import { useTranslation } from "react-i18next";
 import type { FavoriteItem, AddToFavoritesRequest } from "@/types/favorites";
 import {
   getFavoritesAction,
+  getFavoriteIdsAction,
   addToFavoritesAction,
   removeFromFavoritesAction,
   clearFavoritesAction,
@@ -20,6 +21,7 @@ import {
 } from "@/app/actions/favorites";
 import { useAuth } from "./AuthContext";
 import { useToast } from "@/hooks/use-toast";
+import { useDebug } from "@/context/DebugContext";
 
 interface FavoritesContextType {
   favorites: FavoriteItem[];
@@ -39,7 +41,7 @@ interface FavoritesContextType {
   }) => Promise<void>;
   removeFromFavorites: (productId: string) => Promise<void>;
   clearFavorites: () => Promise<void>;
-  refreshFavorites: () => Promise<void>;
+  refreshFavorites: (full?: boolean) => Promise<void>;
   refreshCount: () => Promise<void>;
 }
 
@@ -49,6 +51,7 @@ const FavoritesContext = createContext<FavoritesContextType | undefined>(
 
 export const FavoritesProvider = ({ children }: { children: ReactNode }) => {
   const [favorites, setFavorites] = useState<FavoriteItem[]>([]);
+  const [favoriteIds, setFavoriteIds] = useState<Set<string>>(new Set());
   const [favoritesCount, setFavoritesCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const { isAuthenticated } = useAuth();
@@ -56,10 +59,12 @@ export const FavoritesProvider = ({ children }: { children: ReactNode }) => {
   const { t, i18n } = useTranslation();
   const isRtl = i18n.language === "ar";
   const router = useRouter();
+  const { addLog } = useDebug();
 
-  const refreshFavorites = useCallback(async () => {
+  const refreshFavorites = useCallback(async (full = false) => {
     if (!isAuthenticated) {
       setFavorites([]);
+      setFavoriteIds(new Set());
       setFavoritesCount(0);
       setIsLoading(false);
       return;
@@ -67,22 +72,42 @@ export const FavoritesProvider = ({ children }: { children: ReactNode }) => {
 
     setIsLoading(true);
     try {
-      const data = await getFavoritesAction();
-      if (data) {
-        setFavorites(data.favorites || []);
-        setFavoritesCount(data.count || 0);
+      if (full) {
+        // Full fetch (Heavy)
+        const data = await getFavoritesAction();
+        if (data) {
+          setFavorites(data.favorites || []);
+          setFavoritesCount(data.count || 0);
+          // Also update IDs
+          const ids = new Set(data.favorites.map(f => f.id));
+          setFavoriteIds(ids);
+          addLog("FavoritesContext", { action: "refreshFavorites (Full)", data }, "client");
+        } else {
+          setFavorites([]);
+          setFavoriteIds(new Set());
+          setFavoritesCount(0);
+        }
       } else {
-        setFavorites([]);
-        setFavoritesCount(0);
+        // ID fetch (Lightweight)
+        const data = await getFavoriteIdsAction();
+        if (data) {
+          setFavoriteIds(new Set(data.ids));
+          setFavoritesCount(data.count || 0);
+          addLog("FavoritesContext", { action: "refreshFavorites (Light)", data }, "client");
+        } else {
+          setFavoriteIds(new Set());
+          setFavoritesCount(0);
+        }
       }
     } catch (error) {
       console.error("Error refreshing favorites:", error);
       setFavorites([]);
+      setFavoriteIds(new Set());
       setFavoritesCount(0);
     } finally {
       setIsLoading(false);
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, addLog]);
 
   const refreshCount = useCallback(async () => {
     if (!isAuthenticated) {
@@ -101,9 +126,10 @@ export const FavoritesProvider = ({ children }: { children: ReactNode }) => {
   // Load favorites when user is authenticated
   useEffect(() => {
     if (isAuthenticated) {
-      refreshFavorites();
+      refreshFavorites(false); // Lightweight fetch by default
     } else {
       setFavorites([]);
+      setFavoriteIds(new Set());
       setFavoritesCount(0);
       setIsLoading(false);
     }
@@ -112,9 +138,9 @@ export const FavoritesProvider = ({ children }: { children: ReactNode }) => {
 
   const isFavorite = useCallback(
     (productId: string) => {
-      return favorites.some((fav) => fav.id === productId);
+      return favoriteIds.has(productId);
     },
-    [favorites]
+    [favoriteIds]
   );
 
   const handleAddToFavorites = useCallback(
@@ -157,6 +183,11 @@ export const FavoritesProvider = ({ children }: { children: ReactNode }) => {
           return prev;
         }
         return [tempFavorite, ...prev];
+      });
+      setFavoriteIds((prev) => {
+        const next = new Set(prev);
+        next.add(product.id);
+        return next;
       });
       setFavoritesCount((prev) => prev + 1);
 
@@ -227,6 +258,11 @@ export const FavoritesProvider = ({ children }: { children: ReactNode }) => {
       
       // تحديث الحالة فوراً
       setFavorites((prev) => prev.filter((fav) => fav.id !== productId));
+      setFavoriteIds((prev) => {
+        const next = new Set(prev);
+        next.delete(productId);
+        return next;
+      });
       setFavoritesCount((prev) => Math.max(0, prev - 1));
 
       // إرسال الطلب في الخلفية
@@ -267,6 +303,7 @@ export const FavoritesProvider = ({ children }: { children: ReactNode }) => {
     try {
       await clearFavoritesAction();
       setFavorites([]);
+      setFavoriteIds(new Set());
       setFavoritesCount(0);
 
       toast({

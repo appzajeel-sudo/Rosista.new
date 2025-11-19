@@ -3,6 +3,7 @@ import { LuxuryGiftsClient } from "./luxury-gifts-client";
 import { getLuxuryGifts } from "@/lib/api/products";
 import type { Product } from "@/types/product";
 import { Skeleton } from "@/components/ui/skeleton";
+import { ServerLogger } from "@/components/debug/server-logger";
 
 // Server Component to fetch luxury gifts
 async function LuxuryGiftsContent() {
@@ -22,7 +23,12 @@ async function LuxuryGiftsContent() {
       image: product.mainImage,
     }));
 
-    return <LuxuryGiftsClient products={displayProducts} />;
+    return (
+      <>
+        <ServerLogger source="LuxuryGifts" data={products} />
+        <LuxuryGiftsClient products={displayProducts} />
+      </>
+    );
   } catch (error) {
     console.error("Error loading luxury gifts:", error);
     return null; // Don't render section if error

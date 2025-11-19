@@ -44,6 +44,7 @@ export default function CartPage() {
     updateCartItem,
     clearCart,
     isLoading,
+    refreshCart,
   } = useCart();
   const { isAuthenticated, isLoading: isAuthLoading } = useAuth();
 
@@ -62,6 +63,13 @@ export default function CartPage() {
       }),
     [cart, searchTerm, isRtl]
   );
+
+  // Load cart when user is authenticated
+  useEffect(() => {
+    if (isAuthenticated) {
+      refreshCart(true); // Force full fetch when visiting the page
+    }
+  }, [isAuthenticated, refreshCart]);
 
   // Loading state for auth check
   if (isAuthLoading) {

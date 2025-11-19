@@ -89,13 +89,13 @@ export async function getCartAction(): Promise<CartResponse | null> {
 }
 
 // Get Cart Count - قراءة accessToken من cookie
-export async function getCartCountAction(): Promise<number> {
+export async function getCartCountAction(): Promise<CartCountResponse> {
   try {
     const cookieStore = await cookies();
     let accessToken = cookieStore.get("accessToken")?.value;
 
     if (!accessToken) {
-      return 0;
+      return { count: 0, total: 0 };
     }
 
     const baseUrl = getApiBaseUrl();
@@ -118,7 +118,7 @@ export async function getCartCountAction(): Promise<number> {
         accessToken = newCookieStore.get("accessToken")?.value;
 
         if (!accessToken) {
-          return 0;
+          return { count: 0, total: 0 };
         }
 
         response = await fetch(url, {
@@ -130,19 +130,19 @@ export async function getCartCountAction(): Promise<number> {
           credentials: "include",
         });
       } catch {
-        return 0;
+        return { count: 0, total: 0 };
       }
     }
 
     if (!response.ok) {
-      return 0;
+      return { count: 0, total: 0 };
     }
 
     const data = await response.json();
-    return data.count || 0;
+    return { count: data.count || 0, total: data.total || 0 };
   } catch (error) {
     console.error("Get cart count action error:", error);
-    return 0;
+    return { count: 0, total: 0 };
   }
 }
 

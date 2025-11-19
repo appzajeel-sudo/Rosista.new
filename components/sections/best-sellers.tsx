@@ -3,6 +3,7 @@ import { BestSellersClient } from "./best-sellers-client";
 import { getBestSellers } from "@/lib/api/products";
 import type { Product } from "@/types/product";
 import { Skeleton } from "@/components/ui/skeleton";
+import { ServerLogger } from "@/components/debug/server-logger";
 
 // Server Component to fetch best sellers
 async function BestSellersContent() {
@@ -22,7 +23,12 @@ async function BestSellersContent() {
       image: product.mainImage,
     }));
 
-    return <BestSellersClient products={displayProducts} />;
+    return (
+      <>
+        <ServerLogger source="BestSellers" data={products} />
+        <BestSellersClient products={displayProducts} />
+      </>
+    );
   } catch (error) {
     console.error("Error loading best sellers:", error);
     return null; // Don't render section if error

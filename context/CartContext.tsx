@@ -21,6 +21,7 @@ import {
 } from "@/app/actions/cart";
 import { useAuth } from "./AuthContext";
 import { useToast } from "@/hooks/use-toast";
+import { useDebug } from "@/context/DebugContext";
 
 interface CartContextType {
   cart: CartItem[];
@@ -44,7 +45,7 @@ interface CartContextType {
   removeFromCart: (productId: string) => Promise<void>;
   updateCartItem: (productId: string, quantity: number) => Promise<void>;
   clearCart: () => Promise<void>;
-  refreshCart: () => Promise<void>;
+  refreshCart: (full?: boolean) => Promise<void>;
   refreshCount: () => Promise<void>;
 }
 
@@ -60,8 +61,9 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   const { t, i18n } = useTranslation();
   const isRtl = i18n.language === "ar";
   const router = useRouter();
+  const { addLog } = useDebug();
 
-  const refreshCart = useCallback(async () => {
+  const refreshCart = useCallback(async (full = false) => {
     if (!isAuthenticated) {
       setCart([]);
       setCartCount(0);
@@ -72,35 +74,45 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
     setIsLoading(true);
     try {
-      const data = await getCartAction();
-      if (data) {
-        setCart(data.items || []);
-        setCartCount(data.cartCount || data.totalItems || 0);
-        setTotalAmount(data.totalAmount || 0);
+      if (full) {
+        // Full fetch (Heavy)
+        const data = await getCartAction();
+        if (data) {
+          setCart(data.items || []);
+          setCartCount(data.cartCount || data.totalItems || 0);
+          setTotalAmount(data.totalAmount || 0);
+          addLog("CartContext", { action: "refreshCart (Full)", data }, "client");
+        } else {
+          setCart([]);
+          setCartCount(0);
+          setTotalAmount(0);
+        }
       } else {
-        setCart([]);
-        setCartCount(0);
-        setTotalAmount(0);
+        // Count fetch (Lightweight)
+        const data = await getCartCountAction();
+        setCartCount(data.count || 0);
+        setTotalAmount(data.total || 0);
+        addLog("CartContext", { action: "refreshCart (Light)", data }, "client");
       }
     } catch (error) {
       console.error("Error refreshing cart:", error);
-      setCart([]);
-      setCartCount(0);
-      setTotalAmount(0);
+      // Do not clear cart on error
     } finally {
       setIsLoading(false);
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, addLog]);
 
   const refreshCount = useCallback(async () => {
     if (!isAuthenticated) {
       setCartCount(0);
+      setTotalAmount(0);
       return;
     }
 
     try {
-      const count = await getCartCountAction();
-      setCartCount(count || 0);
+      const data = await getCartCountAction();
+      setCartCount(data.count || 0);
+      setTotalAmount(data.total || 0);
     } catch (error) {
       console.error("Error refreshing cart count:", error);
     }
@@ -109,7 +121,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   // Load cart when user is authenticated
   useEffect(() => {
     if (isAuthenticated) {
-      refreshCart();
+      refreshCart(false); // Lightweight fetch by default
     } else {
       setCart([]);
       setCartCount(0);

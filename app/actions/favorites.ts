@@ -10,6 +10,7 @@ import type {
   ClearFavoritesResponse,
   CheckFavoriteResponse,
   FavoritesCountResponse,
+  FavoriteIdsResponse,
 } from "@/types/favorites";
 import {
   getFavorites,
@@ -85,6 +86,62 @@ export async function getFavoritesAction(): Promise<FavoritesResponse | null> {
     return await response.json();
   } catch (error) {
     console.error("Get favorites action error:", error);
+    return null;
+  }
+}
+// Get Favorite IDs - قراءة accessToken من cookie
+export async function getFavoriteIdsAction(): Promise<FavoriteIdsResponse | null> {
+  try {
+    const cookieStore = await cookies();
+    let accessToken = cookieStore.get("accessToken")?.value;
+
+    if (!accessToken) {
+      return null;
+    }
+
+    const baseUrl = getApiBaseUrl();
+    const url = `${baseUrl}/api/favorites/ids`;
+
+    let response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+      credentials: "include",
+    });
+
+    // إذا كان التوكن منتهي الصلاحية، حاول refresh
+    if (response.status === 401) {
+      try {
+        await refreshTokenAction();
+        const newCookieStore = await cookies();
+        accessToken = newCookieStore.get("accessToken")?.value;
+
+        if (!accessToken) {
+          return null;
+        }
+
+        response = await fetch(url, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+          credentials: "include",
+        });
+      } catch {
+        return null;
+      }
+    }
+
+    if (!response.ok) {
+      return null;
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Get favorite IDs action error:", error);
     return null;
   }
 }

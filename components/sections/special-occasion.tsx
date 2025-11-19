@@ -3,6 +3,7 @@ import { SpecialOccasionClient } from "./special-occasion-client";
 import { getSpecialOccasions } from "@/lib/api/products";
 import type { Product } from "@/types/product";
 import { Skeleton } from "@/components/ui/skeleton";
+import { ServerLogger } from "@/components/debug/server-logger";
 
 // Server Component to fetch special occasions
 async function SpecialOccasionContent() {
@@ -22,7 +23,12 @@ async function SpecialOccasionContent() {
       image: product.mainImage,
     }));
 
-    return <SpecialOccasionClient products={displayProducts} />;
+    return (
+      <>
+        <ServerLogger source="SpecialOccasion" data={products} />
+        <SpecialOccasionClient products={displayProducts} />
+      </>
+    );
   } catch (error) {
     console.error("Error loading special occasions:", error);
     return null; // Don't render section if error

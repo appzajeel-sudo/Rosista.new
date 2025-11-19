@@ -10,6 +10,7 @@ import { LuxuryGifts } from "@/components/sections/luxury-gifts";
 import { SpecialOccasion } from "@/components/sections/special-occasion";
 import { fetchHeroSlides } from "@/lib/api/hero";
 import type { HeroSlide } from "@/types/hero";
+import { ServerLogger } from "@/components/debug/server-logger";
 
 // ISR: إعادة توليد الصفحة كل 3600 ثانية (ساعة)
 export const revalidate = 3600;
@@ -71,7 +72,12 @@ async function HeroSliderServer() {
     const slides: HeroSlide[] = await fetchHeroSlides(language, 10);
 
     // If no slides from API, HeroSlider will use fallback
-    return <HeroSlider slides={slides.length > 0 ? slides : undefined} />;
+    return (
+      <>
+        <ServerLogger source="HeroSlider" data={slides} />
+        <HeroSlider slides={slides.length > 0 ? slides : undefined} />
+      </>
+    );
   } catch (error) {
     // Return HeroSlider without slides (will use fallback)
     return <HeroSlider />;

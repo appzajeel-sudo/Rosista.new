@@ -9,6 +9,7 @@ import {
 } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
+import { useDebug } from "@/context/DebugContext";
 import type { User, LoginRequest, SignupRequest, EmailVerificationRequest, ForgotPasswordRequest } from "@/types/auth";
 import { loginAction, verifyEmailAction, logoutAction, getUserAction, refreshTokenAction, resetPasswordAction, sendPhoneVerificationAction, verifyPhoneNumberAction, loginWithPhoneAction, verifyPhoneLoginAction, saveGoogleAccessTokenAction } from "@/app/actions/auth";
 import { signup, resendCode, requestPasswordReset } from "@/lib/api/auth";
@@ -39,6 +40,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
   const { t } = useTranslation();
+  const { addLog } = useDebug();
 
   const isAuthenticated = !!user;
 
@@ -53,6 +55,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const userData = await getUserAction();
       if (userData) {
         setUser(userData);
+        addLog("AuthContext", { action: "checkAuthStatus", user: userData }, "auth");
       } else {
         setUser(null);
       }
@@ -71,6 +74,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const userData = await getUserAction();
       if (userData) {
         setUser(userData);
+        addLog("AuthContext", { action: "login", user: userData }, "auth");
         router.push(redirectTo);
       }
     } catch (error: any) {

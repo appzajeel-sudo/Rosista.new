@@ -55,3 +55,8 @@ export interface FavoritesCountResponse {
   count: number;
 }
 
+export interface FavoriteIdsResponse {
+  ids: string[];
+  count: number;
+}
+

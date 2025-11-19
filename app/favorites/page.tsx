@@ -56,7 +56,7 @@ const RiyalSymbol = ({ className = "w-3 h-3" }) => (
 export default function FavoritesPage() {
   const { t, i18n } = useTranslation();
   const isRtl = i18n.language === "ar";
-  const { favorites, removeFromFavorites, clearFavorites, isLoading } =
+  const { favorites, removeFromFavorites, clearFavorites, isLoading, refreshFavorites } =
     useFavorites();
   const { addToCart } = useCart();
   const { isAuthenticated, isLoading: isAuthLoading } = useAuth();
@@ -98,14 +98,12 @@ export default function FavoritesPage() {
     [favorites, searchTerm, sortBy, isRtl]
   );
 
-  // Loading state for auth check
-  if (isAuthLoading) {
-    return (
-      <section className="flex min-h-[60vh] items-center justify-center bg-white dark:bg-black px-4">
-        <div className="h-8 w-8 animate-spin rounded-full border-2 border-neutral-200 border-t-black dark:border-neutral-800 dark:border-t-white" />
-      </section>
-    );
-  }
+  // Load favorites when user is authenticated
+  useEffect(() => {
+    if (isAuthenticated) {
+      refreshFavorites(true); // Force full fetch when visiting the page
+    }
+  }, [isAuthenticated, refreshFavorites]);
 
   // Not authenticated state
   if (!isAuthenticated) {

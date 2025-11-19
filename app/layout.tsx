@@ -11,6 +11,8 @@ import { FavoritesProvider } from "@/context/FavoritesContext";
 import { CartProvider } from "@/context/CartContext";
 import { Header } from "@/components/header";
 import { FooterWrapper } from "@/components/footer-wrapper";
+import { DebugProvider } from "@/context/DebugContext";
+import { DebugPanel } from "@/components/debug/debug-panel";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -70,19 +72,22 @@ export default function RootLayout({
       >
         <I18nProvider>
           <ThemeProvider>
-            <AuthProvider>
-              <UserProvider>
-                <FavoritesProvider>
-                  <CartProvider>
-                    <Header />
-                    <main className="min-h-screen">{children}</main>
-                    <Suspense fallback={null}>
-                      <FooterWrapper />
-                    </Suspense>
-                  </CartProvider>
-                </FavoritesProvider>
-              </UserProvider>
-            </AuthProvider>
+            <DebugProvider>
+              <AuthProvider>
+                <UserProvider>
+                  <FavoritesProvider>
+                    <CartProvider>
+                      <Header />
+                      <main className="min-h-screen">{children}</main>
+                      <Suspense fallback={null}>
+                        <FooterWrapper />
+                      </Suspense>
+                      <DebugPanel />
+                    </CartProvider>
+                  </FavoritesProvider>
+                </UserProvider>
+              </AuthProvider>
+            </DebugProvider>
           </ThemeProvider>
         </I18nProvider>
       </body>

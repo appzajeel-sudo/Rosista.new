@@ -38,6 +38,19 @@ import { useFavorites } from "@/context/FavoritesContext";
 import { useCart } from "@/context/CartContext";
 import { Sheet, SheetContent } from "@/components/ui/sheet";
 
+const RiyalSymbol = ({ className = "w-3 h-3" }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 1124.14 1256.39"
+    className={className}
+    fill="currentColor"
+    aria-hidden="true"
+  >
+    <path d="M699.62,1113.02h0c-20.06,44.48-33.32,92.75-38.4,143.37l424.51-90.24c20.06-44.47,33.31-92.75,38.4-143.37l-424.51,90.24Z" />
+    <path d="M1085.73,895.8c20.06-44.47,33.32-92.75,38.4-143.37l-330.68,70.33v-135.2l292.27-62.11c20.06-44.47,33.32-92.75,38.4-143.37l-330.68,70.27V66.13c-50.67,28.45-95.67,66.32-132.25,110.99v403.35l-132.25,28.11V0c-50.67,28.44-95.67,66.32-132.25,110.99v525.69l-295.91,62.88c-20.06,44.47-33.33,92.75-38.42,143.37l334.33-71.05v170.26l-358.3,76.14c-20.06,44.47-33.32,92.75-38.4,143.37l375.04-79.7c30.53-6.35,56.77-24.4,73.83-49.24l68.78-101.97v-.02c7.14-10.55,11.3-23.27,11.3-36.97v-149.98l132.25-28.11v270.4l424.53-90.28Z" />
+  </svg>
+);
+
 export function Header() {
   // Always start with false to match SSR (prevents hydration mismatch)
   const [isScrolled, setIsScrolled] = useState(false);
@@ -53,7 +66,7 @@ export function Header() {
   const { theme, toggleTheme, mounted } = useDarkMode();
   const { user, isAuthenticated, logout } = useAuth();
   const { favoritesCount } = useFavorites();
-  const { cartCount } = useCart();
+  const { cartCount, totalAmount } = useCart();
 
   // Transform state for scroll-linked logo (replaces ref + repeated compute)
   const [transformValues, setTransformValues] = useState<{
@@ -432,13 +445,23 @@ export function Header() {
                 <Link
                   href="/cart"
                   aria-label="Shopping bag"
-                  className={`relative transition-opacity hover:opacity-60 ${textColor}`}
+                  className={`relative flex items-center gap-2 transition-opacity hover:opacity-60 ${textColor}`}
                 >
-                  <ShoppingBag className="h-[18px] w-[18px] stroke-[1.5]" />
-                  {cartCount > 0 && (
-                    <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[10px] text-white">
-                      {cartCount > 9 ? "9+" : cartCount}
-                    </span>
+                  <div className="relative">
+                    <ShoppingBag className="h-[18px] w-[18px] stroke-[1.5]" />
+                    {cartCount > 0 && (
+                      <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[10px] text-white">
+                        {cartCount > 9 ? "9+" : cartCount}
+                      </span>
+                    )}
+                  </div>
+                  {totalAmount > 0 && (
+                    <div className="hidden flex-col items-start text-xs font-bold leading-none sm:flex">
+                      <span className="flex items-center gap-1">
+                        {totalAmount.toLocaleString()}
+                        <RiyalSymbol className="h-3 w-3" />
+                      </span>
+                    </div>
                   )}
                 </Link>
 

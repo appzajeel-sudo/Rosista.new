@@ -148,14 +148,14 @@ export default function FavoritesPage() {
   }
 
   return (
-    <section className="min-h-screen bg-white dark:bg-black pt-40 pb-20">
+    <section className="min-h-screen bg-white dark:bg-black pt-28 pb-12 sm:pt-40 sm:pb-20">
       <div className="container mx-auto max-w-7xl px-4 md:px-8">
         
         {/* Header */}
-        <div className="mb-16 flex flex-col items-center justify-center gap-8 border-b border-neutral-200 dark:border-neutral-800 pb-8 text-center">
+        <div className="mb-8 flex flex-col items-center justify-center gap-6 border-b border-neutral-200 dark:border-neutral-800 pb-6 text-center sm:mb-16 sm:gap-8 sm:pb-8">
           {/* Toolbar */}
-          <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <div className="relative">
+          <div className="flex w-full flex-col items-center justify-center gap-3 sm:w-auto sm:flex-row sm:gap-4">
+            <div className="relative w-full sm:w-auto">
               <Search className="absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-neutral-400" />
               <input
                 type="text"
@@ -179,7 +179,7 @@ export default function FavoritesPage() {
                 >
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent className="rounded-none border-neutral-200 dark:border-neutral-800">
+                <SelectContent className="rounded-none border-neutral-200 bg-white dark:bg-neutral-900 dark:border-neutral-800">
                   <SelectItem 
                     value="recent" 
                     className={cn(
@@ -258,7 +258,7 @@ export default function FavoritesPage() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="grid grid-cols-1 gap-x-4 gap-y-12 sm:grid-cols-2 lg:grid-cols-4"
+              className="grid grid-cols-2 gap-x-3 gap-y-8 sm:grid-cols-2 sm:gap-x-4 sm:gap-y-12 lg:grid-cols-4"
             >
               {filteredFavorites.map((item, index) => (
                 <motion.div
@@ -271,20 +271,20 @@ export default function FavoritesPage() {
                 >
                   {/* Image */}
                   <Link href={`/product/${item.id}`} className="block">
-                    <div className="relative mb-4 aspect-[3/4] w-full overflow-hidden bg-neutral-100 dark:bg-neutral-900">
-                      <Image
-                        src={item.imageUrl}
-                        alt={isRtl ? item.nameAr : item.nameEn}
-                        fill
-                        className="object-cover transition-transform duration-700 group-hover:scale-105"
-                      />
-                      {/* Overlay Button */}
-                      <div className="absolute inset-x-0 bottom-0 p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                        <Button className="w-full rounded-none bg-white text-black hover:bg-neutral-100 dark:bg-black dark:text-white dark:hover:bg-neutral-900">
-                          {isRtl ? "إضافة للسلة" : "ADD TO CART"}
-                        </Button>
+                      <div className="relative mb-3 aspect-[3/4] w-full overflow-hidden bg-neutral-100 dark:bg-neutral-900 sm:mb-4">
+                        <Image
+                          src={item.imageUrl}
+                          alt={isRtl ? item.nameAr : item.nameEn}
+                          fill
+                          className="object-cover transition-transform duration-700 group-hover:scale-105"
+                        />
+                        {/* Overlay Button */}
+                        <div className="absolute inset-x-0 bottom-0 p-2 opacity-100 transition-opacity duration-300 sm:p-4 lg:opacity-0 lg:group-hover:opacity-100">
+                          <Button className="h-8 w-full rounded-none bg-white/90 text-[10px] text-black backdrop-blur-sm hover:bg-white dark:bg-black/90 dark:text-white dark:hover:bg-black sm:h-9 sm:text-xs">
+                            {isRtl ? "إضافة للسلة" : "ADD TO CART"}
+                          </Button>
+                        </div>
                       </div>
-                    </div>
                   </Link>
 
                   {/* Info */}

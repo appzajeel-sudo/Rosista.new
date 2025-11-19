@@ -12,8 +12,8 @@ import {
   ChevronRight,
   Crown,
   ShoppingCart,
-  Heart,
 } from "lucide-react";
+import { FavoriteButton } from "@/components/ui/favorite-button";
 
 // Import Swiper styles
 import "swiper/css";
@@ -223,25 +223,21 @@ export function BestSellersClient({ products }: Props) {
                       </div>
 
                       {/* Favorite Icon */}
-                      <button
-                        onClick={(e) => {
-                          e.preventDefault();
-                          e.stopPropagation();
-                          // TODO: Add to favorites functionality
-                        }}
-                        className={`absolute top-3 z-10 flex h-7 w-7 sm:h-9 sm:w-9 items-center justify-center rounded-full opacity-100 translate-y-0 sm:opacity-0 sm:-translate-y-3 transition-all duration-700 sm:group-hover:opacity-100 sm:group-hover:translate-y-0 cursor-pointer ${
+                      <div
+                        className={`absolute top-3 z-10 flex h-7 w-7 sm:h-9 sm:w-9 items-center justify-center rounded-full opacity-100 translate-y-0 sm:opacity-0 sm:-translate-y-3 transition-all duration-700 sm:group-hover:opacity-100 sm:group-hover:translate-y-0 ${
                           isRtl ? "left-3" : "right-3"
                         }`}
                         style={{
                           backgroundColor: "rgb(var(--background))",
                           transform: "translateZ(0)",
                         }}
-                        aria-label={
-                          isRtl ? "إضافة إلى المفضلة" : "Add to favorites"
-                        }
                       >
-                        <Heart className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-foreground" />
-                      </button>
+                        <FavoriteButton
+                          product={product}
+                          className="cursor-pointer"
+                          size={18}
+                        />
+                      </div>
 
                       {/* Hover Overlay */}
                       <div 

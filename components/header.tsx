@@ -29,10 +29,12 @@ import {
   Settings,
   FileText,
   LogOut,
+  Heart,
 } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useDarkMode } from "@/hooks/use-dark-mode";
 import { useAuth } from "@/context/AuthContext";
+import { useFavorites } from "@/context/FavoritesContext";
 import { Sheet, SheetContent } from "@/components/ui/sheet";
 
 export function Header() {
@@ -49,6 +51,7 @@ export function Header() {
   const isHomePage = pathname === "/";
   const { theme, toggleTheme, mounted } = useDarkMode();
   const { user, isAuthenticated, logout } = useAuth();
+  const { favoritesCount } = useFavorites();
 
   // Transform state for scroll-linked logo (replaces ref + repeated compute)
   const [transformValues, setTransformValues] = useState<{
@@ -244,7 +247,7 @@ export function Header() {
                           : `${textColor} ${hoverColor}`
                       } ${isRtl ? "font-sans-ar" : "font-sans-en"}`}
                     >
-                      {link.label}
+                      <span suppressHydrationWarning>{link.label}</span>
                     </Link>
                   </li>
                 ))}
@@ -285,7 +288,7 @@ export function Header() {
                             : `${textColor} ${hoverColor}`
                         } ${isRtl ? "font-sans-ar" : "font-sans-en"}`}
                       >
-                        {link.label}
+                        <span suppressHydrationWarning>{link.label}</span>
                       </Link>
                     </li>
                   ))}
@@ -407,6 +410,20 @@ export function Header() {
                     <UserCircle className="h-[18px] w-[18px] stroke-[1.5]" />
                   </Link>
                 )}
+
+                {/* Favorites */}
+                <Link
+                  href="/favorites"
+                  aria-label={isRtl ? "المفضلة" : "Favorites"}
+                  className={`relative transition-opacity hover:opacity-60 ${textColor}`}
+                >
+                  <Heart className="h-[18px] w-[18px] stroke-[1.5]" />
+                  {favoritesCount > 0 && (
+                    <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[10px] text-white">
+                      {favoritesCount > 9 ? "9+" : favoritesCount}
+                    </span>
+                  )}
+                </Link>
 
                 {/* Cart */}
                 <Link
@@ -550,7 +567,7 @@ export function Header() {
                           )}
 
                           {/* Text content */}
-                          <span className="relative z-10">{link.label}</span>
+                          <span className="relative z-10" suppressHydrationWarning>{link.label}</span>
                         </Link>
                       </motion.li>
                     ))}

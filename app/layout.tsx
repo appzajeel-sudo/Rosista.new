@@ -7,6 +7,7 @@ import { ThemeProvider } from "@/lib/theme-context";
 import { I18nProvider } from "@/lib/i18n/I18nProvider";
 import { AuthProvider } from "@/context/AuthContext";
 import { UserProvider } from "@/context/UserContext";
+import { FavoritesProvider } from "@/context/FavoritesContext";
 import { Header } from "@/components/header";
 import { FooterWrapper } from "@/components/footer-wrapper";
 
@@ -70,11 +71,13 @@ export default function RootLayout({
           <ThemeProvider>
             <AuthProvider>
               <UserProvider>
-                <Header />
-                <main className="min-h-screen">{children}</main>
-                <Suspense fallback={null}>
-                  <FooterWrapper />
-                </Suspense>
+                <FavoritesProvider>
+                  <Header />
+                  <main className="min-h-screen">{children}</main>
+                  <Suspense fallback={null}>
+                    <FooterWrapper />
+                  </Suspense>
+                </FavoritesProvider>
               </UserProvider>
             </AuthProvider>
           </ThemeProvider>

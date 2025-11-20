@@ -215,20 +215,7 @@ export function SpecialOccasionClient({ products }: Props) {
                         className="object-cover transition-transform duration-[2s] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] sm:group-hover:scale-[1.02] will-change-transform"
                       />
 
-                      {/* Special Occasion Badge */}
-                      <div
-                        className={`hidden sm:flex absolute top-3 h-7 w-7 items-center justify-center rounded-full ${
-                          isRtl ? "right-3" : "left-3"
-                        }`}
-                        style={{
-                          backgroundColor: "rgb(var(--background))",
-                          transform: "translateZ(0)",
-                        }}
-                        aria-label="Special Occasion"
-                        title="Special Occasion"
-                      >
-                        <CalendarHeart className="h-3.5 w-3.5 text-rose-500" />
-                      </div>
+
 
                       {/* Favorite Icon */}
                       <div

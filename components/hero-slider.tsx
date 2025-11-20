@@ -34,7 +34,7 @@ export function HeroSlider({
   // ترجمة الـ slides بناءً على اللغة الحالية في Client
   const displaySlides = useMemo(() => {
     // الصورة الثابتة الأولى
-    const staticHeroSlide: HeroSlide = {
+      const staticHeroSlide: HeroSlide = {
       id: "static-hero-rosista",
       image:
         "https://res.cloudinary.com/djpl34pm6/image/upload/v1763408263/categories/tjzswp5hbygwdi8v77mh.png",

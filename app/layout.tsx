@@ -13,6 +13,7 @@ import { Header } from "@/components/header";
 import { FooterWrapper } from "@/components/footer-wrapper";
 import { DebugProvider } from "@/context/DebugContext";
 import { DebugPanel } from "@/components/debug/debug-panel";
+import { Toaster } from "@/components/ui/toaster";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -65,6 +66,7 @@ export default function RootLayout({
             `,
           }}
         />
+        <link rel="preconnect" href="https://res.cloudinary.com" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
@@ -83,6 +85,7 @@ export default function RootLayout({
                         <FooterWrapper />
                       </Suspense>
                       <DebugPanel />
+                      <Toaster />
                     </CartProvider>
                   </FavoritesProvider>
                 </UserProvider>

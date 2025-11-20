@@ -97,12 +97,13 @@ function OccasionsLoading() {
           <div className="mb-12 text-center">
             <Skeleton className="h-9 w-64 mx-auto sm:h-10 sm:w-80" />
           </div>
-          <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
-            {[...Array(10)].map((_, index) => (
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 lg:gap-5">
+            {[...Array(8)].map((_, index) => (
               <div key={index} className="space-y-3">
-                <Skeleton className="aspect-square rounded-3xl" />
-                <Skeleton className="h-4 w-full" />
-                <Skeleton className="h-4 w-3/4" />
+                <Skeleton className="aspect-[3/3.8] sm:aspect-4/5 rounded-none" />
+                <div className="space-y-2 flex flex-col items-center mt-4">
+                   <Skeleton className="h-4 w-1/2" />
+                </div>
               </div>
             ))}
           </div>

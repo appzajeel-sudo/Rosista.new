@@ -20,7 +20,6 @@ export function FilmStripHero({ slides }: Props) {
   const isRtl = i18n.language === "ar";
   const containerRef = useRef<HTMLDivElement>(null);
   const animationRef = useRef<gsap.core.Tween | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
 
   // Duplicate slides 2 times for seamless infinite loop
   const duplicatedSlides = [...slides, ...slides];
@@ -64,12 +63,10 @@ export function FilmStripHero({ slides }: Props) {
       });
     };
 
-    const timeout = setTimeout(() => {
-      setIsLoading(false);
-      requestAnimationFrame(() => {
-        createAnimation();
-      });
-    }, 1000);
+    // Start animation immediately
+    requestAnimationFrame(() => {
+      createAnimation();
+    });
 
     const handleResize = () => {
       if (animationRef.current) {
@@ -81,7 +78,6 @@ export function FilmStripHero({ slides }: Props) {
     window.addEventListener("resize", handleResize);
 
     return () => {
-      clearTimeout(timeout);
       window.removeEventListener("resize", handleResize);
       if (animationRef.current) {
         animationRef.current.kill();
@@ -98,16 +94,6 @@ export function FilmStripHero({ slides }: Props) {
 
         {/* Animated Film Strip - GSAP */}
         <div className="overflow-hidden relative">
-          {isLoading && (
-            <div className="absolute inset-0 z-20 flex gap-0">
-              {[...Array(8)].map((_, index) => (
-                <Skeleton
-                  key={index}
-                  className="h-[280px] w-[200px] shrink-0 sm:h-[320px] sm:w-[240px] md:h-[380px] md:w-[300px] lg:h-[420px] lg:w-[340px]"
-                />
-              ))}
-            </div>
-          )}
 
           <div
             ref={containerRef}

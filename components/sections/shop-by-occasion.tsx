@@ -5,12 +5,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Autoplay } from "swiper/modules";
+import { Navigation, Autoplay, Parallax } from "swiper/modules";
 import type { Swiper as SwiperType } from "swiper";
-import { ChevronLeft, ChevronRight, ArrowUpRight } from "lucide-react";
+import { ArrowRight, ArrowLeft, ChevronLeft, ChevronRight } from "lucide-react";
 import { getActiveOccasions } from "@/lib/api/occasions";
 import type { Occasion } from "@/types/occasion";
 import { Skeleton } from "@/components/ui/skeleton";
+import { cn } from "@/lib/utils";
 
 // Import Swiper styles
 import "swiper/css";
@@ -21,20 +22,14 @@ export function ShopByOccasion() {
   const swiperRef = useRef<SwiperType | null>(null);
   const { t, i18n } = useTranslation();
   const isRtl = i18n.language === "ar";
-  const [isDark, setIsDark] = useState(false);
   const [occasions, setOccasions] = useState<Occasion[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isDark, setIsDark] = useState(false);
 
-  // Fetch occasions from API
   useEffect(() => {
     const fetchOccasions = async () => {
       try {
-        // ✅ جلب المناسبات المعروضة في Home Page فقط (showInHomePage = true)
         const data = await getActiveOccasions(true);
-
-        // ✅ عرض البيانات في Console فقط
-        console.log("🛍️ Shop by Occasion - Data:", data);
-
         setOccasions(data);
       } catch (error) {
         console.error("❌ Error fetching occasions:", error);
@@ -42,7 +37,6 @@ export function ShopByOccasion() {
         setLoading(false);
       }
     };
-
     fetchOccasions();
   }, []);
 
@@ -60,44 +54,19 @@ export function ShopByOccasion() {
     return () => observer.disconnect();
   }, []);
 
-  // Don't render if loading or no occasions
   if (loading) {
-    return (
-      <section className="relative overflow-hidden bg-background py-3 sm:py-5">
-        <div className="mx-auto max-w-[1650px] px-6 sm:px-8">
-          <div className="mb-12">
-            <div className="relative inline-block">
-              <Skeleton className="h-9 w-64 sm:h-10 sm:w-80" />
-            </div>
-          </div>
-
-          {/* Shimmer Skeleton Cards - يشبه المحتوى الفعلي */}
-          <div className="relative">
-            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
-              {[...Array(5)].map((_, index) => (
-                <div key={index} className="space-y-3">
-                  {/* Image Skeleton - نفس aspect ratio */}
-                  <Skeleton className="aspect-[4/5] sm:aspect-[3/4] rounded-3xl" />
-                  {/* Text Skeleton */}
-                  <div className="px-4 space-y-2">
-                    <Skeleton className="h-4 w-full" />
-                    <Skeleton className="h-4 w-3/4" />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-    );
+    return <ShopByOccasionSkeleton />;
   }
 
   if (!occasions || occasions.length === 0) {
-    return null; // Don't render section if no occasions
+    return null;
   }
 
   return (
-    <section className="relative overflow-hidden bg-background py-3 sm:py-5">
+    <section className="relative bg-background py-8 sm:py-12 overflow-hidden">
+      {/* Background Decorative Elements - Very subtle */}
+      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-border to-transparent opacity-50" />
+      
       <div className="mx-auto max-w-[1650px] px-6 sm:px-8">
         {/* Header */}
         <div className="mb-12">
@@ -187,34 +156,31 @@ export function ShopByOccasion() {
             </div>
           </button>
 
-          {/* Swiper */}
+          {/* Slider Section */}
+          <div className="overflow-hidden rounded-3xl">
           <Swiper
-            key={i18n.language}
             modules={[Navigation, Autoplay]}
-            spaceBetween={16}
-            slidesPerView={2}
-            loop={false}
-            speed={600}
+            spaceBetween={2}
+            slidesPerView={1.2}
+            speed={1500}
+            autoplay={{
+              delay: 5000,
+              disableOnInteraction: false,
+              pauseOnMouseEnter: true,
+            }}
+            loop={true}
+            centeredSlides={false}
             dir={isRtl ? "rtl" : "ltr"}
             grabCursor={true}
             onSwiper={(swiper) => {
               swiperRef.current = swiper;
             }}
             breakpoints={{
-              640: {
-                slidesPerView: 3,
-                spaceBetween: 20,
-              },
-              1024: {
-                slidesPerView: 4,
-                spaceBetween: 20,
-              },
-              1280: {
-                slidesPerView: 5,
-                spaceBetween: 24,
-              },
+              640: { slidesPerView: 2.2, spaceBetween: 4 },
+              1024: { slidesPerView: 3.5, spaceBetween: 6 },
+              1400: { slidesPerView: 4.5, spaceBetween: 6 },
             }}
-            className="shop-by-occasion-swiper"
+            className="shop-occasion-swiper"
           >
             {occasions.map((occasion, index) => {
               const occasionName = isRtl ? occasion.nameAr : occasion.nameEn;
@@ -222,59 +188,34 @@ export function ShopByOccasion() {
 
               return (
                 <SwiperSlide key={occasion._id}>
-                  <Link
-                    href={`/occasions/${occasionSlug}`}
-                    className="group block"
-                  >
-                    <div className="relative overflow-hidden rounded-3xl">
-                      {/* Image */}
-                      <div className="relative aspect-[4/5] sm:aspect-[3/4] overflow-hidden rounded-3xl">
+                  <Link href={`/occasions/${occasionSlug}`} className="group block">
+                    <div className="relative overflow-hidden">
+                      {/* Image Container */}
+                      <div className="relative aspect-[3/4] overflow-hidden">
                         <Image
                           src={occasion.imageUrl}
                           alt={occasionName}
                           fill
-                          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, (max-width: 1280px) 25vw, 20vw"
-                          priority={index === 0}
-                          fetchPriority={index === 0 ? "high" : "auto"}
+                          sizes="(max-width: 640px) 80vw, (max-width: 1024px) 40vw, 25vw"
+                          className="object-cover transition-transform duration-[2s] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group-hover:scale-[1.02] will-change-transform"
+                          priority={index < 2}
                           quality={100}
-                          loading={index === 0 ? "eager" : "lazy"}
-                          className="object-cover transition-all duration-[2s] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group-hover:scale-[1.05]"
                         />
 
-                        {/* Hover Overlay */}
-                        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-
-                        {/* Content - Appears on Hover */}
-                        <div className="absolute inset-x-0 bottom-0 p-4 opacity-0 translate-y-3 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
-                          <h3
-                            className={`mb-2 text-center text-base font-bold text-white sm:text-lg md:text-xl ${
+                        {/* Text Content - Centered & Over Image */}
+                        <div className="absolute inset-0 flex items-center justify-center px-4">
+                          <div className="text-center">
+                            <h3 className={cn(
+                              "text-2xl font-bold text-white transition-opacity duration-700 sm:group-hover:opacity-80",
                               isRtl ? "font-sans-ar" : "font-sans-en"
-                            }`}
-                          >
-                            {occasionName}
-                          </h3>
-                          <div className="flex items-center justify-center gap-2 text-sm text-white/90">
-                            <span
-                              className={
-                                isRtl ? "font-sans-ar" : "font-sans-en"
-                              }
-                            >
-                              {isRtl ? "استكشف" : "Explore"}
-                            </span>
-                            <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                            )}>
+                              {occasionName}
+                            </h3>
                           </div>
                         </div>
-                      </div>
 
-                      {/* Content Below Image */}
-                      <div className="p-4">
-                        <h3
-                          className={`mb-1 text-sm font-medium text-foreground line-clamp-2 transition-colors group-hover:text-foreground/80 ${
-                            isRtl ? "font-sans-ar" : "font-sans-en"
-                          }`}
-                        >
-                          {occasionName}
-                        </h3>
+                        {/* Elegant Border - Only on Hover */}
+                        <div className="absolute inset-0 border border-white/0 transition-opacity duration-700 sm:group-hover:border-white/20" />
                       </div>
                     </div>
                   </Link>
@@ -282,6 +223,38 @@ export function ShopByOccasion() {
               );
             })}
           </Swiper>
+        </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ShopByOccasionSkeleton() {
+  return (
+    <section className="relative bg-background py-8 sm:py-12 overflow-hidden">
+      <div className="mx-auto max-w-[1650px] px-6 sm:px-8">
+        {/* Header */}
+        <div className="mb-8 sm:mb-12 flex flex-col sm:flex-row sm:items-end justify-between gap-6">
+          <div className="space-y-4 max-w-2xl">
+            <Skeleton className="h-3 w-32" />
+            <Skeleton className="h-10 w-64 sm:h-12 sm:w-80" />
+          </div>
+          <div className="hidden sm:flex items-center gap-4">
+            <Skeleton className="h-12 w-12 rounded-full" />
+            <Skeleton className="h-12 w-12 rounded-full" />
+          </div>
+        </div>
+
+        {/* Slider Skeleton */}
+        <div className="relative overflow-hidden rounded-3xl">
+          <div className="flex gap-2">
+            {[...Array(5)].map((_, i) => (
+              <div key={i} className="flex-shrink-0 w-[calc(50%-4px)] sm:w-[calc(33.333%-5px)] lg:w-[calc(20%-5px)]">
+                <Skeleton className="aspect-[3/4] w-full" />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

@@ -198,12 +198,13 @@ export function ShopByOccasion() {
                           fill
                           sizes="(max-width: 640px) 80vw, (max-width: 1024px) 40vw, 25vw"
                           className="object-cover transition-transform duration-[2s] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group-hover:scale-[1.02] will-change-transform"
+                          style={{ backfaceVisibility: "hidden", transform: "translateZ(0)" }}
                           priority={index < 2}
                           quality={100}
                         />
 
                         {/* Text Content - Centered & Over Image */}
-                        <div className="absolute inset-0 flex items-center justify-center px-4">
+                        <div className="absolute inset-0 z-10 flex items-center justify-center px-4">
                           <div className="text-center">
                             <h3 className={cn(
                               "text-2xl font-bold text-white transition-opacity duration-700 sm:group-hover:opacity-80",

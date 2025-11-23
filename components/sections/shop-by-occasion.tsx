@@ -116,7 +116,7 @@ export function ShopByOccasion() {
           <button
             onClick={() => swiperRef.current?.slidePrev()}
             aria-label="Previous"
-            className={`absolute top-[40%] z-10 hidden -translate-y-1/2 rounded-full p-1.5 cursor-pointer sm:block ${
+            className={`absolute top-1/2 z-10 hidden -translate-y-1/2 rounded-full p-1.5 cursor-pointer sm:block ${
               isRtl ? "-right-5" : "-left-5"
             }`}
             style={{ backgroundColor: "rgb(var(--background))" }}
@@ -137,7 +137,7 @@ export function ShopByOccasion() {
           <button
             onClick={() => swiperRef.current?.slideNext()}
             aria-label="Next"
-            className={`absolute top-[40%] z-10 hidden -translate-y-1/2 rounded-full p-1.5 cursor-pointer sm:block ${
+            className={`absolute top-1/2 z-10 hidden -translate-y-1/2 rounded-full p-1.5 cursor-pointer sm:block ${
               isRtl ? "-left-5" : "-right-5"
             }`}
             style={{ backgroundColor: "rgb(var(--background))" }}
@@ -215,8 +215,7 @@ export function ShopByOccasion() {
                           </div>
                         </div>
 
-                        {/* Elegant Border - Only on Hover */}
-                        <div className="absolute inset-0 border border-white/0 transition-opacity duration-700 sm:group-hover:border-white/20" />
+
                       </div>
                     </div>
                   </Link>

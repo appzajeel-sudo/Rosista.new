@@ -220,12 +220,12 @@ export const FavoritesProvider = ({ children }: { children: ReactNode }) => {
           return [newFavorite, ...filtered];
         });
 
-        toast({
-          title: isRtl ? "تم الإضافة" : "Added",
-          description: isRtl
-            ? `تم إضافة ${product.nameAr} إلى المفضلة`
-            : `${product.nameEn} added to favorites`,
-        });
+        // toast({
+        //   title: isRtl ? "تم الإضافة" : "Added",
+        //   description: isRtl
+        //     ? `تم إضافة ${product.nameAr} إلى المفضلة`
+        //     : `${product.nameEn} added to favorites`,
+        // });
       } catch (error: any) {
         console.error("Error adding to favorites:", error);
         
@@ -269,12 +269,12 @@ export const FavoritesProvider = ({ children }: { children: ReactNode }) => {
       try {
         await removeFromFavoritesAction(productId);
 
-        toast({
-          title: isRtl ? "تم الحذف" : "Removed",
-          description: isRtl
-            ? "تم حذف المنتج من المفضلة"
-            : "Product removed from favorites",
-        });
+        // toast({
+        //   title: isRtl ? "تم الحذف" : "Removed",
+        //   description: isRtl
+        //     ? "تم حذف المنتج من المفضلة"
+        //     : "Product removed from favorites",
+        // });
       } catch (error: any) {
         console.error("Error removing from favorites:", error);
         
@@ -306,12 +306,12 @@ export const FavoritesProvider = ({ children }: { children: ReactNode }) => {
       setFavoriteIds(new Set());
       setFavoritesCount(0);
 
-      toast({
-        title: isRtl ? "تم المسح" : "Cleared",
-        description: isRtl
-          ? "تم مسح جميع المفضلة"
-          : "All favorites cleared",
-      });
+      // toast({
+      //   title: isRtl ? "تم المسح" : "Cleared",
+      //   description: isRtl
+      //     ? "تم مسح جميع المفضلة"
+      //     : "All favorites cleared",
+      // });
     } catch (error: any) {
       console.error("Error clearing favorites:", error);
       toast({

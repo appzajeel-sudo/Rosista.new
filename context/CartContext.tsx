@@ -179,12 +179,12 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         // Refresh cart to get updated state
         await refreshCart();
 
-        toast({
-          title: isRtl ? "تم الإضافة" : "Added",
-          description: isRtl
-            ? `تم إضافة ${product.nameAr} إلى السلة`
-            : `${product.nameEn} added to cart`,
-        });
+        // toast({
+        //   title: isRtl ? "تم الإضافة" : "Added",
+        //   description: isRtl
+        //     ? `تم إضافة ${product.nameAr} إلى السلة`
+        //     : `${product.nameEn} added to cart`,
+        // });
       } catch (error: any) {
         console.error("Error adding to cart:", error);
         toast({
@@ -214,12 +214,12 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         // Refresh cart to get updated state
         await refreshCart();
 
-        toast({
-          title: isRtl ? "تم الحذف" : "Removed",
-          description: isRtl
-            ? "تم حذف المنتج من السلة"
-            : "Product removed from cart",
-        });
+        // toast({
+        //   title: isRtl ? "تم الحذف" : "Removed",
+        //   description: isRtl
+        //     ? "تم حذف المنتج من السلة"
+        //     : "Product removed from cart",
+        // });
       } catch (error: any) {
         console.error("Error removing from cart:", error);
         toast({
@@ -253,10 +253,10 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         // Refresh cart to get updated state
         await refreshCart();
 
-        toast({
-          title: isRtl ? "تم التحديث" : "Updated",
-          description: isRtl ? "تم تحديث الكمية" : "Quantity updated",
-        });
+        // toast({
+        //   title: isRtl ? "تم التحديث" : "Updated",
+        //   description: isRtl ? "تم تحديث الكمية" : "Quantity updated",
+        // });
       } catch (error: any) {
         console.error("Error updating cart item:", error);
         toast({
@@ -285,10 +285,10 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       setCartCount(0);
       setTotalAmount(0);
 
-      toast({
-        title: isRtl ? "تم المسح" : "Cleared",
-        description: isRtl ? "تم مسح السلة" : "Cart cleared",
-      });
+      // toast({
+      //   title: isRtl ? "تم المسح" : "Cleared",
+      //   description: isRtl ? "تم مسح السلة" : "Cart cleared",
+      // });
     } catch (error: any) {
       console.error("Error clearing cart:", error);
       toast({

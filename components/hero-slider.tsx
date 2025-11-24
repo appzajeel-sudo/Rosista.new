@@ -11,6 +11,7 @@ import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import type { Swiper as SwiperType } from "swiper";
 import type { HeroSlide, FallbackSlide } from "@/types/hero";
 import { fallbackSlides } from "@/lib/api/hero";
+import { STATIC_HERO_SLIDE } from "@/lib/constants";
 
 // Import Swiper styles
 import "swiper/css";
@@ -35,15 +36,14 @@ export function HeroSlider({
   const displaySlides = useMemo(() => {
     // الصورة الثابتة الأولى
       const staticHeroSlide: HeroSlide = {
-      id: "static-hero-rosista",
-      image:
-        "https://res.cloudinary.com/djpl34pm6/image/upload/v1763408263/categories/tjzswp5hbygwdi8v77mh.png",
+      id: STATIC_HERO_SLIDE.id,
+      image: STATIC_HERO_SLIDE.image,
       title:
         currentLanguage === "en"
-          ? "Luxury Gifts for Every Moment"
-          : "هدايا فاخرة لكل لحظة",
-      cta: currentLanguage === "en" ? "Shop Now" : "تسوق الآن",
-      link: "/",
+          ? STATIC_HERO_SLIDE.titleEn
+          : STATIC_HERO_SLIDE.titleAr,
+      cta: currentLanguage === "en" ? STATIC_HERO_SLIDE.ctaEn : STATIC_HERO_SLIDE.ctaAr,
+      link: STATIC_HERO_SLIDE.link,
       type: "promotion",
     };
 

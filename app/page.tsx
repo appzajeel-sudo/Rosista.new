@@ -11,6 +11,7 @@ import { SpecialOccasion } from "@/components/sections/special-occasion";
 import { fetchHeroSlides } from "@/lib/api/hero";
 import type { HeroSlide } from "@/types/hero";
 import { ServerLogger } from "@/components/debug/server-logger";
+import { STATIC_HERO_SLIDE } from "@/lib/constants";
 
 // ISR: إعادة توليد الصفحة كل 3600 ثانية (ساعة)
 export const revalidate = 3600;
@@ -87,7 +88,17 @@ async function HeroSliderServer() {
 export default async function HomePage() {
   return (
     <main>
-      <Suspense fallback={<div className="h-[70vh] sm:h-screen" />}>
+      <Suspense
+        fallback={
+          <div className="relative h-[70vh] w-full overflow-hidden sm:h-screen">
+            <img
+              src={STATIC_HERO_SLIDE.image}
+              alt="Loading..."
+              className="h-full w-full object-cover"
+            />
+          </div>
+        }
+      >
         <HeroSliderServer />
       </Suspense>
       <Suspense fallback={<div className="h-96" />}>

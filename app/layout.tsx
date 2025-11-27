@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/lib/theme-context";
+import { ThemeProvider } from "@/components/theme-provider";
 import { I18nProvider } from "@/lib/i18n/I18nProvider";
 import { AuthProvider } from "@/context/AuthContext";
 import { UserProvider } from "@/context/UserContext";
@@ -51,16 +51,6 @@ export default function RootLayout({
                   if (lang.startsWith('ar')) lang = 'ar';
                   document.documentElement.setAttribute('lang', lang);
                   document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
-                  
-                  // معالجة Theme
-                  var theme = localStorage.getItem('theme');
-                  var systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                  var shouldBeDark = theme === 'dark' || (!theme && systemPrefersDark);
-                  if (shouldBeDark) {
-                    document.documentElement.classList.add('dark');
-                  } else {
-                    document.documentElement.classList.remove('dark');
-                  }
                 } catch (e) {}
               })();
             `,

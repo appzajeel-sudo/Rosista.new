@@ -32,7 +32,7 @@ import {
   Heart,
 } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
-import { useDarkMode } from "@/hooks/use-dark-mode";
+import { useTheme } from "next-themes";
 import { useAuth } from "@/context/AuthContext";
 import { useFavorites } from "@/context/FavoritesContext";
 import { useCart } from "@/context/CartContext";
@@ -63,7 +63,8 @@ export function Header() {
   const { t, i18n } = useTranslation();
   const isRtl = i18n.language === "ar";
   const isHomePage = pathname === "/";
-  const { theme, toggleTheme, mounted } = useDarkMode();
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
   const { user, isAuthenticated, logout } = useAuth();
   const { favoritesCount } = useFavorites();
   const { cartCount, totalAmount } = useCart();
@@ -92,6 +93,11 @@ export function Header() {
         setIsScrolled(true);
       });
     }
+  }, []);
+
+  // Set mounted state after hydration
+  useEffect(() => {
+    setMounted(true);
   }, []);
 
   useEffect(() => {
@@ -320,7 +326,7 @@ export function Header() {
                 {/* Dark Mode Toggle */}
                 {mounted && (
                   <button
-                    onClick={toggleTheme}
+                    onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
                     aria-label={
                       theme === "dark"
                         ? "Switch to light mode"
@@ -618,7 +624,7 @@ export function Header() {
                   {/* Theme Toggle */}
                   {mounted && (
                     <button
-                      onClick={toggleTheme}
+                      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
                       className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-lg transition-all duration-200 bg-neutral-100/50 dark:bg-neutral-800/50 hover:bg-neutral-200/50 dark:hover:bg-neutral-700/50 active:scale-95"
                       aria-label={
                         theme === "dark"
@@ -701,7 +707,7 @@ export function Header() {
             <CommandItem
               onSelect={() => {
                 setIsCommandOpen(false);
-                toggleTheme();
+                setTheme(theme === "dark" ? "light" : "dark");
               }}
             >
               {theme === "dark" ? (

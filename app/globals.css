@@ -8,98 +8,45 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* ============================================
+   نظام الألوان المنظف - فقط المتغيرات المستخدمة
+   ============================================ */
 :root {
-  /* Light Mode - RGB فقط */
-
+  /* ===== الألوان الأساسية ===== */
+  
   /* Background & Foreground */
   --background: 255 255 255;
   --foreground: 0 0 0;
-
-  /* Inner Circle Background (lighter variant of background) */
+  
+  /* Inner Circle Background */
   --inner-circle-bg: 253 253 253;
-
+  
   /* White & Black */
   --white: 255 255 255;
   --black: 0 0 0;
-
-  /* Text Colors - Plain Black & White for Occasions */
-  --text-plain-black: 0 0 0;
-  --text-plain-white: 255 255 255;
-
-  /* Primary Colors (Pink/Rose) */
-  --primary-50: 254 243 242;
-  --primary-100: 254 228 226;
-  --primary-200: 254 205 211;
-  --primary-300: 253 164 175;
-  --primary-400: 251 113 133;
-  --primary-500: 244 63 94;
-  --primary-600: 225 29 72;
-  --primary-700: 190 18 60;
-  --primary-800: 159 18 57;
-  --primary-900: 136 19 55;
-
-  /* Secondary Colors (Orange/Amber) */
-  --secondary-50: 254 247 238;
-  --secondary-100: 253 236 214;
-  --secondary-200: 251 213 173;
-  --secondary-300: 248 183 121;
-  --secondary-400: 245 144 67;
-  --secondary-500: 242 113 30;
-  --secondary-600: 227 88 20;
-  --secondary-700: 188 66 19;
-  --secondary-800: 149 54 24;
-  --secondary-900: 120 47 22;
-
-  /* Text Colors */
-  --text-primary: 0 0 0;
-  --text-secondary: 0 0 0;
-  --text-tertiary: 0 0 0;
-
-  /* Neutral Colors (Gray scale) */
-  --neutral-50: 250 250 250;
-  --neutral-100: 245 245 245;
-  --neutral-200: 229 229 229;
-  --neutral-300: 212 212 212;
-  --neutral-400: 163 163 163;
-  --neutral-500: 115 115 115;
-  --neutral-600: 82 82 82;
-  --neutral-700: 64 64 64;
-  --neutral-800: 38 38 38;
-  --neutral-900: 23 23 23;
-
-  /* Border Colors */
-  --border-default: 229 229 229;
-  --border-light: 212 212 212;
-  --border-muted: 163 163 163;
-
-  /* Button Colors */
-  --button-primary: 23 23 23;
-  --button-primary-foreground: 255 255 255;
-  --button-secondary: 244 63 94;
-  --button-secondary-foreground: 255 255 255;
-  --button-muted: 245 245 245;
-  --button-muted-foreground: 31 41 55;
-
-  /* Card Colors */
-  --card-background: 255 255 255;
-  --card-foreground: 0 0 0;
-  --card-border: 229 229 229;
-
-  /* Footer Colors - دائماً ألوان الوضع الليلي */
+  
+  /* ===== Primary Colors (Rose/Pink) - المستخدمة فقط ===== */
+  --primary-400: 251 113 133;  /* Dark mode text */
+  --primary-500: 244 63 94;    /* الأساسي - focus, gradients */
+  --primary-600: 225 29 72;    /* Text colors, links */
+  --primary-700: 190 18 60;    /* Hover states */
+  
+  /* ===== Secondary Colors (Orange/Amber) - المستخدمة فقط ===== */
+  --secondary-500: 242 113 30; /* الأساسي - gradients */
+  --secondary-600: 227 88 20;  /* Hover states */
+  
+  /* ===== Neutral Colors (Grayscale) - المستخدمة فقط ===== */
+  --neutral-50: 250 250 250;   /* Light backgrounds */
+  --neutral-300: 212 212 212;  /* Borders - كثير الاستخدام */
+  --neutral-700: 64 64 64;     /* Dark borders */
+  --neutral-800: 38 38 38;     /* Dark backgrounds */
+  --neutral-900: 23 23 23;     /* Text colors */
+  
+  /* ===== Footer Colors ===== */
   --footer-background: 15 15 18;
   --footer-foreground: 245 245 247;
-
-  /* Input Colors */
-  --input-background: 255 255 255;
-  --input-border: 212 212 212;
-  --input-foreground: 0 0 0;
-
-  /* Overlay Colors */
-  --overlay-light: 255 255 255;
-  --overlay-medium: 0 0 0;
-  --overlay-dark: 0 0 0;
-
-  /* Compatibility with existing shadcn/ui variables */
+  
+  /* ===== shadcn/ui Compatibility ===== */
   --card: 255 255 255;
   --card-foreground: 0 0 0;
   --popover: 255 255 255;
@@ -119,99 +66,42 @@
   --ring: 244 63 94;
   --radius: 0.625rem;
 }
-
 .dark {
-  /* Dark Mode - Luxury Dark Blue/Gray Theme - RGB فقط */
-
-  /* Background & Foreground - أزرق/رمادي داكن فاخر */
+  /* ===== Dark Mode - Luxury Dark Blue/Gray ===== */
+  
+  /* Background & Foreground */
   --background: 19 23 32;
   --foreground: 255 255 255;
-
-  /* Inner Circle Background (lighter variant of background) - أفتح قليلاً من #191f2d */
+  
+  /* Inner Circle Background */
   --inner-circle-bg: 35 41 55;
-
+  
   /* White & Black */
   --white: 255 255 255;
   --black: 0 0 0;
-
-  /* Text Colors - Plain Black & White */
-  --text-plain-black: 0 0 0;
-  --text-plain-white: 255 255 255;
-
-  /* Primary Colors (Pink/Rose) - نفس الألوان مع توهج خفيف */
-  --primary-50: 136 19 55;
-  --primary-100: 159 18 57;
-  --primary-200: 190 18 60;
-  --primary-300: 225 29 72;
-  --primary-400: 244 63 94;
-  --primary-500: 251 113 133;
-  --primary-600: 253 164 175;
-  --primary-700: 254 205 211;
-  --primary-800: 254 228 226;
-  --primary-900: 254 243 242;
-
-  /* Secondary Colors (Orange/Amber) - نفس الألوان */
-  --secondary-50: 120 47 22;
-  --secondary-100: 149 54 24;
-  --secondary-200: 188 66 19;
-  --secondary-300: 227 88 20;
-  --secondary-400: 242 113 30;
-  --secondary-500: 245 144 67;
-  --secondary-600: 248 183 121;
-  --secondary-700: 251 213 173;
-  --secondary-800: 253 236 214;
-  --secondary-900: 254 247 238;
-
-  /* Text Colors */
-  --text-primary: 255 255 255;
-  --text-secondary: 255 255 255;
-  --text-tertiary: 255 255 255;
-
-  /* Neutral Colors - أزرق/رمادي داكن متناسق */
+  
+  /* ===== Primary Colors - المستخدمة فقط ===== */
+  --primary-400: 244 63 94;    /* Dark mode text */
+  --primary-500: 251 113 133;  /* الأساسي */
+  --primary-600: 253 164 175;  /* Text colors, links */
+  --primary-700: 254 205 211;  /* Hover states */
+  
+  /* ===== Secondary Colors - المستخدمة فقط ===== */
+  --secondary-500: 245 144 67; /* الأساسي */
+  --secondary-600: 248 183 121; /* Hover states */
+  
+  /* ===== Neutral Colors - المستخدمة فقط ===== */
   --neutral-50: 30 34 43;
-  --neutral-100: 42 46 56;
-  --neutral-200: 58 62 72;
   --neutral-300: 78 82 92;
-  --neutral-400: 110 114 125;
-  --neutral-500: 148 152 163;
-  --neutral-600: 178 182 193;
   --neutral-700: 200 204 215;
   --neutral-800: 220 224 235;
   --neutral-900: 245 245 247;
-
-  /* Border Colors - أزرق/رمادي فاخر */
-  --border-default: 42 46 56;
-  --border-light: 58 62 72;
-  --border-muted: 78 82 92;
-
-  /* Button Colors */
-  --button-primary: 245 245 247;
-  --button-primary-foreground: 19 23 32;
-  --button-secondary: 251 113 133;
-  --button-secondary-foreground: 255 255 255;
-  --button-muted: 42 46 56;
-  --button-muted-foreground: 245 245 247;
-
-  /* Card Colors - أغمق قليلاً من الخلفية */
-  --card-background: 26 30 39;
-  --card-foreground: 255 255 255;
-  --card-border: 42 46 56;
-
-  /* Footer Colors - داكن في الوضع الليلي أيضاً */
+  
+  /* ===== Footer Colors ===== */
   --footer-background: 15 15 18;
   --footer-foreground: 245 245 247;
-
-  /* Input Colors */
-  --input-background: 26 30 39;
-  --input-border: 42 46 56;
-  --input-foreground: 255 255 255;
-
-  /* Overlay Colors */
-  --overlay-light: 19 23 32;
-  --overlay-medium: 15 19 26;
-  --overlay-dark: 10 13 20;
-
-  /* Compatibility with existing shadcn/ui variables */
+  
+  /* ===== shadcn/ui Compatibility ===== */
   --card: 0 0 0;
   --card-foreground: 255 255 255;
   --popover: 0 0 0;

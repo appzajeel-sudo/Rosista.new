@@ -88,7 +88,7 @@ export function CategoriesClient({ categories }: Props) {
         </div>
 
         {/* Luxury Split Screen Design */}
-        <div className="grid grid-cols-2 gap-0.5 border-y-2 border-x-0 border-white bg-white sm:border-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-0.5 border-y-2 border-x-0 border-white dark:border-0 bg-white dark:bg-background sm:border-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {categories.map((category, index) => (
             <Link
               key={category.id}
@@ -128,7 +128,7 @@ export function CategoriesClient({ categories }: Props) {
                 </div>
 
                 {/* Elegant Border - Only on Hover (Desktop) */}
-                <div className="absolute inset-0 border border-white/0 transition-opacity duration-700 sm:group-hover:border-white/20" />
+                <div className="absolute inset-0 border border-white/0 transition-opacity duration-700 sm:group-hover:border-white/20 dark:hidden" />
               </div>
             </Link>
           ))}

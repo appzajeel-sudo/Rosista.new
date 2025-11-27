@@ -126,8 +126,8 @@ export function FilmStripHero({ slides }: Props) {
         </div>
 
         {/* Gradient Overlays */}
-        <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-16 bg-gradient-to-r from-background via-background/50 to-transparent" />
-        <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-16 bg-gradient-to-l from-background via-background/50 to-transparent" />
+        <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-16 bg-gradient-to-r from-background via-background/50 to-transparent dark:opacity-0" />
+        <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-16 bg-gradient-to-l from-background via-background/50 to-transparent dark:opacity-0" />
       </div>
     </section>
   );

@@ -67,58 +67,42 @@
   --radius: 0.625rem;
 }
 .dark {
-  /* ===== Dark Mode - Luxury Dark Blue/Gray ===== */
-  
-  /* Background & Foreground */
-  --background: 19 23 32;
-  --foreground: 255 255 255;
-  
-  /* Inner Circle Background */
-  --inner-circle-bg: 35 41 55;
-  
-  /* White & Black */
+  /* ===== Dark Mode - Luxury Rich Navy ===== */
+  --background: 8 12 24;
+  --foreground: 248 250 252;
+  --inner-circle-bg: 15 20 35;
   --white: 255 255 255;
   --black: 0 0 0;
-  
-  /* ===== Primary Colors - المستخدمة فقط ===== */
-  --primary-400: 244 63 94;    /* Dark mode text */
-  --primary-500: 251 113 133;  /* الأساسي */
-  --primary-600: 253 164 175;  /* Text colors, links */
-  --primary-700: 254 205 211;  /* Hover states */
-  
-  /* ===== Secondary Colors - المستخدمة فقط ===== */
-  --secondary-500: 245 144 67; /* الأساسي */
-  --secondary-600: 248 183 121; /* Hover states */
-  
-  /* ===== Neutral Colors - المستخدمة فقط ===== */
-  --neutral-50: 30 34 43;
-  --neutral-300: 78 82 92;
-  --neutral-700: 200 204 215;
-  --neutral-800: 220 224 235;
-  --neutral-900: 245 245 247;
-  
-  /* ===== Footer Colors ===== */
-  --footer-background: 15 15 18;
+  --primary-400: 251 113 133;
+  --primary-500: 254 135 155;
+  --primary-600: 254 164 175;
+  --primary-700: 254 205 211;
+  --secondary-500: 251 146 60;
+  --secondary-600: 253 186 116;
+  --neutral-50: 15 20 35;
+  --neutral-300: 55 65 90;
+  --neutral-700: 150 160 185;
+  --neutral-800: 190 200 225;
+  --neutral-900: 235 240 248;
+  --footer-background: 6 10 20;
   --footer-foreground: 245 245 247;
-  
-  /* ===== shadcn/ui Compatibility ===== */
-  --card: 0 0 0;
-  --card-foreground: 255 255 255;
-  --popover: 0 0 0;
-  --popover-foreground: 255 255 255;
-  --primary: 251 113 133;
-  --primary-foreground: 0 0 0;
-  --secondary: 245 144 67;
-  --secondary-foreground: 0 0 0;
-  --muted: 0 0 0;
-  --muted-foreground: 255 255 255;
-  --accent: 251 113 133;
-  --accent-foreground: 0 0 0;
-  --destructive: oklch(0.396 0.141 25.723);
-  --destructive-foreground: oklch(0.637 0.237 25.331);
-  --border: 255 255 255;
-  --input: 0 0 0;
-  --ring: 251 113 133;
+  --card: 12 16 30;
+  --card-foreground: 248 250 252;
+  --popover: 10 14 26;
+  --popover-foreground: 248 250 252;
+  --primary: 254 135 155;
+  --primary-foreground: 8 12 24;
+  --secondary: 251 146 60;
+  --secondary-foreground: 8 12 24;
+  --muted: 18 24 40;
+  --muted-foreground: 190 200 225;
+  --accent: 254 135 155;
+  --accent-foreground: 8 12 24;
+  --destructive: oklch(0.55 0.22 25);
+  --destructive-foreground: oklch(0.95 0.05 25);
+  --border: 35 45 70;
+  --input: 15 20 35;
+  --ring: 254 135 155;
 }
 
 @theme inline {
@@ -320,14 +304,14 @@ html[dir="ltr"] {
 .film-strip-border {
   border-left: 1px solid;
   border-right: 1px solid;
-  border-color: rgb(var(--border-default) / 0.2);
+  border-color: rgb(var(--border) / 0.2); /* ✅ صحيح */
   box-sizing: border-box;
   transform: translateZ(0);
   -webkit-transform: translateZ(0);
 }
 
 .dark .film-strip-border {
-  border-color: rgb(var(--border-default) / 0.3);
+  border-color: rgb(var(--border) / 0.3); /* ✅ صحيح */
 }
 
 /* Film Strip Swiper - Smooth continuous scroll */

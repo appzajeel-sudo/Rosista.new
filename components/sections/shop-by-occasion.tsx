@@ -38,6 +38,7 @@ export function ShopByOccasion() {
 
     const container = containerRef.current;
     let slidesWidth = container.scrollWidth / 2;
+    let lastWidth = window.innerWidth; // Track width changes only
 
     const updateWidth = () => {
       slidesWidth = container.scrollWidth / 2;
@@ -77,9 +78,15 @@ export function ShopByOccasion() {
     });
 
     const handleResize = () => {
-      if (animationRef.current) {
-        animationRef.current.kill();
-        createAnimation();
+      const currentWidth = window.innerWidth;
+
+      // Only recreate animation if width changed (ignore height changes from mobile browser UI)
+      if (currentWidth !== lastWidth) {
+        lastWidth = currentWidth;
+        if (animationRef.current) {
+          animationRef.current.kill();
+          createAnimation();
+        }
       }
     };
 

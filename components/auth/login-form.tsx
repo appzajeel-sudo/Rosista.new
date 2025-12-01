@@ -36,6 +36,11 @@ export function LoginForm({ redirectTo = "/" }: LoginFormProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isButtonHovered, setIsButtonHovered] = useState(false);
+  
+  // ReadOnly hack to prevent autofill
+  const [isEmailReady, setIsEmailReady] = useState(false);
+  const [isPasswordReady, setIsPasswordReady] = useState(false);
+  const [isPhoneReady, setIsPhoneReady] = useState(false);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -103,7 +108,7 @@ export function LoginForm({ redirectTo = "/" }: LoginFormProps) {
         {/* Background Image */}
         <div className="absolute inset-0">
           <Image
-            src="https://res.cloudinary.com/djpl34pm6/image/upload/v1763323246/occasions/yhhcp4jtjce8twzkwxgr.png"
+            src="https://res.cloudinary.com/djpl34pm6/image/upload/v1764607717/hero-occasions/b9q0qqe60nbjfylx7vf9.png"
             alt="Luxury Gifts"
             fill
             className="object-cover"
@@ -261,6 +266,9 @@ export function LoginForm({ redirectTo = "/" }: LoginFormProps) {
                       name="email"
                       value={formData.email}
                       onChange={handleChange}
+                      onFocus={() => setIsEmailReady(true)}
+                      readOnly={!isEmailReady}
+                      autoComplete="login-user-email"
                       dir="ltr"
                       className={`w-full border-b-2 border-neutral-300 bg-transparent px-0 py-2.5 text-left text-neutral-900 transition-colors placeholder:text-neutral-400 focus:border-primary-500 focus:outline-none dark:border-neutral-700 dark:text-white dark:placeholder:text-neutral-500 dark:focus:border-primary-400 ${
                         isRtl
@@ -283,6 +291,9 @@ export function LoginForm({ redirectTo = "/" }: LoginFormProps) {
                         name="password"
                         value={formData.password}
                         onChange={handleChange}
+                        onFocus={() => setIsPasswordReady(true)}
+                        readOnly={!isPasswordReady}
+                        autoComplete="login-user-password"
                         dir="ltr"
                         className={`w-full border-b-2 border-neutral-300 bg-transparent px-0 py-2.5 pr-10 text-left text-neutral-900 transition-colors placeholder:text-neutral-400 focus:border-primary-500 focus:outline-none dark:border-neutral-700 dark:text-white dark:placeholder:text-neutral-500 dark:focus:border-primary-400 rtl:pl-10 rtl:pr-0 ${
                           isRtl
@@ -334,6 +345,9 @@ export function LoginForm({ redirectTo = "/" }: LoginFormProps) {
                       name="phoneNumber"
                       value={formData.phoneNumber}
                       onChange={handleChange}
+                      onFocus={() => setIsPhoneReady(true)}
+                      readOnly={!isPhoneReady}
+                      autoComplete="login-phone-number"
                       dir="ltr"
                       className="w-full border-b-2 border-neutral-300 bg-transparent px-0 py-2.5 text-left text-neutral-900 transition-colors placeholder:text-neutral-400 focus:border-primary-500 focus:outline-none dark:border-neutral-700 dark:text-white dark:placeholder:text-neutral-500 dark:focus:border-primary-400"
                       placeholder={t("auth.login.phonePlaceholder")}

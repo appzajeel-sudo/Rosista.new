@@ -116,7 +116,7 @@ export function SignupForm() {
         {/* Background Image */}
         <div className="absolute inset-0">
           <Image
-            src="https://image.cdn2.seaart.me/2025-11-17/d4d4db5e878c7398mcb0-2/a0ab58959ea1d28d8358bc4d913f4489_high.webp"
+            src="https://res.cloudinary.com/djpl34pm6/image/upload/v1764607675/hero-occasions/coeaoqagvwp32wtpayyp.jpg"
             alt="Luxury Gifts"
             fill
             className="object-cover"
@@ -224,6 +224,7 @@ export function SignupForm() {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
+                autoComplete="new-user-fullname"
                 className={`w-full border-b-2 border-neutral-300 bg-transparent px-0 py-2.5 text-neutral-900 transition-colors placeholder:text-neutral-400 focus:border-primary-500 focus:outline-none dark:border-neutral-700 dark:text-white dark:placeholder:text-neutral-500 dark:focus:border-primary-400 ${
                   isRtl ? "placeholder:text-right" : "placeholder:text-left"
                 }`}
@@ -250,6 +251,7 @@ export function SignupForm() {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
+                autoComplete="new-user-email"
                 dir="ltr"
                 className={`w-full border-b-2 border-neutral-300 bg-transparent px-0 py-2.5 text-left text-neutral-900 transition-colors placeholder:text-neutral-400 focus:border-primary-500 focus:outline-none dark:border-neutral-700 dark:text-white dark:placeholder:text-neutral-500 dark:focus:border-primary-400 ${
                   isRtl ? "placeholder:text-right" : "placeholder:text-left"
@@ -270,6 +272,7 @@ export function SignupForm() {
                   name="password"
                   value={formData.password}
                   onChange={handleChange}
+                  autoComplete="new-password"
                   dir="ltr"
                   className={`w-full border-b-2 border-neutral-300 bg-transparent px-0 py-2.5 pr-10 text-left text-neutral-900 transition-colors placeholder:text-neutral-400 focus:border-primary-500 focus:outline-none dark:border-neutral-700 dark:text-white dark:placeholder:text-neutral-500 dark:focus:border-primary-400 rtl:pl-10 rtl:pr-0 ${
                     isRtl ? "placeholder:text-right" : "placeholder:text-left"
@@ -321,6 +324,7 @@ export function SignupForm() {
                   name="confirmPassword"
                   value={formData.confirmPassword}
                   onChange={handleChange}
+                  autoComplete="new-password"
                   dir="ltr"
                   className={`w-full border-b-2 border-neutral-300 bg-transparent px-0 py-2.5 pr-10 text-left text-neutral-900 transition-colors placeholder:text-neutral-400 focus:border-primary-500 focus:outline-none dark:border-neutral-700 dark:text-white dark:placeholder:text-neutral-500 dark:focus:border-primary-400 rtl:pl-10 rtl:pr-0 ${
                     isRtl ? "placeholder:text-right" : "placeholder:text-left"

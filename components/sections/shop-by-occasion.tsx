@@ -92,8 +92,22 @@ export function ShopByOccasion() {
 
     window.addEventListener("resize", handleResize);
 
+    // Pause animation on hover
+    const handleMouseEnter = () => {
+      animationRef.current?.pause();
+    };
+
+    const handleMouseLeave = () => {
+      animationRef.current?.resume();
+    };
+
+    container.addEventListener("mouseenter", handleMouseEnter);
+    container.addEventListener("mouseleave", handleMouseLeave);
+
     return () => {
       window.removeEventListener("resize", handleResize);
+      container.removeEventListener("mouseenter", handleMouseEnter);
+      container.removeEventListener("mouseleave", handleMouseLeave);
       if (animationRef.current) {
         animationRef.current.kill();
       }

@@ -11,7 +11,6 @@ import { ChevronLeft, ChevronRight, Gem } from "lucide-react";
 import { FavoriteButton } from "@/components/ui/favorite-button";
 import { AddToCartButton } from "@/components/ui/add-to-cart-button";
 
-
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
@@ -50,7 +49,6 @@ export function FeaturedCollectionsClient({ products }: Props) {
   const { t, i18n } = useTranslation();
   const isRtl = i18n.language === "ar";
   const [isDark, setIsDark] = useState(false);
-
 
   useEffect(() => {
     const checkDarkMode = () => {
@@ -120,10 +118,9 @@ export function FeaturedCollectionsClient({ products }: Props) {
           <button
             onClick={() => swiperRef.current?.slidePrev()}
             aria-label="Previous"
-            className={`absolute top-[40%] z-10 hidden -translate-y-1/2 rounded-full p-1.5 cursor-pointer sm:block ${
+            className={`absolute top-[40%] z-10 hidden -translate-y-1/2 rounded-full p-1.5 cursor-pointer sm:block bg-white dark:bg-transparent cosmic-bg ${
               isRtl ? "-right-5" : "-left-5"
             }`}
-            style={{ backgroundColor: "rgb(var(--background))" }}
           >
             <div
               className="flex h-8 w-8 items-center justify-center rounded-full"
@@ -141,10 +138,9 @@ export function FeaturedCollectionsClient({ products }: Props) {
           <button
             onClick={() => swiperRef.current?.slideNext()}
             aria-label="Next"
-            className={`absolute top-[40%] z-10 hidden -translate-y-1/2 rounded-full p-1.5 cursor-pointer sm:block ${
+            className={`absolute top-[40%] z-10 hidden -translate-y-1/2 rounded-full p-1.5 cursor-pointer sm:block bg-white dark:bg-transparent cosmic-bg ${
               isRtl ? "-left-5" : "-right-5"
             }`}
-            style={{ backgroundColor: "rgb(var(--background))" }}
           >
             <div
               className="flex h-8 w-8 items-center justify-center rounded-full"
@@ -205,15 +201,12 @@ export function FeaturedCollectionsClient({ products }: Props) {
                         className="object-cover transition-transform duration-[2s] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] sm:group-hover:scale-[1.02] will-change-transform"
                       />
 
-
-
                       {/* Favorite Icon */}
                       <div
-                        className={`absolute top-3 z-10 flex h-7 w-7 sm:h-9 sm:w-9 items-center justify-center rounded-full opacity-100 translate-y-0 sm:opacity-0 sm:-translate-y-3 transition-all duration-700 sm:group-hover:opacity-100 sm:group-hover:translate-y-0 ${
+                        className={`absolute top-3 z-10 flex h-7 w-7 sm:h-9 sm:w-9 items-center justify-center rounded-full opacity-100 translate-y-0 sm:opacity-0 sm:-translate-y-3 transition-all duration-700 sm:group-hover:opacity-100 sm:group-hover:translate-y-0 bg-white dark:bg-transparent cosmic-bg ${
                           isRtl ? "left-3" : "right-3"
                         }`}
                         style={{
-                          backgroundColor: "rgb(var(--background))",
                           transform: "translateZ(0)",
                         }}
                       >

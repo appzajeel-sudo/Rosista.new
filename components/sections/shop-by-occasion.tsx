@@ -124,11 +124,15 @@ export function ShopByOccasion() {
             </div>
 
             {/* Centered Title Overlay */}
-            <div className="absolute inset-0 flex items-center justify-center">
+            {/* Centered Title Overlay */}
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-6">
               <h2
-                className={`text-3xl font-bold tracking-tight drop-shadow-lg sm:text-4xl md:text-5xl ${
+                className={`text-3xl font-black tracking-tight drop-shadow-lg sm:text-4xl md:text-5xl ${
                   isRtl ? "font-sans-ar" : "font-sans-en"
                 }`}
+                style={{
+                  WebkitTextStroke: "0.5px rgba(255, 255, 255, 0.3)",
+                }}
               >
                 {t("home.shopByOccasion.title")
                   .split("")
@@ -145,6 +149,18 @@ export function ShopByOccasion() {
                     </span>
                   ))}
               </h2>
+
+              <Link
+                href="/occasions"
+                className={cn(
+                  "group mt-6 inline-flex items-center justify-center rounded-full bg-white/10 px-3 py-1.5 backdrop-blur-sm transition-all duration-300 hover:bg-white/20",
+                  isRtl ? "font-sans-ar" : "font-sans-en"
+                )}
+              >
+                <span className="text-xs font-medium text-white/90 transition-colors group-hover:text-white">
+                  {t("home.occasions.viewMore")}
+                </span>
+              </Link>
             </div>
           </div>
         </div>

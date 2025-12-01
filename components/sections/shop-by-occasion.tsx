@@ -136,7 +136,7 @@ export function ShopByOccasion() {
                     <span
                       key={index}
                       style={{
-                        display: "inline-block",
+                        display: "inline",
                         animation: `letter-color 6s ease-in-out infinite`,
                         animationDelay: `${index * 0.2}s`,
                       }}

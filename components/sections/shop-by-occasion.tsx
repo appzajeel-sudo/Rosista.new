@@ -107,22 +107,9 @@ export function ShopByOccasion() {
   return (
     <section className="bg-background py-8 sm:py-12">
       <div className="mx-auto max-w-[1650px] px-6 sm:px-8">
-        {/* Header */}
-        <div className="mb-8 flex flex-col items-center justify-center text-center">
-          <h2
-            className={`text-2xl font-bold tracking-tight text-foreground sm:text-3xl ${
-              isRtl ? "font-sans-ar" : "font-sans-en"
-            }`}
-          >
-            {t("home.shopByOccasion.title")}
-          </h2>
-          <div className="mt-3 h-px w-20 bg-border" />
-        </div>
-
         {/* Premium Gift Adventure - Luxury Brand Design */}
         <div className="group mb-8 block">
           <div className="relative h-[45vh] w-full overflow-hidden rounded-3xl shadow-2xl">
-            
             {/* Background Image */}
             <div className="absolute inset-0">
               <Image
@@ -134,6 +121,17 @@ export function ShopByOccasion() {
                 unoptimized
                 priority
               />
+            </div>
+
+            {/* Centered Title Overlay */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <h2
+                className={`text-3xl font-bold tracking-tight text-white drop-shadow-lg sm:text-4xl md:text-5xl ${
+                  isRtl ? "font-sans-ar" : "font-sans-en"
+                }`}
+              >
+                {t("home.shopByOccasion.title")}
+              </h2>
             </div>
           </div>
         </div>
@@ -167,7 +165,7 @@ export function ShopByOccasion() {
                         className="object-cover"
                         quality={85}
                       />
-                      
+
                       {/* Text */}
                       <div className="absolute inset-x-0 bottom-0 bg-background/90 p-3 sm:p-4">
                         <h4
@@ -195,18 +193,16 @@ function ShopByOccasionSkeleton() {
   return (
     <section className="bg-background py-8 sm:py-12">
       <div className="mx-auto max-w-[1650px] px-6 sm:px-8">
-        <div className="mb-8 flex flex-col items-center justify-center gap-3">
-          <Skeleton className="h-8 w-48" />
-          <Skeleton className="h-px w-20" />
-        </div>
-
         {/* Hero Skeleton */}
-        <Skeleton className="mb-8 h-[30vh] w-full rounded-xl" />
+        <Skeleton className="mb-8 h-[45vh] w-full rounded-3xl" />
 
         {/* Carousel Skeleton */}
         <div className="flex gap-4 overflow-hidden">
-          {[...Array(4)].map((_, i) => (
-            <Skeleton key={i} className="h-40 w-48 shrink-0 rounded-lg sm:h-48 sm:w-64" />
+          {[...Array(10)].map((_, i) => (
+            <Skeleton
+              key={i}
+              className="h-40 w-48 shrink-0 rounded-lg sm:h-48 sm:w-64"
+            />
           ))}
         </div>
       </div>

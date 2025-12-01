@@ -497,3 +497,30 @@ html[dir="ltr"] {
 .animate-shimmer {
   animation: shimmer 2s infinite;
 }
+
+/* Gradient Shift Animation for Text */
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+/* Letter Color Animation - Cosmic Purple Theme */
+@keyframes letter-color {
+  0%,
+  100% {
+    color: #ffffff;
+  }
+  25% {
+    color: #a855f7;
+  }
+  50% {
+    color: #ec4899;
+  }
+  75% {
+    color: #3b82f6;
+  }
+}

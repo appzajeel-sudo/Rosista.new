@@ -126,11 +126,24 @@ export function ShopByOccasion() {
             {/* Centered Title Overlay */}
             <div className="absolute inset-0 flex items-center justify-center">
               <h2
-                className={`text-3xl font-bold tracking-tight text-white drop-shadow-lg sm:text-4xl md:text-5xl ${
+                className={`text-3xl font-bold tracking-tight drop-shadow-lg sm:text-4xl md:text-5xl ${
                   isRtl ? "font-sans-ar" : "font-sans-en"
                 }`}
               >
-                {t("home.shopByOccasion.title")}
+                {t("home.shopByOccasion.title")
+                  .split("")
+                  .map((char, index) => (
+                    <span
+                      key={index}
+                      style={{
+                        display: "inline-block",
+                        animation: `letter-color 6s ease-in-out infinite`,
+                        animationDelay: `${index * 0.2}s`,
+                      }}
+                    >
+                      {char === " " ? "\u00A0" : char}
+                    </span>
+                  ))}
               </h2>
             </div>
           </div>

@@ -62,7 +62,7 @@ export function CategoriesClient({ categories }: Props) {
                 style={{
                   backgroundColor: isDark
                     ? "rgb(255, 255, 255)"
-                    : "rgb(107, 114, 128)",
+                    : "rgb(0, 0, 0)",
                 }}
               />
               <div
@@ -70,7 +70,7 @@ export function CategoriesClient({ categories }: Props) {
                 style={{
                   backgroundColor: isDark
                     ? "rgb(250, 204, 21)"
-                    : "rgb(0, 0, 0)",
+                    : "rgb(250, 204, 21)",
                   clipPath:
                     "polygon(0 0, calc(100% - 4px) 0, 100% 100%, 4px 100%)",
                 }}
@@ -80,7 +80,7 @@ export function CategoriesClient({ categories }: Props) {
                 style={{
                   backgroundColor: isDark
                     ? "rgb(255, 255, 255)"
-                    : "rgb(107, 114, 128)",
+                    : "rgb(0, 0, 0)",
                 }}
               />
             </div>

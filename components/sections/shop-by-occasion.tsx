@@ -133,19 +133,24 @@ export function ShopByOccasion() {
 
     animateWords();
 
+    let resizeTimeout: NodeJS.Timeout;
     const handleResize = () => {
-      const radius = getRadius();
-      words.forEach((word, index) => {
-        const angle = (index / words.length) * Math.PI * 2 - Math.PI / 2;
-        const x = Math.cos(angle) * radius.x;
-        const y = Math.sin(angle) * radius.y;
-        gsap.set(word, { x, y });
-      });
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        const radius = getRadius();
+        words.forEach((word, index) => {
+          const angle = (index / words.length) * Math.PI * 2 - Math.PI / 2;
+          const x = Math.cos(angle) * radius.x;
+          const y = Math.sin(angle) * radius.y;
+          gsap.set(word, { x, y });
+        });
+      }, 150);
     };
 
     window.addEventListener("resize", handleResize);
 
     return () => {
+      clearTimeout(resizeTimeout);
       gsap.killTweensOf(words);
       window.removeEventListener("resize", handleResize);
     };
@@ -189,16 +194,22 @@ export function ShopByOccasion() {
       createAnimation();
     });
 
+    let resizeTimeout: NodeJS.Timeout;
     const handleResize = () => {
-      const currentWidth = window.innerWidth;
-
-      if (currentWidth !== lastWidth) {
-        lastWidth = currentWidth;
-        if (animationRef.current) {
-          animationRef.current.kill();
-          createAnimation();
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        const currentWidth = window.innerWidth;
+        if (currentWidth !== lastWidth) {
+          lastWidth = currentWidth;
+          updateWidth();
+          if (animationRef.current) {
+            const progress = animationRef.current.progress();
+            animationRef.current.kill();
+            createAnimation();
+            animationRef.current?.progress(progress);
+          }
         }
-      }
+      }, 150);
     };
 
     window.addEventListener("resize", handleResize);
@@ -215,6 +226,7 @@ export function ShopByOccasion() {
     container.addEventListener("mouseleave", handleMouseLeave);
 
     return () => {
+      clearTimeout(resizeTimeout);
       window.removeEventListener("resize", handleResize);
       container.removeEventListener("mouseenter", handleMouseEnter);
       container.removeEventListener("mouseleave", handleMouseLeave);

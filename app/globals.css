@@ -462,7 +462,10 @@ html[dir="ltr"] {
   }
 }
 
-.floating-word {
-  background-size: 200% auto;
-  animation: luxury-shimmer 4s linear infinite;
+/* Apply shimmer only on larger screens for better performance */
+@media (min-width: 640px) {
+  .floating-word {
+    background-size: 200% auto;
+    animation: luxury-shimmer 4s linear infinite;
+  }
 }

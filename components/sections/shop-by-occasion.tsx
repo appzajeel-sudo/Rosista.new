@@ -43,7 +43,7 @@ export function ShopByOccasion() {
     const totalWords = words.length;
     const fadeInDuration = 1.5;
     const fadeOutDuration = 1.5;
-    const staggerDelay = 0.8; // أبطأ - 0.8 ثانية بين كل كلمة
+    const staggerDelay = 0.8;
     const holdTime = 5;
 
     const totalFadeInTime = totalWords * staggerDelay + fadeInDuration;
@@ -69,7 +69,6 @@ export function ShopByOccasion() {
         repeatDelay: 0,
       });
 
-      // Fade in
       tl.to(
         word,
         {
@@ -80,7 +79,6 @@ export function ShopByOccasion() {
         index * staggerDelay
       );
 
-      // Hold
       tl.to(
         word,
         {
@@ -90,7 +88,6 @@ export function ShopByOccasion() {
         totalFadeInTime
       );
 
-      // Fade out
       tl.to(
         word,
         {
@@ -101,7 +98,6 @@ export function ShopByOccasion() {
         totalFadeInTime + holdTime + index * staggerDelay
       );
 
-      // Wait
       tl.to(
         word,
         {
@@ -233,13 +229,14 @@ export function ShopByOccasion() {
                   const occasionName = isRtl
                     ? occasion.nameAr
                     : occasion.nameEn;
+
                   const luxuryColors = [
-                    "from-yellow-200 via-yellow-300 to-yellow-400",
-                    "from-rose-200 via-rose-300 to-pink-400",
-                    "from-amber-200 via-amber-300 to-yellow-300",
-                    "from-gray-200 via-gray-300 to-gray-400",
-                    "from-orange-200 via-yellow-300 to-amber-400",
-                    "from-pink-200 via-rose-300 to-pink-400",
+                    "from-amber-300 via-yellow-400 to-amber-500",
+                    "from-slate-200 via-gray-100 to-slate-300",
+                    "from-yellow-100 via-amber-200 to-yellow-300",
+                    "from-rose-300 via-pink-200 to-rose-400",
+                    "from-orange-300 via-amber-400 to-yellow-500",
+                    "from-gray-100 via-slate-200 to-gray-300",
                   ];
                   const gradientClass =
                     luxuryColors[index % luxuryColors.length];
@@ -254,8 +251,9 @@ export function ShopByOccasion() {
                       )}
                       style={{
                         textShadow:
-                          "0 0 20px rgba(212, 175, 55, 0.6), 0 0 40px rgba(212, 175, 55, 0.3)",
-                        filter: "drop-shadow(0 0 10px rgba(255, 215, 0, 0.4))",
+                          "0 0 30px rgba(218, 165, 32, 0.8), 0 0 60px rgba(218, 165, 32, 0.4)",
+                        filter:
+                          "drop-shadow(0 0 15px rgba(255, 215, 0, 0.6)) brightness(1.2)",
                       }}
                     >
                       {occasionName}
@@ -265,9 +263,14 @@ export function ShopByOccasion() {
               </div>
 
               <h2
-                className={`relative z-10 animate-pulse-soft bg-gradient-to-r from-pink-400 via-purple-400 to-blue-400 bg-clip-text text-3xl font-black tracking-tight text-transparent drop-shadow-2xl sm:text-4xl md:text-5xl ${
+                className={`relative z-10 bg-gradient-to-r from-amber-200 via-yellow-300 to-amber-400 bg-clip-text text-3xl font-black tracking-tight text-transparent drop-shadow-2xl sm:text-4xl md:text-5xl ${
                   isRtl ? "font-sans-ar" : "font-sans-en"
                 }`}
+                style={{
+                  textShadow:
+                    "0 0 40px rgba(218, 165, 32, 0.9), 0 0 80px rgba(218, 165, 32, 0.5)",
+                  filter: "drop-shadow(0 4px 20px rgba(255, 215, 0, 0.7))",
+                }}
               >
                 {t("home.shopByOccasion.title")}
               </h2>

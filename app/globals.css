@@ -175,13 +175,11 @@ html[dir="ltr"] {
 /* الخطوط العربية */
 .font-sans-ar {
   font-family: "Tajawal", "Lalezar", sans-serif;
-  font-weight: 700;
 }
 
 /* الخطوط الإنجليزية */
 .font-sans-en {
   font-family: "Cormorant Garamond", "Cinzel", serif;
-  font-weight: 700;
 }
 
 /* أنيميشن للـ Bottom Navigation */
@@ -239,30 +237,19 @@ html[dir="ltr"] {
   background: rgb(var(--white) / 1);
 }
 
-/* Best Sellers Swiper */
-.best-sellers-swiper {
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.best-sellers-swiper.swiper-initialized {
-  opacity: 1;
-}
-
-.best-sellers-swiper .swiper-slide {
-  height: auto;
-}
-
-/* Featured Collections Swiper */
+/* Swiper Styles - Best Sellers & Featured Collections */
+.best-sellers-swiper,
 .featured-collections-swiper {
   opacity: 0;
   transition: opacity 0.3s ease;
 }
 
+.best-sellers-swiper.swiper-initialized,
 .featured-collections-swiper.swiper-initialized {
   opacity: 1;
 }
 
+.best-sellers-swiper .swiper-slide,
 .featured-collections-swiper .swiper-slide {
   height: auto;
 }
@@ -340,9 +327,6 @@ html[dir="ltr"] {
 @layer base {
   * {
     @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
   }
 }
 

@@ -63,7 +63,7 @@
 }
 .dark {
   /* ===== Dark Mode - Luxury Rich Navy ===== */
-  --background: 0 0 0;
+  --background: 10 10 25; /* #0a0a19 */
   --foreground: 248 250 252;
   --inner-circle-bg: 15 20 35;
   --white: 255 255 255;

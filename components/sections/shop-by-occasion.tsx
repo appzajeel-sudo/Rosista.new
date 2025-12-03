@@ -15,6 +15,7 @@ export function ShopByOccasion() {
   const isRtl = i18n.language === "ar";
   const [occasions, setOccasions] = useState<Occasion[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const animationRef = useRef<gsap.core.Tween | null>(null);
   const floatingWordsRef = useRef<HTMLDivElement>(null);
@@ -33,7 +34,16 @@ export function ShopByOccasion() {
     fetchOccasions();
   }, []);
 
-  // GSAP Animation - Sequential Fade with 5s Hold Time
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 640);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  // GSAP Animation - Sequential Fade with Responsive Radius
   useEffect(() => {
     if (!floatingWordsRef.current || occasions.length === 0) return;
 
@@ -50,68 +60,96 @@ export function ShopByOccasion() {
     const totalFadeOutTime = totalWords * staggerDelay + fadeOutDuration;
     const cycleDuration = totalFadeInTime + holdTime + totalFadeOutTime;
 
-    words.forEach((word, index) => {
-      const angle = (index / words.length) * Math.PI * 2;
-      const radiusX = 400;
-      const radiusY = 150;
+    const getRadius = () => {
+      const width = window.innerWidth;
+      if (width < 640) {
+        return { x: 140, y: 120 };
+      } else if (width < 1024) {
+        return { x: 250, y: 100 };
+      } else {
+        return { x: 400, y: 150 };
+      }
+    };
 
-      const x = Math.cos(angle) * radiusX;
-      const y = Math.sin(angle) * radiusY;
+    const animateWords = () => {
+      const radius = getRadius();
 
-      gsap.set(word, {
-        x: x,
-        y: y,
-        opacity: 0,
-      });
+      words.forEach((word, index) => {
+        // Start from top (-90 degrees)
+        const angle = (index / words.length) * Math.PI * 2 - Math.PI / 2;
+        const x = Math.cos(angle) * radius.x;
+        const y = Math.sin(angle) * radius.y;
 
-      const tl = gsap.timeline({
-        repeat: -1,
-        repeatDelay: 0,
-      });
-
-      tl.to(
-        word,
-        {
-          opacity: 0.85,
-          duration: fadeInDuration,
-          ease: "power2.out",
-        },
-        index * staggerDelay
-      );
-
-      tl.to(
-        word,
-        {
-          opacity: 0.85,
-          duration: holdTime,
-        },
-        totalFadeInTime
-      );
-
-      tl.to(
-        word,
-        {
+        gsap.set(word, {
+          x: x,
+          y: y,
           opacity: 0,
-          duration: fadeOutDuration,
-          ease: "power2.in",
-        },
-        totalFadeInTime + holdTime + index * staggerDelay
-      );
+        });
 
-      tl.to(
-        word,
-        {
-          opacity: 0,
-          duration: 0.5,
-        },
-        cycleDuration - 0.5
-      );
-    });
+        const tl = gsap.timeline({
+          repeat: -1,
+          repeatDelay: 0,
+        });
+
+        tl.to(
+          word,
+          {
+            opacity: 0.85,
+            duration: fadeInDuration,
+            ease: "power2.out",
+          },
+          index * staggerDelay
+        );
+
+        tl.to(
+          word,
+          {
+            opacity: 0.85,
+            duration: holdTime,
+          },
+          totalFadeInTime
+        );
+
+        tl.to(
+          word,
+          {
+            opacity: 0,
+            duration: fadeOutDuration,
+            ease: "power2.in",
+          },
+          totalFadeInTime + holdTime + index * staggerDelay
+        );
+
+        tl.to(
+          word,
+          {
+            opacity: 0,
+            duration: 0.5,
+          },
+          cycleDuration - 0.5
+        );
+      });
+    };
+
+    animateWords();
+
+    const handleResize = () => {
+      const radius = getRadius();
+      words.forEach((word, index) => {
+        const angle = (index / words.length) * Math.PI * 2 - Math.PI / 2;
+        const x = Math.cos(angle) * radius.x;
+        const y = Math.sin(angle) * radius.y;
+        gsap.set(word, { x, y });
+      });
+    };
+
+    window.addEventListener("resize", handleResize);
 
     return () => {
       gsap.killTweensOf(words);
+      window.removeEventListener("resize", handleResize);
     };
-  }, [occasions]);
+  }, [occasions, isMobile]);
 
   // GSAP Animation for infinite carousel loop
   useEffect(() => {
@@ -202,6 +240,7 @@ export function ShopByOccasion() {
   }
 
   const duplicatedOccasions = [...occasions, ...occasions];
+  const displayedOccasions = isMobile ? occasions.slice(0, 5) : occasions;
 
   return (
     <section className="bg-background py-8 sm:py-12">
@@ -220,12 +259,12 @@ export function ShopByOccasion() {
               />
             </div>
 
-            <div className="absolute inset-0 flex flex-col items-center justify-center gap-6">
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 px-4 sm:gap-4 sm:px-6">
               <div
                 ref={floatingWordsRef}
                 className="pointer-events-none absolute inset-0 flex items-center justify-center"
               >
-                {occasions.map((occasion, index) => {
+                {displayedOccasions.map((occasion, index) => {
                   const occasionName = isRtl
                     ? occasion.nameAr
                     : occasion.nameEn;
@@ -236,7 +275,6 @@ export function ShopByOccasion() {
                     "from-yellow-100 via-amber-200 to-yellow-300",
                     "from-rose-300 via-pink-200 to-rose-400",
                     "from-orange-300 via-amber-400 to-yellow-500",
-                    "from-gray-100 via-slate-200 to-gray-300",
                   ];
                   const gradientClass =
                     luxuryColors[index % luxuryColors.length];
@@ -245,15 +283,16 @@ export function ShopByOccasion() {
                     <span
                       key={`floating-${occasion._id}-${index}`}
                       className={cn(
-                        "floating-word absolute whitespace-nowrap bg-gradient-to-r bg-clip-text text-lg font-bold text-transparent sm:text-xl md:text-2xl",
+                        "floating-word absolute whitespace-nowrap bg-gradient-to-r bg-clip-text font-bold text-transparent",
+                        "text-sm sm:text-base md:text-lg lg:text-xl",
                         gradientClass,
                         isRtl ? "font-sans-ar" : "font-sans-en"
                       )}
                       style={{
                         textShadow:
-                          "0 0 30px rgba(218, 165, 32, 0.8), 0 0 60px rgba(218, 165, 32, 0.4)",
+                          "0 0 20px rgba(218, 165, 32, 0.7), 0 0 40px rgba(218, 165, 32, 0.3)",
                         filter:
-                          "drop-shadow(0 0 15px rgba(255, 215, 0, 0.6)) brightness(1.2)",
+                          "drop-shadow(0 0 10px rgba(255, 215, 0, 0.5)) brightness(1.1)",
                       }}
                     >
                       {occasionName}
@@ -263,13 +302,15 @@ export function ShopByOccasion() {
               </div>
 
               <h2
-                className={`relative z-10 bg-gradient-to-r from-amber-200 via-yellow-300 to-amber-400 bg-clip-text text-3xl font-black tracking-tight text-transparent drop-shadow-2xl sm:text-4xl md:text-5xl ${
+                className={cn(
+                  "relative z-10 bg-gradient-to-r from-amber-200 via-yellow-300 to-amber-400 bg-clip-text text-center font-black leading-tight tracking-tight text-transparent drop-shadow-2xl",
+                  "text-xl sm:text-2xl md:text-3xl lg:text-4xl",
                   isRtl ? "font-sans-ar" : "font-sans-en"
-                }`}
+                )}
                 style={{
                   textShadow:
-                    "0 0 40px rgba(218, 165, 32, 0.9), 0 0 80px rgba(218, 165, 32, 0.5)",
-                  filter: "drop-shadow(0 4px 20px rgba(255, 215, 0, 0.7))",
+                    "0 0 30px rgba(218, 165, 32, 0.8), 0 0 60px rgba(218, 165, 32, 0.4)",
+                  filter: "drop-shadow(0 2px 15px rgba(255, 215, 0, 0.6))",
                 }}
               >
                 {t("home.shopByOccasion.title")}
@@ -278,11 +319,12 @@ export function ShopByOccasion() {
               <Link
                 href="/occasions"
                 className={cn(
-                  "group relative z-10 mt-6 inline-flex items-center justify-center rounded-full bg-white/10 px-3 py-1.5 backdrop-blur-sm transition-all duration-300 hover:bg-white/20",
+                  "group relative z-10 inline-flex items-center justify-center rounded-full bg-white/10 backdrop-blur-sm transition-all duration-300 hover:bg-white/20",
+                  "px-4 py-1.5 text-xs sm:px-5 sm:py-2 sm:text-sm",
                   isRtl ? "font-sans-ar" : "font-sans-en"
                 )}
               >
-                <span className="text-xs font-medium text-white/90 transition-colors group-hover:text-white">
+                <span className="font-medium text-white/90 transition-colors group-hover:text-white">
                   {t("home.occasions.viewMore")}
                 </span>
               </Link>

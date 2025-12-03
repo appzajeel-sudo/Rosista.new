@@ -104,65 +104,29 @@
   /* Tailwind CSS v4 Theme Variables */
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
+  --color-background: rgb(var(--background));
+  --color-foreground: rgb(var(--foreground));
+  --color-card: rgb(var(--card));
+  --color-card-foreground: rgb(var(--card-foreground));
+  --color-popover: rgb(var(--popover));
+  --color-popover-foreground: rgb(var(--popover-foreground));
+  --color-primary: rgb(var(--primary));
+  --color-primary-foreground: rgb(var(--primary-foreground));
+  --color-secondary: rgb(var(--secondary));
+  --color-secondary-foreground: rgb(var(--secondary-foreground));
+  --color-muted: rgb(var(--muted));
+  --color-muted-foreground: rgb(var(--muted-foreground));
+  --color-accent: rgb(var(--accent));
+  --color-accent-foreground: rgb(var(--accent-foreground));
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
+  --color-border: rgb(var(--border));
+  --color-input: rgb(var(--input));
+  --color-ring: rgb(var(--ring));
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
-}
-/* تعميم الخلفية الكونية على الصفحة والعناصر التي تستخدم خلفية الموقع */
-.dark body,
-.dark .bg-background,
-.dark .cosmic-bg {
-  background-color: #000000 !important;
-  background-image: 
-    /* بنفسجي من الأعلى (Top Center) */ radial-gradient(
-      circle at 50% 0%,
-      rgba(168, 85, 247, 0.15),
-      transparent 70%
-    ),
-    /* أزرق من اليسار (Left) */
-      radial-gradient(
-        circle at 0% 50%,
-        rgba(59, 130, 246, 0.12),
-        transparent 60%
-      ),
-    /* بنفسجي غامق من اليمين (Right) */
-      radial-gradient(
-        circle at 100% 50%,
-        rgba(88, 28, 135, 0.15),
-        transparent 60%
-      ) !important;
-
-  background-attachment: fixed !important;
-  background-size: cover;
-}
-
-/* إلغاء fixed على الأجهزة المحمولة لتحسين الأداء */
-@media (max-width: 768px) {
-  .dark body,
-  .dark .bg-background,
-  .dark .cosmic-bg {
-    background-attachment: scroll !important;
-  }
 }
 body {
   background: rgb(var(--background));

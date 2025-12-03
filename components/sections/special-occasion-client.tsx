@@ -118,7 +118,7 @@ export function SpecialOccasionClient({ products }: Props) {
           <button
             onClick={() => swiperRef.current?.slidePrev()}
             aria-label="Previous"
-            className={`absolute top-[40%] z-10 hidden -translate-y-1/2 rounded-full p-1.5 cursor-pointer sm:block bg-white dark:bg-transparent cosmic-bg ${
+            className={`absolute top-[40%] z-10 hidden -translate-y-1/2 rounded-full p-1.5 cursor-pointer sm:block bg-background ${
               isRtl ? "-right-5" : "-left-5"
             }`}
           >
@@ -138,7 +138,7 @@ export function SpecialOccasionClient({ products }: Props) {
           <button
             onClick={() => swiperRef.current?.slideNext()}
             aria-label="Next"
-            className={`absolute top-[40%] z-10 hidden -translate-y-1/2 rounded-full p-1.5 cursor-pointer sm:block bg-white dark:bg-transparent cosmic-bg ${
+            className={`absolute top-[40%] z-10 hidden -translate-y-1/2 rounded-full p-1.5 cursor-pointer sm:block bg-background ${
               isRtl ? "-left-5" : "-right-5"
             }`}
           >
@@ -203,7 +203,7 @@ export function SpecialOccasionClient({ products }: Props) {
 
                       {/* Favorite Icon */}
                       <div
-                        className={`absolute top-3 z-10 flex h-7 w-7 sm:h-9 sm:w-9 items-center justify-center rounded-full opacity-100 translate-y-0 sm:opacity-0 sm:-translate-y-3 transition-all duration-700 sm:group-hover:opacity-100 sm:group-hover:translate-y-0 bg-white dark:bg-transparent cosmic-bg ${
+                        className={`absolute top-3 z-10 flex h-7 w-7 sm:h-9 sm:w-9 items-center justify-center rounded-full opacity-100 translate-y-0 sm:opacity-0 sm:-translate-y-3 transition-all duration-700 sm:group-hover:opacity-100 sm:group-hover:translate-y-0 bg-background ${
                           isRtl ? "left-3" : "right-3"
                         }`}
                         style={{

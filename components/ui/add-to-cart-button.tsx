@@ -79,7 +79,7 @@ export function AddToCartButton({
       className={`inline-flex items-center gap-1.5 sm:gap-2 rounded-full px-4 py-1.5 sm:px-5 sm:py-2 text-xs sm:text-sm font-medium transition-all duration-300 cursor-pointer ${
         isAdded
           ? "bg-green-500 text-white"
-          : "bg-white dark:bg-transparent cosmic-bg text-foreground hover:opacity-90"
+          : "bg-background text-foreground hover:opacity-90"
       } ${isRtl ? "font-sans-ar" : "font-sans-en"} ${className}`}
     >
       {isAdded ? (

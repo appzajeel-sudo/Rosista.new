@@ -179,15 +179,8 @@ export function ShopByOccasion() {
         duration: 60,
         ease: "none",
         repeat: -1,
-        modifiers: {
-          x: (x) => {
-            const num = parseFloat(x);
-            if (isRtl) {
-              return num >= slidesWidth ? `${num - slidesWidth}` : x;
-            } else {
-              return num <= -slidesWidth ? `${num + slidesWidth}` : x;
-            }
-          },
+        onRepeat: () => {
+          gsap.set(container, { x: 0 });
         },
       });
     };

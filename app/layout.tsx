@@ -56,6 +56,33 @@ export default function RootLayout({
             `,
           }}
         />
+
+        {/* Preconnect للخطوط - تحسين الأداء */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+
+        {/* تحميل الخطوط العربية */}
+        <link
+          href="https://fonts.googleapis.com/css2?family=Lalezar&family=Tajawal:wght@300;400;500;700;800&display=swap"
+          rel="stylesheet"
+        />
+
+        {/* تحميل الخطوط الإنجليزية */}
+        <link
+          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Cinzel:wght@400;500;600;700&display=swap"
+          rel="stylesheet"
+        />
+
+        {/* تحميل خط Amiri */}
+        <link
+          href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap"
+          rel="stylesheet"
+        />
+
         <link rel="preconnect" href="https://res.cloudinary.com" />
       </head>
       <body

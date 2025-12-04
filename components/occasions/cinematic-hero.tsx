@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, ArrowLeft, Play } from "lucide-react";
+import { ArrowRight, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 type Occasion = {
@@ -49,8 +49,8 @@ export function CinematicHero({ activeOccasion }: Props) {
           </div>
 
           {/* Main Image Layer - Contained */}
-          <div className="absolute inset-0 flex items-center justify-center md:justify-end md:pr-24 lg:pr-32 z-20">
-            <div className="relative w-full h-full md:w-[60%] md:h-[80%]">
+          <div className="absolute inset-0 flex items-start md:items-center justify-center md:justify-end md:pr-24 lg:pr-32 z-20 pt-4 md:pt-0">
+            <div className="relative w-full h-[50vh] md:w-[60%] md:h-[80%]">
               <Image
                 src={activeOccasion.image}
                 alt={isRtl ? activeOccasion.nameAr : activeOccasion.nameEn}
@@ -68,7 +68,7 @@ export function CinematicHero({ activeOccasion }: Props) {
       </AnimatePresence>
 
       {/* Content */}
-      <div className="absolute inset-0 z-10 flex flex-col justify-center px-6 md:px-16 lg:px-24">
+      <div className="absolute inset-0 z-30 flex flex-col justify-end md:justify-center px-6 md:px-16 lg:px-24 pb-32 md:pb-0">
         <div className="max-w-2xl space-y-6">
           <motion.div
             key={`text-${activeOccasion.id}`}
@@ -76,14 +76,9 @@ export function CinematicHero({ activeOccasion }: Props) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            {/* Tag / Category */}
-            <span className="inline-block mb-4 text-sm font-bold tracking-wider text-amber-400 uppercase">
-              {isRtl ? "مجموعة حصرية" : "Exclusive Collection"}
-            </span>
-
             {/* Title */}
             <h1
-              className={`text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-4 leading-tight ${
+              className={`text-3xl md:text-7xl lg:text-8xl font-bold text-white mb-4 leading-tight ${
                 isRtl ? "font-sans-ar" : "font-sans-en"
               }`}
               style={
@@ -97,7 +92,7 @@ export function CinematicHero({ activeOccasion }: Props) {
 
             {/* Description */}
             <p
-              className={`text-lg md:text-xl text-gray-200 line-clamp-3 mb-8 leading-relaxed ${
+              className={`text-sm md:text-xl text-gray-200 line-clamp-3 mb-8 leading-relaxed ${
                 isRtl ? "font-sans-ar" : "font-sans-en"
               }`}
             >
@@ -111,15 +106,15 @@ export function CinematicHero({ activeOccasion }: Props) {
               <Button
                 asChild
                 size="lg"
-                className="bg-amber-500 hover:bg-amber-600 text-black font-bold text-lg px-8 py-6 rounded-full transition-all hover:scale-105"
+                className="bg-amber-500 hover:bg-amber-600 text-black font-bold text-lg px-8 py-6 rounded-full transition-all cursor-pointer"
               >
                 <Link href={`/occasions/${activeOccasion.slug}`}>
-                  <Play
-                    className={`w-5 h-5 ${
-                      isRtl ? "ml-2" : "mr-2"
-                    } fill-current`}
-                  />
-                  {isRtl ? "تصفح المجموعة" : "Explore Collection"}
+                  {isRtl ? (
+                    <ArrowLeft className="w-5 h-5 ml-2" />
+                  ) : (
+                    <ArrowRight className="w-5 h-5 mr-2" />
+                  )}
+                  {isRtl ? "تصفح المناسبة" : "Browse Occasion"}
                 </Link>
               </Button>
             </div>

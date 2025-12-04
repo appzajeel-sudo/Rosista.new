@@ -30,7 +30,7 @@ export function OccasionsLayout({ occasions }: Props) {
       <CinematicHero activeOccasion={activeOccasion} />
 
       {/* Thumbnail Slider - Controls state */}
-      <div className="absolute bottom-0 left-0 right-0 z-20 pb-8 md:pb-12 bg-gradient-to-t from-black via-black/80 to-transparent pt-24">
+      <div className="absolute bottom-0 left-0 right-0 z-40 pb-8 md:pb-12 bg-gradient-to-t from-black via-black/80 to-transparent pt-24">
         <ThumbnailSlider
           occasions={occasions}
           activeId={activeOccasion.id}

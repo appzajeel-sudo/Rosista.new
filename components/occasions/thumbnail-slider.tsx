@@ -35,7 +35,7 @@ export function ThumbnailSlider({ occasions, activeId, onSelect }: Props) {
             key={occasion.id}
             onClick={() => onSelect(occasion)}
             className={cn(
-              "relative cursor-pointer transition-all duration-300 flex-shrink-0",
+              "relative cursor-pointer transition-all duration-300 flex-shrink-0 pointer-events-auto z-50",
               activeId === occasion.id
                 ? "opacity-100"
                 : "opacity-40 hover:opacity-70"

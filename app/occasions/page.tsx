@@ -1,6 +1,5 @@
 import { Suspense } from "react";
-import { FilmStripHero } from "@/components/film-strip-hero";
-import { OccasionsGallery } from "@/components/occasions-gallery";
+import { OccasionsLayout } from "@/components/occasions/occasions-layout";
 import { getAllOccasions } from "@/lib/api/occasions";
 import type { Occasion } from "@/types/occasion";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -32,35 +31,7 @@ async function OccasionsContent() {
       image: occasion.imageUrl,
     }));
 
-    return (
-      <div className="min-h-screen bg-background">
-        {/* Film Strip Hero */}
-        {filmStripSlides.length > 0 && (
-          <FilmStripHero slides={filmStripSlides} />
-        )}
-
-        {/* Occasions Gallery */}
-        <section className="relative w-full bg-background pt-4 pb-16 md:pt-8 md:pb-20 lg:pt-0 lg:pb-24">
-          <div className="mx-auto w-[95%] max-w-[1650px] px-0 sm:px-6 lg:px-8">
-            <div className="mb-12 text-center">
-              <h2 className="text-2xl font-medium text-foreground md:text-3xl font-sans-ar">
-                المناسبات - اكتشف مجموعتنا الحصرية
-              </h2>
-            </div>
-
-            {galleryOccasions.length > 0 ? (
-              <OccasionsGallery occasions={galleryOccasions} />
-            ) : (
-              <div className="text-center py-12">
-                <p className="text-foreground/60">
-                  لا توجد مناسبات متاحة حالياً
-                </p>
-              </div>
-            )}
-          </div>
-        </section>
-      </div>
-    );
+    return <OccasionsLayout occasions={galleryOccasions} />;
   } catch (error) {
     console.error("Error loading occasions:", error);
     return (
@@ -102,12 +73,12 @@ function OccasionsLoading() {
               <div key={index} className="space-y-3">
                 <Skeleton className="aspect-[3/3.8] sm:aspect-4/5 rounded-none" />
                 <div className="space-y-2 flex flex-col items-center mt-4">
-                   <Skeleton className="h-4 w-1/2" />
+                  <Skeleton className="h-4 w-1/2" />
                 </div>
               </div>
             ))}
           </div>
-      </div>
+        </div>
       </section>
     </div>
   );

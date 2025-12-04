@@ -135,7 +135,6 @@ body {
   font-weight: 700;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* تطبيق Bold على العناصر المحددة فقط بدلاً من * لتحسين الأداء */

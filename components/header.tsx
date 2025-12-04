@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
 import { LanguageSwitcher } from "@/components/ui/language-switcher";
+import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler";
 import {
   CommandDialog,
   CommandEmpty,
@@ -325,21 +326,9 @@ export function Header() {
               >
                 {/* Dark Mode Toggle */}
                 {mounted && (
-                  <button
-                    onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                    aria-label={
-                      theme === "dark"
-                        ? "Switch to light mode"
-                        : "Switch to dark mode"
-                    }
+                  <AnimatedThemeToggler
                     className={`hidden lg:block transition-opacity hover:opacity-60 ${textColor}`}
-                  >
-                    {theme === "dark" ? (
-                      <Sun className="h-[18px] w-[18px] stroke-[1.5]" />
-                    ) : (
-                      <Moon className="h-[18px] w-[18px] stroke-[1.5]" />
-                    )}
-                  </button>
+                  />
                 )}
 
                 {/* Language */}
@@ -623,21 +612,7 @@ export function Header() {
                 <div className="flex items-center gap-3">
                   {/* Theme Toggle */}
                   {mounted && (
-                    <button
-                      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                      className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-lg transition-all duration-200 bg-neutral-100/50 dark:bg-neutral-800/50 hover:bg-neutral-200/50 dark:hover:bg-neutral-700/50 active:scale-95"
-                      aria-label={
-                        theme === "dark"
-                          ? "Switch to light mode"
-                          : "Switch to dark mode"
-                      }
-                    >
-                      {theme === "dark" ? (
-                        <Sun className="h-5 w-5 text-foreground" />
-                      ) : (
-                        <Moon className="h-5 w-5 text-foreground" />
-                      )}
-                    </button>
+                    <AnimatedThemeToggler className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-lg transition-all duration-200 bg-neutral-100/50 dark:bg-neutral-800/50 hover:bg-neutral-200/50 dark:hover:bg-neutral-700/50 active:scale-95" />
                   )}
 
                   {/* Language Toggle */}

@@ -1,5 +1,6 @@
 "use client";
 
+import { useRef, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
 
@@ -22,17 +23,40 @@ type Props = {
 export function ThumbnailSlider({ occasions, activeId, onSelect }: Props) {
   const { i18n } = useTranslation();
   const isRtl = i18n.language === "ar";
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (scrollContainerRef.current && activeId) {
+      const activeElement = document.getElementById(
+        `occasion-thumb-${activeId}`
+      );
+      if (activeElement) {
+        const container = scrollContainerRef.current;
+        const scrollLeft =
+          activeElement.offsetLeft -
+          container.offsetWidth / 2 +
+          activeElement.offsetWidth / 2;
+
+        container.scrollTo({
+          left: scrollLeft,
+          behavior: "smooth",
+        });
+      }
+    }
+  }, [activeId]);
 
   return (
     <div className="relative w-full px-4 md:px-8 pb-8">
       {/* Simple Horizontal List */}
       <div
+        ref={scrollContainerRef}
         className="flex items-center justify-start md:justify-center gap-6 md:gap-10 overflow-x-auto scrollbar-hide px-8 md:px-4"
         style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
       >
         {occasions.map((occasion) => (
           <div
             key={occasion.id}
+            id={`occasion-thumb-${occasion.id}`}
             onClick={() => onSelect(occasion)}
             className={cn(
               "relative cursor-pointer transition-all duration-300 flex-shrink-0 pointer-events-auto z-50",

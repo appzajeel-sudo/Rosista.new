@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, ArrowLeft } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { AnimatedShinyButton } from "@/components/ui/animated-shiny-button";
 
 type Occasion = {
   id: string;
@@ -103,20 +103,14 @@ export function CinematicHero({ activeOccasion }: Props) {
 
             {/* Actions */}
             <div className="flex flex-wrap gap-4">
-              <Button
-                asChild
-                size="lg"
-                className="bg-amber-500 hover:bg-amber-600 text-black font-bold text-lg px-8 py-6 rounded-full transition-all cursor-pointer"
+              <AnimatedShinyButton
+                url={`/occasions/${activeOccasion.slug}`}
+                className={`text-lg px-8 py-6 ${
+                  isRtl ? "rtl font-sans-ar" : "font-sans-en"
+                }`}
               >
-                <Link href={`/occasions/${activeOccasion.slug}`}>
-                  {isRtl ? (
-                    <ArrowLeft className="w-5 h-5 ml-2" />
-                  ) : (
-                    <ArrowRight className="w-5 h-5 mr-2" />
-                  )}
-                  {isRtl ? "تصفح المناسبة" : "Browse Occasion"}
-                </Link>
-              </Button>
+                {isRtl ? "تصفح المناسبة" : "Browse Occasion"}
+              </AnimatedShinyButton>
             </div>
           </motion.div>
         </div>

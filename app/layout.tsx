@@ -1,6 +1,7 @@
 import type React from "react";
 import type { Metadata } from "next";
 import { Suspense } from "react";
+import { cookies, headers } from "next/headers";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -31,31 +32,40 @@ export const metadata: Metadata = {
   generator: "v0.app",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const cookieStore = await cookies();
+  const headersList = await headers();
+
+  // Server-side language detection
+  let lang = cookieStore.get("i18next")?.value;
+
+  if (!lang) {
+    // Fallback to Accept-Language header if cookie is missing
+    const acceptLanguage = headersList.get("accept-language");
+    if (acceptLanguage?.includes("ar")) {
+      lang = "ar";
+    } else if (acceptLanguage?.includes("en")) {
+      lang = "en";
+    } else {
+      lang = "ar"; // Default fallback
+    }
+  }
+
+  // Ensure valid language
+  if (lang !== "ar" && lang !== "en") {
+    lang = "ar";
+  }
+
+  const dir = lang === "ar" ? "rtl" : "ltr";
+
   return (
-    <html lang="ar" dir="rtl" suppressHydrationWarning>
+    <html lang={lang} dir={dir} suppressHydrationWarning>
       <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function() {
-                try {
-                  // تحديث lang و dir بناءً على اللغة المحفوظة (i18next يستخدم 'i18nextLng')
-                  var lang = localStorage.getItem('i18nextLng') || localStorage.getItem('language') || 'ar';
-                  // تحويل en-US, en-GB, etc إلى en
-                  if (lang.startsWith('en')) lang = 'en';
-                  if (lang.startsWith('ar')) lang = 'ar';
-                  document.documentElement.setAttribute('lang', lang);
-                  document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
-                } catch (e) {}
-              })();
-            `,
-          }}
-        />
+        {/* Preconnect للخطوط - تحسين الأداء */}
 
         {/* Preconnect للخطوط - تحسين الأداء */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -89,7 +99,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         suppressHydrationWarning
       >
-        <I18nProvider>
+        <I18nProvider locale={lang}>
           <ThemeProvider>
             <DebugProvider>
               <AuthProvider>

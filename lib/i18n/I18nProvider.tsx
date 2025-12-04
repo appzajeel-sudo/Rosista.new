@@ -13,7 +13,10 @@ function LanguageSync() {
     const updateDocumentAttributes = () => {
       const lang = i18nInstance.language;
       document.documentElement.setAttribute("lang", lang);
-      document.documentElement.setAttribute("dir", lang === "ar" ? "rtl" : "ltr");
+      document.documentElement.setAttribute(
+        "dir",
+        lang === "ar" ? "rtl" : "ltr"
+      );
     };
 
     // تحديث فوري
@@ -30,7 +33,18 @@ function LanguageSync() {
   return null;
 }
 
-export function I18nProvider({ children }: { children: React.ReactNode }) {
+export function I18nProvider({
+  children,
+  locale,
+}: {
+  children: React.ReactNode;
+  locale?: string;
+}) {
+  // Sync initial language from server
+  if (locale && i18n.language !== locale) {
+    i18n.changeLanguage(locale);
+  }
+
   return (
     <I18nextProvider i18n={i18n}>
       <LanguageSync />
@@ -38,4 +52,3 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
     </I18nextProvider>
   );
 }
-

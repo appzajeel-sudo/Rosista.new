@@ -47,39 +47,42 @@ async function OccasionsContent() {
 // Loading fallback
 function OccasionsLoading() {
   return (
-    <div className="min-h-screen bg-background">
-      {/* Film Strip Hero Skeleton */}
-      <section className="relative overflow-hidden py-8 sm:py-12">
-        <div className="mx-auto max-w-[1650px] px-4 sm:px-6 lg:px-8">
-          <div className="flex gap-4 overflow-hidden">
-            {[...Array(8)].map((_, index) => (
-              <Skeleton
-                key={index}
-                className="h-[280px] w-[200px] shrink-0 sm:h-[320px] sm:w-[240px] md:h-[380px] md:w-[300px] lg:h-[420px] lg:w-[340px]"
-              />
-            ))}
-          </div>
-        </div>
-      </section>
+    <div className="relative min-h-screen w-full bg-black overflow-hidden">
+      {/* Background Skeleton */}
+      <div className="absolute inset-0 bg-neutral-900/50" />
 
-      {/* Gallery Skeleton */}
-      <section className="relative w-full bg-background pt-4 pb-16 md:pt-8 md:pb-20 lg:pt-0 lg:pb-24">
-        <div className="mx-auto w-[95%] max-w-[1650px] px-0 sm:px-6 lg:px-8">
-          <div className="mb-12 text-center">
-            <Skeleton className="h-9 w-64 mx-auto sm:h-10 sm:w-80" />
+      {/* Content Skeleton */}
+      <div className="absolute inset-0 z-30 flex flex-col justify-end md:justify-center px-6 md:px-16 lg:px-24 pb-32 md:pb-0">
+        <div className="max-w-2xl space-y-6 w-full">
+          {/* Title Skeleton */}
+          <Skeleton className="h-10 md:h-20 w-2/3 md:w-3/4 bg-neutral-800/50 rounded-lg" />
+
+          {/* Description Skeleton */}
+          <div className="space-y-2 md:space-y-3">
+            <Skeleton className="h-3 md:h-4 w-full bg-neutral-800/50 rounded" />
+            <Skeleton className="h-3 md:h-4 w-5/6 bg-neutral-800/50 rounded" />
+            <Skeleton className="h-3 md:h-4 w-4/6 bg-neutral-800/50 rounded" />
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 lg:gap-5">
-            {[...Array(8)].map((_, index) => (
-              <div key={index} className="space-y-3">
-                <Skeleton className="aspect-[3/3.8] sm:aspect-4/5 rounded-none" />
-                <div className="space-y-2 flex flex-col items-center mt-4">
-                  <Skeleton className="h-4 w-1/2" />
-                </div>
-              </div>
-            ))}
-          </div>
+
+          {/* Button Skeleton */}
+          <Skeleton className="h-12 md:h-14 w-40 md:w-48 bg-neutral-800/50 rounded-full mt-4 md:mt-8" />
         </div>
-      </section>
+      </div>
+
+      {/* Thumbnail Slider Skeleton */}
+      <div className="absolute bottom-0 left-0 right-0 z-40 pb-8 md:pb-12 pt-24 bg-gradient-to-t from-black via-black/80 to-transparent">
+        <div className="flex items-center justify-start md:justify-center gap-6 md:gap-10 px-8 md:px-4 overflow-hidden">
+          {[...Array(6)].map((_, index) => (
+            <div
+              key={index}
+              className="flex flex-col items-center space-y-3 shrink-0"
+            >
+              <Skeleton className="h-4 md:h-6 w-20 md:w-32 bg-neutral-800/50 rounded" />
+              <Skeleton className="h-0.5 md:h-1 w-full bg-neutral-800/30 rounded-full" />
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

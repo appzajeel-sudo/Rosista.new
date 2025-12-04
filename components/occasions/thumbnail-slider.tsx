@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
 
@@ -24,24 +24,33 @@ export function ThumbnailSlider({ occasions, activeId, onSelect }: Props) {
   const { i18n } = useTranslation();
   const isRtl = i18n.language === "ar";
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const itemRefs = useRef<Map<string, HTMLDivElement>>(new Map());
+
+  const setItemRef = useCallback(
+    (id: string, element: HTMLDivElement | null) => {
+      if (element) {
+        itemRefs.current.set(id, element);
+      } else {
+        itemRefs.current.delete(id);
+      }
+    },
+    []
+  );
 
   useEffect(() => {
-    if (scrollContainerRef.current && activeId) {
-      const activeElement = document.getElementById(
-        `occasion-thumb-${activeId}`
-      );
-      if (activeElement) {
-        const container = scrollContainerRef.current;
-        const scrollLeft =
-          activeElement.offsetLeft -
-          container.offsetWidth / 2 +
-          activeElement.offsetWidth / 2;
+    const container = scrollContainerRef.current;
+    const activeElement = itemRefs.current.get(activeId);
 
-        container.scrollTo({
-          left: scrollLeft,
-          behavior: "smooth",
-        });
-      }
+    if (container && activeElement) {
+      const scrollLeft =
+        activeElement.offsetLeft -
+        container.offsetWidth / 2 +
+        activeElement.offsetWidth / 2;
+
+      container.scrollTo({
+        left: scrollLeft,
+        behavior: "smooth",
+      });
     }
   }, [activeId]);
 
@@ -56,7 +65,7 @@ export function ThumbnailSlider({ occasions, activeId, onSelect }: Props) {
         {occasions.map((occasion) => (
           <div
             key={occasion.id}
-            id={`occasion-thumb-${occasion.id}`}
+            ref={(el) => setItemRef(occasion.id, el)}
             onClick={() => onSelect(occasion)}
             className={cn(
               "relative cursor-pointer transition-all duration-300 flex-shrink-0 pointer-events-auto z-50",

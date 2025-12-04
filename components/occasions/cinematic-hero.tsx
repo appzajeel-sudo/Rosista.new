@@ -23,7 +23,8 @@ type Props = {
   direction?: number;
 };
 
-const variants = {
+// Animation variants - defined outside component to prevent re-creation on every render
+const slideVariants = {
   enter: (direction: number) => ({
     x: direction > 0 ? 1000 : -1000,
     opacity: 0,
@@ -38,7 +39,7 @@ const variants = {
     x: direction < 0 ? 1000 : -1000,
     opacity: 0,
   }),
-};
+} as const;
 
 export function CinematicHero({
   activeOccasion,
@@ -63,7 +64,7 @@ export function CinematicHero({
         <motion.div
           key={activeOccasion.id}
           custom={animationDirection}
-          variants={variants}
+          variants={slideVariants}
           initial="enter"
           animate="center"
           exit="exit"

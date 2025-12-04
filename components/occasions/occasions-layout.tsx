@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { CinematicHero } from "@/components/occasions/cinematic-hero";
 import { ThumbnailSlider } from "@/components/occasions/thumbnail-slider";
 
@@ -25,19 +25,31 @@ export function OccasionsLayout({ occasions }: Props) {
 
   if (!occasions || occasions.length === 0) return null;
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     const currentIndex = occasions.findIndex((o) => o.id === activeOccasion.id);
     const nextIndex = (currentIndex + 1) % occasions.length;
     setDirection(1);
     setActiveOccasion(occasions[nextIndex]);
-  };
+  }, [occasions, activeOccasion.id]);
 
-  const handlePrev = () => {
+  const handlePrev = useCallback(() => {
     const currentIndex = occasions.findIndex((o) => o.id === activeOccasion.id);
     const prevIndex = (currentIndex - 1 + occasions.length) % occasions.length;
     setDirection(-1);
     setActiveOccasion(occasions[prevIndex]);
-  };
+  }, [occasions, activeOccasion.id]);
+
+  const handleSelect = useCallback(
+    (occasion: Occasion) => {
+      const currentIndex = occasions.findIndex(
+        (o) => o.id === activeOccasion.id
+      );
+      const newIndex = occasions.findIndex((o) => o.id === occasion.id);
+      setDirection(newIndex > currentIndex ? 1 : -1);
+      setActiveOccasion(occasion);
+    },
+    [occasions, activeOccasion.id]
+  );
 
   return (
     <div className="relative w-full h-[90vh] md:h-screen bg-black overflow-hidden">
@@ -54,14 +66,7 @@ export function OccasionsLayout({ occasions }: Props) {
         <ThumbnailSlider
           occasions={occasions}
           activeId={activeOccasion.id}
-          onSelect={(occasion) => {
-            const currentIndex = occasions.findIndex(
-              (o) => o.id === activeOccasion.id
-            );
-            const newIndex = occasions.findIndex((o) => o.id === occasion.id);
-            setDirection(newIndex > currentIndex ? 1 : -1);
-            setActiveOccasion(occasion);
-          }}
+          onSelect={handleSelect}
         />
       </div>
     </div>

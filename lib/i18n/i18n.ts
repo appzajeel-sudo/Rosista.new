@@ -25,8 +25,10 @@ i18n
     },
 
     detection: {
-      order: ["localStorage", "navigator"],
-      caches: ["localStorage"],
+      // Cookie first for SSR support, then localStorage, then browser language
+      order: ["cookie", "localStorage", "navigator"],
+      caches: ["cookie", "localStorage"],
+      cookieMinutes: 525600, // 1 year
       // تحويل اللغة إلى صيغة موحدة
       convertDetectedLanguage: (lng: string) => {
         // تحويل en-US, en-GB, etc إلى en
@@ -38,4 +40,3 @@ i18n
   });
 
 export default i18n;
-

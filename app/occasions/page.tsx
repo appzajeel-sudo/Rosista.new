@@ -14,12 +14,6 @@ async function OccasionsContent() {
       sortOrder: "asc",
     });
 
-    // Convert occasions to slides format for Film Strip
-    const filmStripSlides = occasions.map((occasion) => ({
-      id: occasion._id,
-      image: occasion.imageUrl,
-    }));
-
     // Convert occasions to gallery format
     const galleryOccasions = occasions.map((occasion) => ({
       id: occasion._id,

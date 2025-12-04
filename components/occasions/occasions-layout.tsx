@@ -40,7 +40,7 @@ export function OccasionsLayout({ occasions }: Props) {
   };
 
   return (
-    <div className="relative min-h-screen w-full bg-black overflow-x-hidden">
+    <div className="relative w-full h-[90vh] md:h-screen bg-black overflow-hidden">
       {/* Hero Section - Controlled by state */}
       <CinematicHero
         activeOccasion={activeOccasion}

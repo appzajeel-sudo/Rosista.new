@@ -58,7 +58,7 @@ export function CinematicHero({
   const animationDirection = direction * (isRtl ? -1 : 1);
 
   return (
-    <div className="relative w-full h-screen overflow-hidden">
+    <div className="relative w-full h-[90vh] md:h-screen overflow-hidden">
       <AnimatePresence initial={false} custom={animationDirection}>
         <motion.div
           key={activeOccasion.id}

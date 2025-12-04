@@ -160,12 +160,16 @@ export function Header() {
     { href: "#", label: t("nav.contact") },
   ];
 
-  // On homepage, use white text when not scrolled
+  const isOccasionsPage = pathname === "/occasions";
+
+  // On homepage or occasions page, use white text when not scrolled
   // In dark mode, always use appropriate contrast
   const textColor =
-    isHomePage && !isScrolled ? "text-white" : "text-foreground";
+    (isHomePage || isOccasionsPage) && !isScrolled
+      ? "text-white"
+      : "text-foreground";
   const hoverColor =
-    isHomePage && !isScrolled
+    (isHomePage || isOccasionsPage) && !isScrolled
       ? "hover:text-white/70"
       : "hover:text-foreground/70";
 

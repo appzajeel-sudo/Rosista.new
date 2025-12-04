@@ -54,11 +54,11 @@
     "i18next-browser-languagedetector": "^8.0.2",
     "input-otp": "1.4.1",
     "lucide-react": "^0.454.0",
-    "next": "16.0.0",
+    "next": "^16.0.7",
     "next-themes": "^0.4.6",
-    "react": "19.2.0",
+    "react": "^19.2.1",
     "react-day-picker": "^9.11.1",
-    "react-dom": "19.2.0",
+    "react-dom": "^19.2.1",
     "react-hook-form": "^7.60.0",
     "react-i18next": "^15.1.0",
     "react-resizable-panels": "^2.1.7",
@@ -67,7 +67,6 @@
     "swiper": "^12.0.3",
     "tailwind-merge": "^2.5.5",
     "tailwindcss-animate": "^1.0.7",
-    "vaul": "^0.9.9",
     "zod": "3.25.76"
   },
   "devDependencies": {

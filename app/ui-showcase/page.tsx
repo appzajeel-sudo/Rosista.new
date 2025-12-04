@@ -136,16 +136,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer";
+
 import {
   ContextMenu,
   ContextMenuContent,
@@ -1299,9 +1290,7 @@ export default function UIShowcasePage() {
                     </HoverCardTrigger>
                     <HoverCardContent>
                       <div className="space-y-2">
-                        <h4 className="text-sm font-bold">
-                          معلومات إضافية
-                        </h4>
+                        <h4 className="text-sm font-bold">معلومات إضافية</h4>
                         <p className="text-sm text-muted-foreground">
                           هذا مثال على Hover Card مع محتوى بسيط
                         </p>
@@ -1337,47 +1326,6 @@ export default function UIShowcasePage() {
                     </AlertDialogFooter>
                   </AlertDialogContent>
                 </AlertDialog>
-              </CardContent>
-            </Card>
-
-            {/* 32. Drawer Component */}
-            <Card>
-              <CardHeader>
-                <CardTitle>Drawer</CardTitle>
-                <CardDescription>أدراج منبثقة من الأسفل</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Drawer>
-                  <DrawerTrigger asChild>
-                    <Button variant="outline">فتح Drawer</Button>
-                  </DrawerTrigger>
-                  <DrawerContent>
-                    <DrawerHeader>
-                      <DrawerTitle>هل أنت متأكد؟</DrawerTitle>
-                      <DrawerDescription>
-                        هذا الإجراء لا يمكن التراجع عنه.
-                      </DrawerDescription>
-                    </DrawerHeader>
-                    <div className="p-4 pb-0">
-                      <div className="space-y-4">
-                        <div className="space-y-2">
-                          <Label>الاسم</Label>
-                          <Input placeholder="أدخل اسمك" />
-                        </div>
-                        <div className="space-y-2">
-                          <Label>البريد الإلكتروني</Label>
-                          <Input type="email" placeholder="email@example.com" />
-                        </div>
-                      </div>
-                    </div>
-                    <DrawerFooter>
-                      <Button>إرسال</Button>
-                      <DrawerClose asChild>
-                        <Button variant="outline">إلغاء</Button>
-                      </DrawerClose>
-                    </DrawerFooter>
-                  </DrawerContent>
-                </Drawer>
               </CardContent>
             </Card>
 
@@ -2138,9 +2086,7 @@ export default function UIShowcasePage() {
                         <div className="flex h-full flex-col gap-4 p-4">
                           <div className="flex items-center gap-2">
                             <SidebarTrigger />
-                            <h2 className="text-lg font-bold">
-                              محتوى الصفحة
-                            </h2>
+                            <h2 className="text-lg font-bold">محتوى الصفحة</h2>
                           </div>
                           <div className="flex-1 rounded-lg border border-dashed p-8">
                             <p className="text-sm text-muted-foreground">

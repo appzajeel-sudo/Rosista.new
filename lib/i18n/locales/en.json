@@ -31,7 +31,8 @@
   },
   "home": {
     "shopByOccasion": {
-      "title": "Shop by Occasion"
+      "title": "Shop by Occasion",
+      "description": "Discover our curated collection of luxury gifts designed specifically for every special occasion"
     },
     "occasions": {
       "viewMore": "View All Occasions"

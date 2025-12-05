@@ -70,12 +70,12 @@ export function OccasionProductsCarousel({
   if (loading) {
     return (
       <div className="w-full py-8 px-8 md:px-16 lg:px-24">
-        <Skeleton className="h-8 w-48 mb-6 bg-neutral-800" />
+        <Skeleton className="h-8 w-48 mb-6 bg-gray-200 dark:bg-neutral-800" />
         <div className="flex gap-4 overflow-hidden">
           {[...Array(4)].map((_, i) => (
             <Skeleton
               key={i}
-              className="h-[400px] w-[300px] shrink-0 bg-neutral-800 rounded-xl"
+              className="h-[400px] w-[300px] shrink-0 bg-gray-200 dark:bg-neutral-800 rounded-xl"
             />
           ))}
         </div>
@@ -90,7 +90,7 @@ export function OccasionProductsCarousel({
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <h2
-          className={`text-2xl md:text-3xl font-bold text-white ${
+          className={`text-2xl md:text-3xl font-bold text-black dark:text-white ${
             isRtl ? "font-sans-ar" : "font-sans-en"
           }`}
         >
@@ -103,7 +103,7 @@ export function OccasionProductsCarousel({
             variant="outline"
             size="icon"
             onClick={() => scroll(isRtl ? "right" : "left")}
-            className="rounded-full bg-transparent border-neutral-700 hover:bg-neutral-800 text-white"
+            className="rounded-full bg-transparent border-gray-300 dark:border-neutral-700 hover:bg-gray-100 dark:hover:bg-neutral-800 text-black dark:text-white"
           >
             {isRtl ? (
               <ChevronRight className="h-5 w-5" />
@@ -115,7 +115,7 @@ export function OccasionProductsCarousel({
             variant="outline"
             size="icon"
             onClick={() => scroll(isRtl ? "left" : "right")}
-            className="rounded-full bg-transparent border-neutral-700 hover:bg-neutral-800 text-white"
+            className="rounded-full bg-transparent border-gray-300 dark:border-neutral-700 hover:bg-gray-100 dark:hover:bg-neutral-800 text-black dark:text-white"
           >
             {isRtl ? (
               <ChevronLeft className="h-5 w-5" />

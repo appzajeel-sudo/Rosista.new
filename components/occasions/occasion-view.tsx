@@ -26,9 +26,9 @@ export function OccasionView({ occasion }: Props) {
   };
 
   return (
-    <div className="relative w-full min-h-screen bg-black">
-      {/* Hero Section - Static for single occasion */}
-      <div className="relative h-[90vh] md:h-screen w-full overflow-hidden">
+    <div className="relative w-full min-h-screen bg-white dark:bg-black transition-colors duration-300">
+      {/* Hero Section - Static for single occasion - Always Black */}
+      <div className="relative h-[90vh] md:h-screen w-full overflow-hidden bg-black">
         <CinematicHero
           activeOccasion={heroOccasion}
           onNext={() => {}} // No navigation in specific view
@@ -39,7 +39,7 @@ export function OccasionView({ occasion }: Props) {
       </div>
 
       {/* Content Sections - Below the fold */}
-      <div className="relative z-50 bg-black w-full shadow-[0_-50px_100px_rgba(0,0,0,1)]">
+      <div className="relative z-50 bg-white dark:bg-black w-full dark:shadow-[0_-50px_100px_rgba(0,0,0,1)]">
         <div className="py-12 space-y-12 pb-32">
           {/* Best Sellers Carousel */}
           <OccasionProductsCarousel

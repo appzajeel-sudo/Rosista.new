@@ -58,12 +58,12 @@ export function OccasionsLayout({ occasions }: Props) {
   );
 
   return (
-    <div className="relative w-full min-h-screen bg-black">
+    <div className="relative w-full min-h-screen bg-white dark:bg-black text-black dark:text-white transition-colors duration-300">
       {/* Preload all occasion images for instant switching */}
       <ImagePreloader occasions={occasions} activeId={activeOccasion.id} />
 
       {/* Hero Section Container - Full Screen */}
-      <div className="relative h-[90vh] md:h-screen w-full overflow-hidden">
+      <div className="relative h-[90vh] md:h-screen w-full overflow-hidden bg-black">
         {/* Hero Section - Controlled by state */}
         <CinematicHero
           activeOccasion={activeOccasion}
@@ -83,19 +83,19 @@ export function OccasionsLayout({ occasions }: Props) {
       </div>
 
       {/* Landing Page Content - General Sections */}
-      <div className="relative z-50 bg-black w-full shadow-[0_-50px_100px_rgba(0,0,0,1)]">
+      <div className="relative z-50 bg-white dark:bg-black w-full dark:shadow-[0_-50px_100px_rgba(0,0,0,1)]">
         <div className="py-24 space-y-32 container mx-auto px-4 md:px-16">
           {/* Why Rosista Section */}
           <div className="text-center space-y-8">
             <h2
-              className={`text-3xl md:text-5xl font-bold text-white ${
+              className={`text-3xl md:text-5xl font-bold text-black dark:text-white ${
                 isRtl ? "font-sans-ar" : "font-sans-en"
               }`}
             >
               {t("occasions.whyRosista.title", "لماذا روزيستا؟")}
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="p-6 rounded-2xl bg-neutral-900/50 border border-neutral-800">
+              <div className="p-6 rounded-2xl bg-gray-50 dark:bg-neutral-900/50 border border-gray-200 dark:border-neutral-800">
                 <h3
                   className={`text-xl font-bold text-amber-500 mb-4 ${
                     isRtl ? "font-sans-ar" : "font-sans-en"
@@ -104,7 +104,7 @@ export function OccasionsLayout({ occasions }: Props) {
                   {t("occasions.whyRosista.freshFlowers", "زهور طازجة يومياً")}
                 </h3>
                 <p
-                  className={`text-neutral-400 ${
+                  className={`text-gray-600 dark:text-neutral-400 ${
                     isRtl ? "font-sans-ar" : "font-sans-en"
                   }`}
                 >
@@ -114,7 +114,7 @@ export function OccasionsLayout({ occasions }: Props) {
                   )}
                 </p>
               </div>
-              <div className="p-6 rounded-2xl bg-neutral-900/50 border border-neutral-800">
+              <div className="p-6 rounded-2xl bg-gray-50 dark:bg-neutral-900/50 border border-gray-200 dark:border-neutral-800">
                 <h3
                   className={`text-xl font-bold text-amber-500 mb-4 ${
                     isRtl ? "font-sans-ar" : "font-sans-en"
@@ -126,7 +126,7 @@ export function OccasionsLayout({ occasions }: Props) {
                   )}
                 </h3>
                 <p
-                  className={`text-neutral-400 ${
+                  className={`text-gray-600 dark:text-neutral-400 ${
                     isRtl ? "font-sans-ar" : "font-sans-en"
                   }`}
                 >
@@ -136,7 +136,7 @@ export function OccasionsLayout({ occasions }: Props) {
                   )}
                 </p>
               </div>
-              <div className="p-6 rounded-2xl bg-neutral-900/50 border border-neutral-800">
+              <div className="p-6 rounded-2xl bg-gray-50 dark:bg-neutral-900/50 border border-gray-200 dark:border-neutral-800">
                 <h3
                   className={`text-xl font-bold text-amber-500 mb-4 ${
                     isRtl ? "font-sans-ar" : "font-sans-en"
@@ -145,7 +145,7 @@ export function OccasionsLayout({ occasions }: Props) {
                   {t("occasions.whyRosista.luxuryPackaging", "تغليف فاخر")}
                 </h3>
                 <p
-                  className={`text-neutral-400 ${
+                  className={`text-gray-600 dark:text-neutral-400 ${
                     isRtl ? "font-sans-ar" : "font-sans-en"
                   }`}
                 >
@@ -161,14 +161,14 @@ export function OccasionsLayout({ occasions }: Props) {
           {/* How it Works Section */}
           <div className="text-center space-y-8">
             <h2
-              className={`text-3xl md:text-5xl font-bold text-white ${
+              className={`text-3xl md:text-5xl font-bold text-black dark:text-white ${
                 isRtl ? "font-sans-ar" : "font-sans-en"
               }`}
             >
               {t("occasions.howItWorks.title", "كيف تعمل الخدمة")}
             </h2>
             <p
-              className={`text-neutral-400 max-w-2xl mx-auto ${
+              className={`text-gray-600 dark:text-neutral-400 max-w-2xl mx-auto ${
                 isRtl ? "font-sans-ar" : "font-sans-en"
               }`}
             >

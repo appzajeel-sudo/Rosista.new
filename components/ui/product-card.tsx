@@ -23,10 +23,10 @@ export function ProductCard({ product }: ProductCardProps) {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="group relative w-full overflow-hidden rounded-xl bg-neutral-900 border border-neutral-800 hover:border-neutral-700 transition-colors"
+      className="group relative w-full overflow-hidden rounded-xl bg-white dark:bg-neutral-900 border border-gray-200 dark:border-neutral-800 hover:border-primary-500/50 dark:hover:border-neutral-700 transition-colors"
     >
       {/* Product Image */}
-      <div className="relative aspect-[4/5] w-full overflow-hidden bg-neutral-800">
+      <div className="relative aspect-[4/5] w-full overflow-hidden bg-gray-100 dark:bg-neutral-800">
         <Link href={`/products/${product.slug}`}>
           <Image
             src={product.mainImage}
@@ -40,7 +40,7 @@ export function ProductCard({ product }: ProductCardProps) {
         {/* Quick Add Button - Appears on Hover */}
         <div className="absolute bottom-4 left-4 right-4 translate-y-full opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
           <Button
-            className={`w-full gap-2 bg-white text-black hover:bg-neutral-200 ${
+            className={`w-full gap-2 bg-black text-white hover:bg-neutral-800 dark:bg-white dark:text-black dark:hover:bg-neutral-200 ${
               isRtl ? "font-sans-ar" : "font-sans-en"
             }`}
           >
@@ -55,7 +55,7 @@ export function ProductCard({ product }: ProductCardProps) {
         <div className="mb-2 flex items-start justify-between gap-2">
           <Link href={`/products/${product.slug}`}>
             <h3
-              className={`text-lg font-medium text-white transition-colors group-hover:text-amber-400 line-clamp-1 ${
+              className={`text-lg font-medium text-black dark:text-white transition-colors group-hover:text-primary-600 dark:group-hover:text-amber-400 line-clamp-1 ${
                 isRtl ? "font-sans-ar" : "font-sans-en"
               }`}
             >
@@ -65,7 +65,7 @@ export function ProductCard({ product }: ProductCardProps) {
         </div>
 
         <div className="flex items-center justify-between">
-          <p className="text-lg font-semibold text-white">
+          <p className="text-lg font-semibold text-black dark:text-white">
             {product.price.toLocaleString()} {isRtl ? "ر.س" : "SAR"}
           </p>
         </div>

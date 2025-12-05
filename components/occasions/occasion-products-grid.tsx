@@ -92,7 +92,7 @@ export function OccasionProductsGrid({ occasionId }: Props) {
       {/* Header & Controls */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
         <h2
-          className={`text-2xl md:text-3xl font-bold text-white ${
+          className={`text-2xl md:text-3xl font-bold text-black dark:text-white ${
             isRtl ? "font-sans-ar" : "font-sans-en"
           }`}
         >
@@ -102,10 +102,10 @@ export function OccasionProductsGrid({ occasionId }: Props) {
         {/* Sort Dropdown */}
         <div className="w-full md:w-48">
           <Select value={sortBy} onValueChange={setSortBy}>
-            <SelectTrigger className="w-full bg-neutral-900 border-neutral-800 text-white">
+            <SelectTrigger className="w-full bg-white dark:bg-neutral-900 border-gray-300 dark:border-neutral-800 text-black dark:text-white">
               <SelectValue placeholder={t("occasions.sorting.sortBy")} />
             </SelectTrigger>
-            <SelectContent className="bg-neutral-900 border-neutral-800 text-white">
+            <SelectContent className="bg-white dark:bg-neutral-900 border-gray-300 dark:border-neutral-800 text-black dark:text-white">
               <SelectItem value="sortOrder">
                 {t("occasions.sorting.featured")}
               </SelectItem>
@@ -133,9 +133,9 @@ export function OccasionProductsGrid({ occasionId }: Props) {
         {loading &&
           [...Array(4)].map((_, i) => (
             <div key={`skeleton-${i}`} className="space-y-3">
-              <Skeleton className="h-[400px] w-full bg-neutral-800 rounded-xl" />
-              <Skeleton className="h-4 w-2/3 bg-neutral-800" />
-              <Skeleton className="h-4 w-1/3 bg-neutral-800" />
+              <Skeleton className="h-[400px] w-full bg-gray-200 dark:bg-neutral-800 rounded-xl" />
+              <Skeleton className="h-4 w-2/3 bg-gray-200 dark:bg-neutral-800" />
+              <Skeleton className="h-4 w-1/3 bg-gray-200 dark:bg-neutral-800" />
             </div>
           ))}
       </div>
@@ -147,7 +147,7 @@ export function OccasionProductsGrid({ occasionId }: Props) {
           className="h-20 flex items-center justify-center mt-8"
         >
           {loading && (
-            <div className="text-neutral-400 text-sm">
+            <div className="text-gray-500 dark:text-neutral-400 text-sm">
               {isRtl ? "جاري التحميل..." : "Loading..."}
             </div>
           )}
@@ -156,7 +156,7 @@ export function OccasionProductsGrid({ occasionId }: Props) {
 
       {/* Empty State */}
       {!loading && products.length === 0 && (
-        <div className="text-center py-24 text-neutral-400">
+        <div className="text-center py-24 text-gray-500 dark:text-neutral-400">
           <p>{t("occasions.actions.noProducts")}</p>
         </div>
       )}

@@ -42,6 +42,22 @@ const slideVariants = {
   }),
 } as const;
 
+// Separate animation for images to make them fade smoothly
+const imageVariants = {
+  enter: {
+    opacity: 0,
+    scale: 1.05,
+  },
+  center: {
+    opacity: 1,
+    scale: 1,
+  },
+  exit: {
+    opacity: 0,
+    scale: 0.95,
+  },
+} as const;
+
 export function CinematicHero({
   activeOccasion,
   onNext,
@@ -92,26 +108,52 @@ export function CinematicHero({
         >
           {/* Background Blur Layer */}
           <div className="absolute inset-0">
-            <Image
-              src={optimizeCloudinaryUrl(activeOccasion.image)}
-              alt=""
-              fill
-              className="object-cover blur-xl scale-110 opacity-50"
-              priority
-            />
+            <motion.div
+              key={`bg-${activeOccasion.id}`}
+              variants={imageVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{
+                opacity: { duration: 0.3, ease: "easeInOut" },
+                scale: { duration: 0.4, ease: "easeOut" },
+              }}
+              className="absolute inset-0"
+            >
+              <Image
+                src={optimizeCloudinaryUrl(activeOccasion.image)}
+                alt=""
+                fill
+                className="object-cover blur-xl scale-110 opacity-50"
+                priority
+              />
+            </motion.div>
             <div className="absolute inset-0 bg-black/60" />
           </div>
 
           {/* Main Image Layer - Contained */}
           <div className="absolute inset-0 flex items-start md:items-center justify-center md:justify-end md:pr-24 lg:pr-32 z-20 pt-4 md:pt-0">
             <div className="relative w-full h-[50vh] md:w-[60%] md:h-[80%]">
-              <Image
-                src={optimizeCloudinaryUrl(activeOccasion.image)}
-                alt={isRtl ? activeOccasion.nameAr : activeOccasion.nameEn}
-                fill
-                className="object-contain object-center md:object-right pointer-events-none"
-                priority
-              />
+              <motion.div
+                key={`main-${activeOccasion.id}`}
+                variants={imageVariants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={{
+                  opacity: { duration: 0.3, ease: "easeInOut" },
+                  scale: { duration: 0.4, ease: "easeOut" },
+                }}
+                className="absolute inset-0"
+              >
+                <Image
+                  src={optimizeCloudinaryUrl(activeOccasion.image)}
+                  alt={isRtl ? activeOccasion.nameAr : activeOccasion.nameEn}
+                  fill
+                  className="object-contain object-center md:object-right pointer-events-none"
+                  priority
+                />
+              </motion.div>
             </div>
           </div>
 

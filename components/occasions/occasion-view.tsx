@@ -2,8 +2,10 @@
 
 import { useTranslation } from "react-i18next";
 import { CinematicHero } from "@/components/occasions/cinematic-hero";
-import { OccasionProductsCarousel } from "@/components/occasions/occasion-products-carousel";
-import { OccasionProductsGrid } from "@/components/occasions/occasion-products-grid";
+import { FeaturedProductsRow } from "@/components/occasions/featured-products-row";
+import { LuxuryHighlightSection } from "@/components/occasions/luxury-highlight-section";
+import { CollectionViewGrid } from "@/components/occasions/collection-view-grid";
+import { ModernProductGrid } from "@/components/occasions/modern-product-grid";
 import type { Occasion } from "@/types/occasion";
 
 interface ExtendedOccasion extends Occasion {
@@ -38,40 +40,19 @@ export function OccasionView({ occasion }: Props) {
         />
       </div>
 
-      {/* Content Sections - Below the fold */}
-      <div className="relative z-50 bg-white dark:bg-black w-full dark:shadow-[0_-50px_100px_rgba(0,0,0,1)]">
-        <div className="py-12 space-y-12 pb-32">
-          {/* Best Sellers Carousel */}
-          <OccasionProductsCarousel
-            title={t("occasions.productSections.bestSellers")}
-            occasionId={occasion.id}
-            productStatus="الأكثر مبيعًا"
-          />
+      {/* Content Sections - Redesigned */}
+      <div className="relative z-50 bg-white dark:bg-black w-full dark:shadow-[0_-50px_100px_rgba(0,0,0,1)] flex flex-col gap-0">
+        {/* 1. Best Sellers -> Featured Products Row */}
+        <FeaturedProductsRow occasionId={occasion.id} />
 
-          {/* Luxury Gifts Carousel */}
-          <OccasionProductsCarousel
-            title={t("occasions.productSections.luxuryGifts")}
-            occasionId={occasion.id}
-            productStatus="هدايا فاخرة"
-          />
+        {/* 2. Featured Collections -> Collection View Grid */}
+        <CollectionViewGrid occasionId={occasion.id} />
 
-          {/* Featured Collections Carousel */}
-          <OccasionProductsCarousel
-            title={t("occasions.productSections.featuredCollections")}
-            occasionId={occasion.id}
-            productStatus="المجموعات المميزة"
-          />
+        {/* 3. Luxury Gifts -> Luxury Highlight Section (Navy Dark Theme) */}
+        <LuxuryHighlightSection occasionId={occasion.id} />
 
-          {/* Special Occasion Carousel */}
-          <OccasionProductsCarousel
-            title={t("occasions.productSections.specialOccasion")}
-            occasionId={occasion.id}
-            productStatus="مناسبة خاصة"
-          />
-
-          {/* Detailed Product Grid */}
-          <OccasionProductsGrid occasionId={occasion.id} />
-        </div>
+        {/* 4. All Products -> Modern Grid */}
+        <ModernProductGrid occasionId={occasion.id} />
       </div>
     </div>
   );

@@ -93,7 +93,7 @@ export function CinematicHero({
           {/* Background Blur Layer */}
           <div className="absolute inset-0">
             <Image
-              src={activeOccasion.image}
+              src={optimizeCloudinaryUrl(activeOccasion.image)}
               alt=""
               fill
               className="object-cover blur-xl scale-110 opacity-50"
@@ -106,7 +106,7 @@ export function CinematicHero({
           <div className="absolute inset-0 flex items-start md:items-center justify-center md:justify-end md:pr-24 lg:pr-32 z-20 pt-4 md:pt-0">
             <div className="relative w-full h-[50vh] md:w-[60%] md:h-[80%]">
               <Image
-                src={activeOccasion.image}
+                src={optimizeCloudinaryUrl(activeOccasion.image)}
                 alt={isRtl ? activeOccasion.nameAr : activeOccasion.nameEn}
                 fill
                 className="object-contain object-center md:object-right pointer-events-none"
@@ -335,4 +335,21 @@ export function CinematicHero({
       </AnimatePresence>
     </div>
   );
+}
+
+/**
+ * Optimize Cloudinary URL with transformations for better performance
+ * Only uses f_auto to get WebP format without reducing quality
+ */
+function optimizeCloudinaryUrl(url: string): string {
+  if (!url || !url.includes("cloudinary.com")) {
+    return url;
+  }
+
+  if (url.includes("/upload/")) {
+    // Only f_auto to get WebP format without reducing quality
+    return url.replace("/upload/", "/upload/f_auto/");
+  }
+
+  return url;
 }

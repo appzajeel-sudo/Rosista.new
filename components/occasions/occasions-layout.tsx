@@ -4,6 +4,7 @@ import { useState, useCallback, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { CinematicHero } from "@/components/occasions/cinematic-hero";
 import { ThumbnailSlider } from "@/components/occasions/thumbnail-slider";
+import { ImagePreloader } from "@/components/occasions/image-preloader";
 
 type Occasion = {
   id: string;
@@ -58,6 +59,9 @@ export function OccasionsLayout({ occasions }: Props) {
 
   return (
     <div className="relative w-full min-h-screen bg-black">
+      {/* Preload all occasion images for instant switching */}
+      <ImagePreloader occasions={occasions} activeId={activeOccasion.id} />
+
       {/* Hero Section Container - Full Screen */}
       <div className="relative h-[90vh] md:h-screen w-full overflow-hidden">
         {/* Hero Section - Controlled by state */}

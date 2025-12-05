@@ -56,31 +56,45 @@ export function ProductCard({ product }: ProductCardProps) {
       return;
     }
 
-    setLoading(true);
+    // Oimtistic UI: Update button state immediately
+    setIsAdded(true);
 
     try {
-      await addToCart({
-        id: product._id, // Ensure we use _id as per Product type usually
+      // Fire request in background but await to catch errors if needed
+      // (Using await here to ensure we catch network errors,
+      // but the UI updated first so user perceives it as instant)
+      // Note: If you want true fire-and-forget without waiting, remove 'await'.
+      // But keeping await with the state already set gives the best balance.
+      // Actually, to make it TRULY fast like the favorite button, we should not await inside the UI block,
+      // or effectively fire-and-forget.
+      addToCart({
+        id: product._id,
         nameEn: product.nameEn,
         nameAr: product.nameAr,
         price: product.price,
         imageUrl: product.mainImage,
-        categoryId: undefined, // Type check adjustment if needed
+        categoryId: undefined,
         occasionId: undefined,
         isBestSeller: false,
         isSpecialGift: false,
+      }).catch((err) => {
+        console.error("Failed to add to cart", err);
+        setIsAdded(false); // Revert on error
+        toast({
+          title: isRtl ? "خطأ" : "Error",
+          description: isRtl ? "فشل إضافة المنتج" : "Failed to add product",
+          variant: "destructive",
+        });
       });
 
-      setIsAdded(true);
-
-      // Reset state after 2 seconds
+      // Reset state after 2 seconds automatically to let user add again
       setTimeout(() => {
         setIsAdded(false);
       }, 2000);
     } catch (error) {
-      console.error("Failed to add to cart", error);
-    } finally {
-      setLoading(false);
+      // This catch block might not be reached if we don't await addToCart,
+      // but using .catch on the promise handles it.
+      setIsAdded(false);
     }
   };
 
@@ -136,7 +150,7 @@ export function ProductCard({ product }: ProductCardProps) {
 
           <Button
             onClick={handleAddToCart}
-            disabled={loading || isAdded}
+            disabled={loading} // Only disable if strictly loading (though we rely on isAdded now)
             variant="default"
             size="sm"
             className={`h-9 px-4 rounded-full min-w-[90px] transition-all duration-300 ${
@@ -146,6 +160,8 @@ export function ProductCard({ product }: ProductCardProps) {
             } ${isRtl ? "font-sans-ar" : "font-sans-en"}`}
           >
             {loading ? (
+              // We might not use loading state visibly if optimisitic,
+              // but keeping fallback logic just in case
               <Loader2 className="w-4 h-4 animate-spin" />
             ) : isAdded ? (
               <>

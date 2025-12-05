@@ -25,6 +25,16 @@ async function OccasionsContent() {
       image: occasion.imageUrl,
     }));
 
+    console.log(
+      "Fetched Occasions Debug:",
+      galleryOccasions.map((o) => ({
+        id: o.id,
+        nameEn: o.nameEn,
+        hasDescEn: !!o.descriptionEn,
+        descEnLen: o.descriptionEn?.length,
+      }))
+    );
+
     return <OccasionsLayout occasions={galleryOccasions} />;
   } catch (error) {
     console.error("Error loading occasions:", error);

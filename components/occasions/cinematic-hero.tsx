@@ -166,28 +166,168 @@ export function CinematicHero({
             </div>
           </div>
 
-          {/* Scroll Indicator - Only show when button is hidden */}
           {hideButton && (
-            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-40 flex flex-col items-center gap-2 pointer-events-none">
+            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-40 flex flex-col items-center gap-4 pointer-events-none">
+              <style jsx>{`
+                @property --gradient-angle {
+                  syntax: "<angle>";
+                  initial-value: 0deg;
+                  inherits: false;
+                }
+
+                @property --gradient-angle-offset {
+                  syntax: "<angle>";
+                  initial-value: 0deg;
+                  inherits: false;
+                }
+
+                @property --gradient-percent {
+                  syntax: "<percentage>";
+                  initial-value: 5%;
+                  inherits: false;
+                }
+
+                @property --gradient-shine {
+                  syntax: "<color>";
+                  initial-value: white;
+                  inherits: false;
+                }
+
+                .shiny-mouse {
+                  --shiny-cta-bg: #000000;
+                  --shiny-cta-bg-subtle: #1a1818;
+                  --shiny-cta-fg: #ffffff;
+                  --shiny-cta-highlight: #67e8f9;
+                  --shiny-cta-highlight-subtle: #06b6d4;
+                  --animation: gradient-angle linear infinite;
+                  --duration: 3s;
+                  --shadow-size: 2px;
+                  --transition: 800ms cubic-bezier(0.25, 1, 0.5, 1);
+
+                  position: relative;
+                  display: block;
+                  width: 30px;
+                  height: 50px;
+                  border-radius: 15px;
+                  border: 1px solid transparent;
+                  background: linear-gradient(
+                        var(--shiny-cta-bg),
+                        var(--shiny-cta-bg)
+                      )
+                      padding-box,
+                    conic-gradient(
+                        from
+                          calc(
+                            var(--gradient-angle) - var(--gradient-angle-offset)
+                          ),
+                        transparent,
+                        var(--shiny-cta-highlight) var(--gradient-percent),
+                        var(--gradient-shine) calc(var(--gradient-percent) * 2),
+                        var(--shiny-cta-highlight)
+                          calc(var(--gradient-percent) * 3),
+                        transparent calc(var(--gradient-percent) * 4)
+                      )
+                      border-box;
+                  box-shadow: inset 0 0 0 1px var(--shiny-cta-bg-subtle);
+                  animation: var(--animation) var(--duration);
+                }
+
+                .shiny-mouse::before {
+                  content: "";
+                  position: absolute;
+                  top: 50%;
+                  left: 50%;
+                  transform: translate(-50%, -50%);
+                  width: 100%;
+                  height: 100%;
+                  border-radius: 15px;
+                  box-shadow: 0 0 20px var(--shiny-cta-highlight-subtle);
+                  opacity: 0.3;
+                  z-index: -1;
+                }
+
+                .shiny-mouse::after {
+                  content: "";
+                  position: absolute;
+                  top: 8px;
+                  left: 50%;
+                  transform: translateX(-50%);
+                  width: 4px;
+                  height: 6px;
+                  background: var(--shiny-cta-highlight);
+                  border-radius: 2px;
+                  animation: scroll-wheel 2s ease-in-out infinite;
+                  box-shadow: 0 0 5px var(--shiny-cta-highlight);
+                  z-index: 2;
+                }
+
+                .shiny-mouse-dots {
+                  position: absolute;
+                  top: 50%;
+                  left: 50%;
+                  transform: translate(-50%, -50%);
+                  --size: calc(100% - var(--shadow-size) * 3);
+                  --position: 2px;
+                  --space: calc(var(--position) * 1.5);
+                  width: var(--size);
+                  height: var(--size);
+                  background: radial-gradient(
+                      circle at var(--position) var(--position),
+                      white calc(var(--position) / 3),
+                      transparent 0
+                    )
+                    padding-box;
+                  background-size: var(--space) var(--space);
+                  background-repeat: space;
+                  mask-image: conic-gradient(
+                    from calc(var(--gradient-angle) + 45deg),
+                    black,
+                    transparent 10% 90%,
+                    black
+                  );
+                  border-radius: 12px;
+                  opacity: 0.8;
+                  z-index: 1;
+                  animation: var(--animation) var(--duration);
+                }
+
+                @keyframes gradient-angle {
+                  to {
+                    --gradient-angle: 360deg;
+                  }
+                }
+
+                @keyframes scroll-wheel {
+                  0% {
+                    top: 8px;
+                    opacity: 1;
+                    height: 6px;
+                  }
+                  50% {
+                    height: 12px;
+                    opacity: 0.5;
+                  }
+                  100% {
+                    top: 30px;
+                    opacity: 0;
+                    height: 4px;
+                  }
+                }
+              `}</style>
+
               <p
-                className={`text-sm text-white/80 ${
+                className={`text-sm tracking-[0.2em] uppercase text-cyan-300 font-medium ${
                   isRtl ? "font-sans-ar" : "font-sans-en"
                 }`}
+                style={{
+                  textShadow: "0 0 10px rgba(103, 232, 249, 0.5)",
+                }}
               >
-                {isRtl ? "اكتشف المنتجات" : "Discover Products"}
+                {isRtl ? "اكتشف" : "Discover"}
               </p>
-              <div className="animate-bounce">
-                <svg
-                  className="w-8 h-8 text-white"
-                  fill="none"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-                </svg>
+
+              <div className="shiny-mouse">
+                <div className="shiny-mouse-dots" />
               </div>
             </div>
           )}

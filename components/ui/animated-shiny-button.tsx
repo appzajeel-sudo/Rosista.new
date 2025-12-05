@@ -226,18 +226,6 @@ export function AnimatedShinyButton({
             scale: 1.2;
           }
         }
-
-        /* Light theme overrides */
-        @media (prefers-color-scheme: light) {
-          .shiny-cta,
-          .shiny-cta-link {
-            --shiny-cta-bg: #ffffff;
-            --shiny-cta-bg-subtle: #f0f0f0;
-            --shiny-cta-fg: #000000;
-            --shiny-cta-highlight: #06b6d4;
-            --shiny-cta-highlight-subtle: #0891b2;
-          }
-        }
       `}</style>
 
       {url ? (

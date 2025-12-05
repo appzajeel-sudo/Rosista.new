@@ -34,6 +34,7 @@ export function OccasionView({ occasion }: Props) {
           onNext={() => {}} // No navigation in specific view
           onPrev={() => {}}
           direction={0}
+          hideButton={true} // Hide browse button since we're already on the page
         />
       </div>
 

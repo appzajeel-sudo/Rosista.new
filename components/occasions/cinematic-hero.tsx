@@ -21,6 +21,7 @@ type Props = {
   onNext?: () => void;
   onPrev?: () => void;
   direction?: number;
+  hideButton?: boolean; // Hide the browse button on detail pages
 };
 
 // Animation variants - defined outside component to prevent re-creation on every render
@@ -46,6 +47,7 @@ export function CinematicHero({
   onNext,
   onPrev,
   direction = 0,
+  hideButton = false,
 }: Props) {
   const { i18n } = useTranslation();
   const isRtl = i18n.language === "ar";
@@ -149,18 +151,46 @@ export function CinematicHero({
               </p>
 
               {/* Actions */}
-              <div className="flex flex-wrap gap-4 pointer-events-auto">
-                <AnimatedShinyButton
-                  url={`/occasions/${activeOccasion.slug}`}
-                  className={`text-lg px-8 py-6 ${
-                    isRtl ? "rtl font-sans-ar" : "font-sans-en"
-                  }`}
-                >
-                  {isRtl ? "تصفح المناسبة" : "Browse Occasion"}
-                </AnimatedShinyButton>
-              </div>
+              {!hideButton && (
+                <div className="flex flex-wrap gap-4 pointer-events-auto">
+                  <AnimatedShinyButton
+                    url={`/occasions/${activeOccasion.slug}`}
+                    className={`text-lg px-8 py-6 ${
+                      isRtl ? "rtl font-sans-ar" : "font-sans-en"
+                    }`}
+                  >
+                    {isRtl ? "تصفح المناسبة" : "Browse Occasion"}
+                  </AnimatedShinyButton>
+                </div>
+              )}
             </div>
           </div>
+
+          {/* Scroll Indicator - Only show when button is hidden */}
+          {hideButton && (
+            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-40 flex flex-col items-center gap-2 pointer-events-none">
+              <p
+                className={`text-sm text-white/80 ${
+                  isRtl ? "font-sans-ar" : "font-sans-en"
+                }`}
+              >
+                {isRtl ? "اكتشف المنتجات" : "Discover Products"}
+              </p>
+              <div className="animate-bounce">
+                <svg
+                  className="w-8 h-8 text-white"
+                  fill="none"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                </svg>
+              </div>
+            </div>
+          )}
         </motion.div>
       </AnimatePresence>
     </div>

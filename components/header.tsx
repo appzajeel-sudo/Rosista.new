@@ -160,7 +160,7 @@ export function Header() {
     { href: "#", label: t("nav.contact") },
   ];
 
-  const isOccasionsPage = pathname === "/occasions";
+  const isOccasionsPage = pathname.startsWith("/occasions");
 
   // On homepage or occasions page, use white text when not scrolled
   // In dark mode, always use appropriate contrast

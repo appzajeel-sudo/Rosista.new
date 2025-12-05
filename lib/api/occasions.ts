@@ -71,7 +71,9 @@ export async function getAllOccasions(params?: {
     }
 
     const queryString = searchParams.toString();
-    const url = `${baseUrl}/api/occasions${queryString ? `?${queryString}` : ""}`;
+    const url = `${baseUrl}/api/occasions${
+      queryString ? `?${queryString}` : ""
+    }`;
 
     const response = await fetch(url, {
       method: "GET",
@@ -99,5 +101,39 @@ export async function getAllOccasions(params?: {
   } catch (error) {
     console.error("Error fetching all occasions:", error);
     return { occasions: [] };
+  }
+}
+
+// Fetch single occasion by slug
+export async function getOccasionBySlug(
+  slug: string
+): Promise<Occasion | null> {
+  try {
+    const baseUrl = getApiBaseUrl();
+    const url = `${baseUrl}/api/occasions/${slug}`;
+
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      next: { revalidate: 600 },
+    });
+
+    if (!response.ok) {
+      if (response.status === 404) return null;
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    if (data.success && data.data) {
+      return data.data;
+    }
+
+    return null;
+  } catch (error) {
+    console.error(`Error fetching occasion with slug ${slug}:`, error);
+    return null;
   }
 }

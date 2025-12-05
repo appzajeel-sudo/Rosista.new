@@ -57,7 +57,38 @@
     "graduation": "Graduation",
     "eidAlFitr": "Eid Al-Fitr",
     "anniversary": "Anniversary",
-    "hajj": "Hajj"
+    "hajj": "Hajj",
+    "whyRosista": {
+      "title": "Why Rosista?",
+      "freshFlowers": "Fresh Flowers Daily",
+      "freshFlowersDesc": "We guarantee the finest flowers, carefully selected every morning.",
+      "sameDayDelivery": "Same Day Delivery",
+      "sameDayDeliveryDesc": "Fast and reliable delivery service to ensure your gift arrives on time.",
+      "luxuryPackaging": "Luxury Packaging",
+      "luxuryPackagingDesc": "Artistic touches in packaging that add elegance and sophistication."
+    },
+    "howItWorks": {
+      "title": "How It Works",
+      "description": "Simple steps separate you from sending the most beautiful gifts to your loved ones."
+    },
+    "productSections": {
+      "bestSellers": "Best Sellers",
+      "luxuryGifts": "Luxury Gifts",
+      "featuredCollections": "Featured Collections",
+      "specialOccasion": "Special Occasion",
+      "allProducts": "All Products"
+    },
+    "sorting": {
+      "sortBy": "Sort by",
+      "featured": "Featured",
+      "priceLowToHigh": "Price: Low to High",
+      "priceHighToLow": "Price: High to Low",
+      "newest": "Newest"
+    },
+    "actions": {
+      "loadMore": "Load More",
+      "noProducts": "No products found"
+    }
   },
   "categories": {
     "title": "Our Collections",

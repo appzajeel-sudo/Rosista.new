@@ -57,7 +57,38 @@
     "graduation": "التخرج",
     "eidAlFitr": "عيد الفطر",
     "anniversary": "الذكرى السنوية",
-    "hajj": "الحج"
+    "hajj": "الحج",
+    "whyRosista": {
+      "title": "لماذا روزيستا؟",
+      "freshFlowers": "زهور طازجة يومياً",
+      "freshFlowersDesc": "نضمن لك أجود أنواع الزهور التي ننتقيها بعناية كل صباح.",
+      "sameDayDelivery": "توصيل في نفس اليوم",
+      "sameDayDeliveryDesc": "خدمة توصيل سريعة وموثوقة لضمان وصول هديتك في وقتها.",
+      "luxuryPackaging": "تغليف فاخر",
+      "luxuryPackagingDesc": "لمسات فنية في التغليف تضفي طابعاً من الفخامة والرقي."
+    },
+    "howItWorks": {
+      "title": "كيف تعمل الخدمة",
+      "description": "خطوات بسيطة تفصلك عن إرسال أجمل الهدايا لأحبائك."
+    },
+    "productSections": {
+      "bestSellers": "الأكثر مبيعاً",
+      "luxuryGifts": "هدايا فاخرة",
+      "featuredCollections": "المجموعات المميزة",
+      "specialOccasion": "مناسبة خاصة",
+      "allProducts": "جميع المنتجات"
+    },
+    "sorting": {
+      "sortBy": "ترتيب حسب",
+      "featured": "المقترح",
+      "priceLowToHigh": "السعر: من الأقل للأعلى",
+      "priceHighToLow": "السعر: من الأعلى للأقل",
+      "newest": "الأحدث"
+    },
+    "actions": {
+      "loadMore": "عرض المزيد",
+      "noProducts": "لا توجد منتجات متاحة"
+    }
   },
   "categories": {
     "title": "فئاتنا",

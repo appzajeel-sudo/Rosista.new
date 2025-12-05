@@ -142,3 +142,87 @@ export async function getSpecialOccasions(limit = 10): Promise<Product[]> {
   }
 }
 
+// Fetch products with filters
+export async function getProducts(params: {
+  page?: number;
+  limit?: number;
+  isActive?: boolean;
+  search?: string;
+  sortBy?:
+    | "sortOrder"
+    | "nameAr"
+    | "nameEn"
+    | "createdAt"
+    | "price"
+    | "price_asc"
+    | "price_desc";
+  sortOrder?: "asc" | "desc";
+  category?: string;
+  occasion?: string;
+  brand?: string;
+  productStatus?: string;
+  targetAudience?: string;
+  minPrice?: number;
+  maxPrice?: number;
+  showInHomePage?: boolean;
+}): Promise<{ products: Product[]; pagination?: any }> {
+  try {
+    const baseUrl = getApiBaseUrl();
+    const searchParams = new URLSearchParams();
+
+    // Handle sort options
+    let apiSortBy = params.sortBy;
+    let apiSortOrder = params.sortOrder;
+
+    if (params.sortBy === "price_asc") {
+      apiSortBy = "price";
+      apiSortOrder = "asc";
+    } else if (params.sortBy === "price_desc") {
+      apiSortBy = "price";
+      apiSortOrder = "desc";
+    }
+
+    if (params) {
+      Object.entries(params).forEach(([key, value]) => {
+        if (value !== undefined && key !== "sortBy" && key !== "sortOrder") {
+          searchParams.append(key, value.toString());
+        }
+      });
+
+      // Append processed sort params
+      if (apiSortBy) searchParams.append("sortBy", apiSortBy);
+      if (apiSortOrder) searchParams.append("sortOrder", apiSortOrder);
+    }
+
+    const queryString = searchParams.toString();
+    const url = `${baseUrl}/api/products${
+      queryString ? `?${queryString}` : ""
+    }`;
+
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      next: { revalidate: 60 }, // Revalidate every minute
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    if (data.success && data.data && Array.isArray(data.data)) {
+      return {
+        products: data.data,
+        pagination: data.pagination,
+      };
+    }
+
+    return { products: [] };
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    return { products: [] };
+  }
+}

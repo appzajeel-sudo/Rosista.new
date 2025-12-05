@@ -43,18 +43,16 @@ const slideVariants = {
 } as const;
 
 // Separate animation for images to make them fade smoothly
+// Very subtle animation - just a gentle fade without scale
 const imageVariants = {
   enter: {
     opacity: 0,
-    scale: 1.05,
   },
   center: {
     opacity: 1,
-    scale: 1,
   },
   exit: {
     opacity: 0,
-    scale: 0.95,
   },
 } as const;
 
@@ -115,8 +113,7 @@ export function CinematicHero({
               animate="center"
               exit="exit"
               transition={{
-                opacity: { duration: 0.3, ease: "easeInOut" },
-                scale: { duration: 0.4, ease: "easeOut" },
+                opacity: { duration: 0.5, ease: "easeInOut" },
               }}
               className="absolute inset-0"
             >
@@ -141,8 +138,7 @@ export function CinematicHero({
                 animate="center"
                 exit="exit"
                 transition={{
-                  opacity: { duration: 0.3, ease: "easeInOut" },
-                  scale: { duration: 0.4, ease: "easeOut" },
+                  opacity: { duration: 0.5, ease: "easeInOut" },
                 }}
                 className="absolute inset-0"
               >

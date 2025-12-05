@@ -60,6 +60,9 @@
   --input: 255 255 255;
   --ring: 244 63 94;
   --radius: 0.625rem;
+
+  /* Scrollbar Thumb Color (Light Mode) */
+  --scrollbar-color: rgb(244 63 94); /* Primary Pink for a cheerful look */
 }
 .dark {
   /* ===== Dark Mode - Luxury Rich Navy ===== */
@@ -98,6 +101,9 @@
   --border: 35 45 70;
   --input: 15 20 35;
   --ring: 254 135 155;
+
+  /* Scrollbar Thumb Color (Dark Mode) */
+  --scrollbar-color: #67e8f9; /* Cyan from Shiny Button */
 }
 
 @theme inline {
@@ -482,4 +488,24 @@ html[dir="ltr"] {
     background-size: 200% auto;
     animation: luxury-shimmer 4s linear infinite;
   }
+}
+
+/* Custom Scrollbar inspired by Animated Shiny Button */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgb(var(--background));
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-color);
+  border: 1px solid rgb(var(--background));
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--primary-600));
 }

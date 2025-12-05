@@ -1,12 +1,16 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
-import { ShoppingBag } from "lucide-react";
+import { ShoppingBag, Check, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { FavoriteButton } from "@/components/ui/favorite-button";
 import type { Product } from "@/types/product";
+import { useCart } from "@/context/CartContext";
+import { useAuth } from "@/context/AuthContext";
+import { useToast } from "@/hooks/use-toast";
 
 const RiyalSymbol = ({ className = "w-4 h-4" }) => (
   <svg
@@ -26,9 +30,59 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ product }: ProductCardProps) {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const isRtl = i18n.language === "ar";
   const name = isRtl ? product.nameAr : product.nameEn;
+
+  // Cart Logic
+  const [isAdded, setIsAdded] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const { addToCart } = useCart();
+  const { isAuthenticated } = useAuth();
+  const { toast } = useToast();
+
+  const handleAddToCart = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (!isAuthenticated) {
+      toast({
+        title: isRtl ? "تسجيل الدخول مطلوب" : "Login Required",
+        description: isRtl
+          ? "يجب تسجيل الدخول لإضافة المنتجات إلى السلة"
+          : "Please login to add products to cart",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      await addToCart({
+        id: product._id, // Ensure we use _id as per Product type usually
+        nameEn: product.nameEn,
+        nameAr: product.nameAr,
+        price: product.price,
+        imageUrl: product.mainImage,
+        categoryId: undefined, // Type check adjustment if needed
+        occasionId: undefined,
+        isBestSeller: false,
+        isSpecialGift: false,
+      });
+
+      setIsAdded(true);
+
+      // Reset state after 2 seconds
+      setTimeout(() => {
+        setIsAdded(false);
+      }, 2000);
+    } catch (error) {
+      console.error("Failed to add to cart", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="group w-full flex flex-col gap-3">
@@ -81,14 +135,29 @@ export function ProductCard({ product }: ProductCardProps) {
           </div>
 
           <Button
+            onClick={handleAddToCart}
+            disabled={loading || isAdded}
             variant="default"
             size="sm"
-            className={`h-9 px-4 rounded-full bg-black text-white hover:bg-primary-600 dark:bg-white dark:text-black dark:hover:bg-primary-600 dark:hover:text-white transition-colors ${
-              isRtl ? "font-sans-ar" : "font-sans-en"
-            }`}
+            className={`h-9 px-4 rounded-full min-w-[90px] transition-all duration-300 ${
+              isAdded
+                ? "bg-green-600 hover:bg-green-700 text-white border-transparent"
+                : "bg-black text-white hover:bg-primary-600 dark:bg-white dark:text-black dark:hover:bg-primary-600 dark:hover:text-white"
+            } ${isRtl ? "font-sans-ar" : "font-sans-en"}`}
           >
-            {isRtl ? "أضف" : "Add"}
-            <ShoppingBag className="w-3.5 h-3.5 ml-1.5" />
+            {loading ? (
+              <Loader2 className="w-4 h-4 animate-spin" />
+            ) : isAdded ? (
+              <>
+                {isRtl ? "تم" : "Added"}
+                <Check className="w-3.5 h-3.5 ml-1.5" />
+              </>
+            ) : (
+              <>
+                {isRtl ? "أضف" : "Add"}
+                <ShoppingBag className="w-3.5 h-3.5 ml-1.5" />
+              </>
+            )}
           </Button>
         </div>
       </div>

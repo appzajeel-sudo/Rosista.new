@@ -95,67 +95,98 @@ export function ModernProductGrid({ occasionId }: Props) {
   return (
     <section className="w-full bg-neutral-50 dark:bg-black min-h-screen relative">
       <div className="container mx-auto px-4 md:px-8 pb-12 sm:pb-16 md:pb-20">
-        {/* Floating Glass Header */}
-        <div className="sticky top-20 z-30 py-4 sm:py-5 md:py-6 mb-6 sm:mb-7 md:mb-8">
-          <div className="bg-white/80 dark:bg-neutral-900/80 backdrop-blur-md border border-gray-200 dark:border-neutral-800 rounded-full px-4 sm:px-5 md:px-6 py-2.5 sm:py-3 flex flex-col md:flex-row items-center justify-between gap-3 md:gap-4 shadow-sm transition-all hover:shadow-md">
-            <div className="flex items-center gap-3">
-              <span className="w-2 h-2 rounded-full bg-primary-500 animate-pulse" />
-              <h2
-                className={`text-lg font-bold text-black dark:text-white ${
-                  isRtl ? "font-sans-ar" : "font-sans-en"
-                }`}
-              >
-                {t("occasions.productSections.allProducts", "كل المنتجات")}
-              </h2>
-              <span className="bg-gray-100 dark:bg-white/10 text-gray-600 dark:text-gray-300 px-2 py-0.5 rounded-md text-xs font-mono">
-                {products.length}
-              </span>
-            </div>
+        {/* Luxury Floating Header */}
+        <div className="sticky top-20 z-30 py-6 mb-10">
+          <div className="relative group">
+            {/* Elegant Border with Gradient */}
+            <div className="absolute inset-0 bg-gradient-to-r from-primary-500/20 via-primary-400/10 to-primary-500/20 rounded-sm blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-            <div className="flex items-center gap-3">
-              {/* Filter Dropdown */}
-              <DropdownMenu
-                trigger={
-                  <>
-                    <SlidersHorizontal className="h-4 w-4" />
-                    <span className={isRtl ? "font-sans-ar" : "font-sans-en"}>
-                      {isRtl ? "ترتيب" : "Sort"}
-                    </span>
-                  </>
-                }
-                items={[
-                  {
-                    label: t("occasions.sorting.featured", "مميز"),
-                    value: "sortOrder",
-                    icon: <Star className="h-4 w-4" />,
-                  },
-                  {
-                    label: t(
-                      "occasions.sorting.priceLowToHigh",
-                      "السعر: من الأقل للأعلى"
-                    ),
-                    value: "price_asc",
-                    icon: <ArrowUpDown className="h-4 w-4" />,
-                  },
-                  {
-                    label: t(
-                      "occasions.sorting.priceHighToLow",
-                      "السعر: من الأعلى للأقل"
-                    ),
-                    value: "price_desc",
-                    icon: <DollarSign className="h-4 w-4" />,
-                  },
-                  {
-                    label: t("occasions.sorting.newest", "الأحدث"),
-                    value: "createdAt",
-                    icon: <Clock className="h-4 w-4" />,
-                  },
-                ]}
-                selectedValue={sortBy}
-                onSelect={setSortBy}
-                align="end"
-                isRtl={isRtl}
-              />
+            {/* Main Container */}
+            <div className="relative bg-white dark:bg-black border-t border-b border-gray-200 dark:border-neutral-800 py-4 backdrop-blur-sm">
+              <div className="flex items-center justify-between">
+                {/* Left Side - Elegant Title */}
+                <div className="flex items-center gap-6">
+                  {/* Decorative Line */}
+                  <div className="hidden md:block w-12 h-px bg-gradient-to-r from-transparent via-primary-500 to-transparent" />
+
+                  <div className="flex items-center gap-4">
+                    <h2
+                      className={`text-sm uppercase tracking-[0.3em] font-light text-gray-900 dark:text-white ${
+                        isRtl ? "font-sans-ar" : "font-sans-en"
+                      }`}
+                      style={{
+                        letterSpacing: isRtl ? "0.2em" : "0.3em",
+                      }}
+                    >
+                      {t(
+                        "occasions.productSections.allProducts",
+                        "كل المنتجات"
+                      )}
+                    </h2>
+
+                    {/* Elegant Count Badge */}
+                    <div className="flex items-center gap-2">
+                      <div className="w-px h-4 bg-gray-300 dark:bg-neutral-700" />
+                      <span className="text-xs font-mono text-gray-500 dark:text-gray-400 tracking-wider">
+                        {products.length.toString().padStart(2, "0")}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right Side - Minimal Dropdown */}
+                <div className="flex items-center gap-4">
+                  {/* Decorative Line */}
+                  <div className="hidden md:block w-12 h-px bg-gradient-to-r from-transparent via-primary-500 to-transparent" />
+
+                  <DropdownMenu
+                    trigger={
+                      <>
+                        <span
+                          className={`text-xs uppercase tracking-widest font-light ${
+                            isRtl ? "font-sans-ar" : "font-sans-en"
+                          }`}
+                        >
+                          {isRtl ? "ترتيب" : "Sort"}
+                        </span>
+                        <SlidersHorizontal className="h-3.5 w-3.5 opacity-50" />
+                      </>
+                    }
+                    items={[
+                      {
+                        label: t("occasions.sorting.featured", "مميز"),
+                        value: "sortOrder",
+                        icon: <Star className="h-4 w-4" />,
+                      },
+                      {
+                        label: t(
+                          "occasions.sorting.priceLowToHigh",
+                          "السعر: من الأقل للأعلى"
+                        ),
+                        value: "price_asc",
+                        icon: <ArrowUpDown className="h-4 w-4" />,
+                      },
+                      {
+                        label: t(
+                          "occasions.sorting.priceHighToLow",
+                          "السعر: من الأعلى للأقل"
+                        ),
+                        value: "price_desc",
+                        icon: <DollarSign className="h-4 w-4" />,
+                      },
+                      {
+                        label: t("occasions.sorting.newest", "الأحدث"),
+                        value: "createdAt",
+                        icon: <Clock className="h-4 w-4" />,
+                      },
+                    ]}
+                    selectedValue={sortBy}
+                    onSelect={setSortBy}
+                    align="end"
+                    isRtl={isRtl}
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>

@@ -10,7 +10,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import type { Product } from "@/types/product";
 
 // Support both Product types (from types/product.ts and local types in sections)
-type ProductLike = 
+type ProductLike =
   | Product
   | {
       id?: string;
@@ -60,7 +60,7 @@ export function FavoriteButton({
       // Just added to favorites
       setJustAdded(true);
       setShowSparkles(true);
-      
+
       // Reset animation states after animation completes
       const timer = setTimeout(() => {
         setJustAdded(false);
@@ -75,7 +75,7 @@ export function FavoriteButton({
         clearTimeout(sparkleTimer);
       };
     }
-    
+
     setPrevFavoriteState(isProductFavorite);
   }, [isProductFavorite, prevFavoriteState]);
 
@@ -102,10 +102,10 @@ export function FavoriteButton({
     } else {
       // Convert Product to Favorite format
       // Support multiple image field names
-      const imageUrl = 
-        (product as any).imageUrl || 
-        (product as any).mainImage || 
-        (product as any).image || 
+      const imageUrl =
+        (product as any).imageUrl ||
+        (product as any).mainImage ||
+        (product as any).image ||
         "";
 
       addToFavorites({
@@ -116,13 +116,13 @@ export function FavoriteButton({
         imageUrl: imageUrl,
         categoryId: (product as any).categoryId,
         occasionId: (product as any).occasionId,
-        isBestSeller: 
-          (product as any).isBestSeller || 
-          (product as any).productStatus?.includes("best-seller") || 
+        isBestSeller:
+          (product as any).isBestSeller ||
+          (product as any).productStatus?.includes("best-seller") ||
           false,
-        isSpecialGift: 
-          (product as any).isSpecialGift || 
-          (product as any).productStatus?.includes("special-gift") || 
+        isSpecialGift:
+          (product as any).isSpecialGift ||
+          (product as any).productStatus?.includes("special-gift") ||
           false,
       }).catch((error) => {
         console.error("Error adding to favorites:", error);
@@ -139,7 +139,7 @@ export function FavoriteButton({
   return (
     <motion.button
       onClick={handleToggle}
-      className={`relative flex items-center justify-center w-full h-full ${className}`}
+      className={`relative flex items-center justify-center w-full h-full cursor-pointer ${className}`}
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.9 }}
       aria-label={
@@ -158,8 +158,8 @@ export function FavoriteButton({
           <motion.div
             className="absolute inset-0 rounded-full bg-red-500/30"
             initial={{ scale: 0, opacity: 0.8 }}
-            animate={{ 
-              scale: 2.5, 
+            animate={{
+              scale: 2.5,
               opacity: 0,
             }}
             exit={{ opacity: 0 }}
@@ -195,13 +195,13 @@ export function FavoriteButton({
                 <motion.div
                   key={sparkle.id}
                   className="absolute w-1.5 h-1.5 bg-red-500 rounded-full"
-                  initial={{ 
-                    opacity: 0, 
+                  initial={{
+                    opacity: 0,
                     scale: 0,
                     x: 0,
                     y: 0,
                   }}
-                  animate={{ 
+                  animate={{
                     opacity: [0, 1, 0.8, 0],
                     scale: [0, 1.2, 0.8, 0],
                     x: x,
@@ -244,13 +244,10 @@ export function FavoriteButton({
         <Heart
           size={size}
           className={`transition-colors duration-300 ${
-            isProductFavorite
-              ? "fill-red-500 text-red-500"
-              : "text-foreground"
+            isProductFavorite ? "fill-red-500 text-red-500" : "text-foreground"
           }`}
         />
       </motion.div>
     </motion.button>
   );
 }
-

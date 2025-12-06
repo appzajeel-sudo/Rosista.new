@@ -117,9 +117,7 @@ export function ProductCard({ product }: ProductCardProps) {
 
         {/* Favorite Button */}
         <div className="absolute top-3 right-3 z-10">
-          <div className="bg-white/80 backdrop-blur-md rounded-full shadow-sm">
-            <FavoriteButton product={product} size={18} className="p-1.5" />
-          </div>
+          <FavoriteButton product={product} size={20} className="p-1.5" />
         </div>
       </div>
 
@@ -153,10 +151,10 @@ export function ProductCard({ product }: ProductCardProps) {
             disabled={loading} // Only disable if strictly loading (though we rely on isAdded now)
             variant="default"
             size="sm"
-            className={`h-9 px-4 rounded-full min-w-[90px] transition-all duration-300 ${
+            className={`h-9 px-4 rounded-full min-w-[90px] transition-all duration-300 cursor-pointer ${
               isAdded
                 ? "bg-green-600 hover:bg-green-700 text-white border-transparent"
-                : "bg-black text-white hover:bg-primary-600 dark:bg-white dark:text-black dark:hover:bg-primary-600 dark:hover:text-white"
+                : "bg-black text-white hover:bg-rose-600 hover:text-white dark:bg-white dark:text-black dark:hover:bg-rose-600 dark:hover:text-white"
             } ${isRtl ? "font-sans-ar" : "font-sans-en"}`}
           >
             {loading ? (

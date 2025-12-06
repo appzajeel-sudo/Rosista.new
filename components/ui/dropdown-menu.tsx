@@ -33,7 +33,7 @@ export function DropdownMenu({
   return (
     <Menu>
       <MenuButton
-        className={`inline-flex items-center gap-2 rounded-md bg-gray-100 dark:bg-black px-3 py-1.5 text-sm font-semibold text-gray-900 dark:text-white shadow-sm hover:bg-gray-200 dark:hover:bg-neutral-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 transition-colors ${className}`}
+        className={`inline-flex items-center gap-2 px-4 py-2 text-xs uppercase tracking-widest font-light text-gray-900 dark:text-white border border-gray-200 dark:border-neutral-800 hover:border-primary-500 dark:hover:border-primary-500 focus:outline-none focus-visible:ring-1 focus-visible:ring-primary-500 transition-all duration-300 ${className}`}
       >
         {typeof trigger === "string" ? (
           <>

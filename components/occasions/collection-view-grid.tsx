@@ -55,7 +55,7 @@ export function CollectionViewGrid({ occasionId }: Props) {
             {t("occasions.labels.curatedSeries", "سلسلة مختارة")}
           </span>
           <h2
-            className={`mt-4 text-4xl md:text-5xl font-bold text-black dark:text-white ${
+            className={`mt-4 text-3xl sm:text-4xl md:text-5xl font-bold text-black dark:text-white ${
               isRtl ? "font-sans-ar" : "font-sans-en"
             }`}
           >

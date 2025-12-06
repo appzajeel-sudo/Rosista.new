@@ -28,7 +28,7 @@ export function OccasionView({ occasion }: Props) {
   };
 
   return (
-    <div className="relative w-full min-h-screen bg-white dark:bg-black transition-colors duration-300">
+    <div className="relative w-full min-h-screen bg-white dark:bg-black transition-colors duration-300 overflow-x-hidden">
       {/* Hero Section - Static for single occasion - Always Black */}
       <div className="relative h-[90vh] md:h-screen w-full overflow-hidden bg-black">
         <CinematicHero

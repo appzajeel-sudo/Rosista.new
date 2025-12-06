@@ -51,7 +51,7 @@ export function LuxuryHighlightSection({ occasionId }: Props) {
   if (products.length === 0) return null;
 
   return (
-    <section className="w-full py-16 bg-[#0A0A19] text-white relative">
+    <section className="w-full py-10 sm:py-12 md:py-16 bg-[#0A0A19] text-white relative">
       {/* Golden Glow Background */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-amber-500/10 rounded-full blur-[120px] pointer-events-none" />
 
@@ -66,7 +66,7 @@ export function LuxuryHighlightSection({ occasionId }: Props) {
             {t("occasions.labels.premiumSelection", "تشكيلة فاخرة")}
           </span>
           <h2
-            className={`text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white via-amber-100 to-amber-200 ${
+            className={`text-2xl sm:text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white via-amber-100 to-amber-200 ${
               isRtl ? "font-sans-ar" : "font-sans-en"
             }`}
           >
@@ -124,7 +124,7 @@ export function LuxuryHighlightSection({ occasionId }: Props) {
                 </div>
                 <div className="space-y-2">
                   <h3
-                    className={`text-xl font-medium text-gray-200 group-hover:text-amber-200 transition-colors ${
+                    className={`text-base sm:text-lg md:text-xl font-medium text-gray-200 group-hover:text-amber-200 transition-colors ${
                       isRtl ? "font-sans-ar" : "font-sans-en"
                     }`}
                   >

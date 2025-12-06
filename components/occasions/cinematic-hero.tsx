@@ -102,7 +102,7 @@ export function CinematicHero({
               else onPrev?.();
             }
           }}
-          className="absolute inset-0 w-full h-full cursor-grab active:cursor-grabbing"
+          className="absolute inset-0 w-full h-full cursor-grab active:cursor-grabbing overflow-hidden"
         >
           {/* Background Blur Layer */}
           <div className="absolute inset-0">
@@ -158,7 +158,7 @@ export function CinematicHero({
           <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent pointer-events-none z-10" />
 
           {/* Content - Now inside the moving container for perfect sync */}
-          <div className="absolute inset-0 z-30 flex flex-col justify-end md:justify-center px-6 md:px-16 lg:px-24 pb-44 md:pb-0 pointer-events-none">
+          <div className="absolute inset-0 z-30 flex flex-col justify-end md:justify-center px-4 sm:px-6 md:px-16 lg:px-24 pb-32 sm:pb-36 md:pb-0 pointer-events-none">
             <div className="max-w-2xl space-y-6">
               {/* Title */}
               <h1

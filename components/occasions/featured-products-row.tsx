@@ -50,7 +50,7 @@ export function FeaturedProductsRow({ occasionId }: Props) {
   const gridProducts = products.slice(1); // Show all remaining products
 
   return (
-    <section className="w-full py-20 bg-white dark:bg-black relative">
+    <section className="w-full py-12 md:py-16 lg:py-20 bg-white dark:bg-black relative">
       {/* Background Accent */}
       <div className="absolute top-0 left-0 w-full h-1/2 bg-gray-50 dark:bg-neutral-900/20 -z-10" />
 
@@ -59,7 +59,7 @@ export function FeaturedProductsRow({ occasionId }: Props) {
         <div className="flex items-end justify-between mb-12">
           <div>
             <h2
-              className={`text-4xl font-bold text-black dark:text-white mb-3 ${
+              className={`text-2xl sm:text-3xl md:text-4xl font-bold text-black dark:text-white mb-3 ${
                 isRtl ? "font-sans-ar" : "font-sans-en"
               }`}
             >
@@ -73,7 +73,7 @@ export function FeaturedProductsRow({ occasionId }: Props) {
           {/* Main Spotlight Product (Span 7) */}
           <div className="lg:col-span-7 h-auto relative">
             <div className="lg:sticky lg:top-32 self-start transition-all">
-              <div className="group relative h-[500px] md:h-[600px] w-full overflow-hidden rounded-3xl bg-gray-100 dark:bg-neutral-900 border border-gray-200 dark:border-neutral-800">
+              <div className="group relative h-[350px] sm:h-[450px] md:h-[600px] w-full overflow-hidden rounded-3xl bg-gray-100 dark:bg-neutral-900 border border-gray-200 dark:border-neutral-800">
                 <Link
                   href={`/products/${mainProduct.slug}`}
                   className="block h-full w-full"
@@ -98,16 +98,16 @@ export function FeaturedProductsRow({ occasionId }: Props) {
                   </div>
 
                   {/* Content Overlay */}
-                  <div className="absolute bottom-0 left-0 right-0 p-8 pt-24 bg-gradient-to-t from-black/90 via-black/50 to-transparent text-white">
+                  <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6 md:p-8 pt-16 sm:pt-20 md:pt-24 bg-gradient-to-t from-black/90 via-black/50 to-transparent text-white">
                     <h3
-                      className={`text-3xl md:text-4xl font-bold mb-3 ${
+                      className={`text-2xl sm:text-3xl md:text-4xl font-bold mb-3 ${
                         isRtl ? "font-sans-ar" : "font-sans-en"
                       }`}
                     >
                       {isRtl ? mainProduct.nameAr : mainProduct.nameEn}
                     </h3>
                     <div className="flex items-center justify-between">
-                      <p className="text-2xl font-bold text-primary-400">
+                      <p className="text-xl sm:text-2xl font-bold text-primary-400">
                         {mainProduct.price.toLocaleString()}{" "}
                         {isRtl ? "ر.س" : "SAR"}
                       </p>

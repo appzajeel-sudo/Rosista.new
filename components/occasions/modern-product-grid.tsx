@@ -6,7 +6,14 @@ import { ProductCard } from "@/components/ui/product-card";
 import { getProducts } from "@/lib/api/products";
 import type { Product } from "@/types/product";
 import { Skeleton } from "@/components/ui/skeleton";
-import { SlidersHorizontal } from "lucide-react";
+import { DropdownMenu } from "@/components/ui/dropdown-menu";
+import {
+  SlidersHorizontal,
+  ArrowUpDown,
+  Star,
+  DollarSign,
+  Clock,
+} from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -87,10 +94,10 @@ export function ModernProductGrid({ occasionId }: Props) {
 
   return (
     <section className="w-full bg-neutral-50 dark:bg-black min-h-screen relative">
-      <div className="container mx-auto px-4 md:px-8 pb-20">
+      <div className="container mx-auto px-4 md:px-8 pb-12 sm:pb-16 md:pb-20">
         {/* Floating Glass Header */}
-        <div className="sticky top-20 z-30 py-6 mb-8 -mx-4 px-4 md:mx-0 md:px-0">
-          <div className="bg-white/80 dark:bg-neutral-900/80 backdrop-blur-md border border-gray-200 dark:border-neutral-800 rounded-full px-6 py-3 flex flex-col md:flex-row items-center justify-between gap-4 shadow-sm transition-all hover:shadow-md">
+        <div className="sticky top-20 z-30 py-4 sm:py-5 md:py-6 mb-6 sm:mb-7 md:mb-8">
+          <div className="bg-white/80 dark:bg-neutral-900/80 backdrop-blur-md border border-gray-200 dark:border-neutral-800 rounded-full px-4 sm:px-5 md:px-6 py-2.5 sm:py-3 flex flex-col md:flex-row items-center justify-between gap-3 md:gap-4 shadow-sm transition-all hover:shadow-md">
             <div className="flex items-center gap-3">
               <span className="w-2 h-2 rounded-full bg-primary-500 animate-pulse" />
               <h2
@@ -105,41 +112,56 @@ export function ModernProductGrid({ occasionId }: Props) {
               </span>
             </div>
 
-            <div className="flex items-center gap-4 w-full md:w-auto">
-              <div className="hidden md:flex items-center text-sm text-gray-500 gap-2">
-                <SlidersHorizontal className="w-4 h-4" />
-                <span className={isRtl ? "font-sans-ar" : "font-sans-en"}>
-                  {isRtl ? "تصفية وترتيب" : "Filter & Sort"}
-                </span>
-              </div>
-
-              <div className="w-full md:w-48">
-                <Select value={sortBy} onValueChange={setSortBy}>
-                  <SelectTrigger className="w-full h-9 bg-transparent border-0 focus:ring-0 text-right md:text-end font-medium">
-                    <SelectValue placeholder={t("occasions.sorting.sortBy")} />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="sortOrder">
-                      {t("occasions.sorting.featured")}
-                    </SelectItem>
-                    <SelectItem value="price_asc">
-                      {t("occasions.sorting.priceLowToHigh")}
-                    </SelectItem>
-                    <SelectItem value="price_desc">
-                      {t("occasions.sorting.priceHighToLow")}
-                    </SelectItem>
-                    <SelectItem value="createdAt">
-                      {t("occasions.sorting.newest")}
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+            <div className="flex items-center gap-3">
+              {/* Filter Dropdown */}
+              <DropdownMenu
+                trigger={
+                  <>
+                    <SlidersHorizontal className="h-4 w-4" />
+                    <span className={isRtl ? "font-sans-ar" : "font-sans-en"}>
+                      {isRtl ? "ترتيب" : "Sort"}
+                    </span>
+                  </>
+                }
+                items={[
+                  {
+                    label: t("occasions.sorting.featured", "مميز"),
+                    value: "sortOrder",
+                    icon: <Star className="h-4 w-4" />,
+                  },
+                  {
+                    label: t(
+                      "occasions.sorting.priceLowToHigh",
+                      "السعر: من الأقل للأعلى"
+                    ),
+                    value: "price_asc",
+                    icon: <ArrowUpDown className="h-4 w-4" />,
+                  },
+                  {
+                    label: t(
+                      "occasions.sorting.priceHighToLow",
+                      "السعر: من الأعلى للأقل"
+                    ),
+                    value: "price_desc",
+                    icon: <DollarSign className="h-4 w-4" />,
+                  },
+                  {
+                    label: t("occasions.sorting.newest", "الأحدث"),
+                    value: "createdAt",
+                    icon: <Clock className="h-4 w-4" />,
+                  },
+                ]}
+                selectedValue={sortBy}
+                onSelect={setSortBy}
+                align="end"
+                isRtl={isRtl}
+              />
             </div>
           </div>
         </div>
 
         {/* Masonry Grid using CSS Columns */}
-        <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-6 space-y-6">
+        <div className="columns-2 sm:columns-2 md:columns-3 lg:columns-4 gap-4 sm:gap-5 md:gap-6 space-y-4 sm:space-y-5 md:space-y-6">
           {products.map((product) => (
             <div key={product._id} className="break-inside-avoid mb-6">
               <div>

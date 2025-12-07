@@ -226,3 +226,76 @@ export async function getProducts(params: {
     return { products: [] };
   }
 }
+
+// Fetch single product by ID
+export async function getProductById(id: string): Promise<Product | null> {
+  try {
+    const baseUrl = getApiBaseUrl();
+    const url = `${baseUrl}/api/products/${id}`;
+
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      next: { revalidate: 60 }, // Revalidate every minute
+    });
+
+    if (!response.ok) {
+      if (response.status === 404) return null;
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    if (data.success && data.data) {
+      return data.data;
+    }
+
+    return null;
+  } catch (error) {
+    console.error(`Error fetching product with ID ${id}:`, error);
+    return null;
+  }
+}
+
+// Fetch single product by slug or ID (fallback)
+export async function getProductBySlug(
+  slugOrId: string
+): Promise<Product | null> {
+  try {
+    const baseUrl = getApiBaseUrl();
+
+    // First, try to fetch by slug
+    const slugUrl = `${baseUrl}/api/products/slug/${slugOrId}`;
+    const slugResponse = await fetch(slugUrl, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      next: { revalidate: 60 },
+    });
+
+    if (slugResponse.ok) {
+      const data = await slugResponse.json();
+      if (data.success && data.data) {
+        return data.data;
+      }
+    }
+
+    // If slug fetch fails, try by ID (for fallback compatibility)
+    if (slugResponse.status === 404) {
+      return await getProductById(slugOrId);
+    }
+
+    return null;
+  } catch (error) {
+    console.error(`Error fetching product with slug/ID ${slugOrId}:`, error);
+    // Try ID as last resort
+    try {
+      return await getProductById(slugOrId);
+    } catch (idError) {
+      return null;
+    }
+  }
+}

@@ -103,7 +103,7 @@ export function ProductCard({ product }: ProductCardProps) {
       {/* Image Container - Borderless, Rounded */}
       <div className="relative aspect-[3/4] w-full overflow-hidden rounded-[20px] bg-gray-100 dark:bg-neutral-900 shadow-sm transition-shadow duration-300 hover:shadow-md">
         <Link
-          href={`/products/${product.slug}`}
+          href={`/products/${product.slug || product._id}`}
           className="block h-full w-full"
         >
           <Image
@@ -125,7 +125,7 @@ export function ProductCard({ product }: ProductCardProps) {
       <div className="flex flex-col gap-2 px-1">
         {/* Title */}
         <Link
-          href={`/products/${product.slug}`}
+          href={`/products/${product.slug || product._id}`}
           className="group-hover:text-primary-600 transition-colors"
         >
           <h3

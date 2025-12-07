@@ -185,7 +185,7 @@ export function SpecialOccasionClient({ products }: Props) {
           >
             {products.map((product, index) => (
               <SwiperSlide key={product.id}>
-                <Link href={`/product/${product.slug}`} className="block">
+                <Link href={`/products/${product.slug}`} className="block">
                   <div className="group relative overflow-hidden rounded-3xl">
                     {/* Image */}
                     <div className="relative aspect-3/4 sm:aspect-270/390 overflow-hidden rounded-3xl">
